@@ -1,0 +1,5158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Zauberstich</title>
+<meta name="description" content="Stichspiel mit Ansage: allein gegen Computergegner oder mit Freunden, jeder am eigenen Handy.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Zauberstich">
+<meta name="theme-color" content="#e7e4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1430" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:800;font-display:swap;src:url(data:font/woff2;base64,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) format('woff2');}
+:root {
+  /* Layout: Der Tisch füllt die Mitte, die eigene Hand liegt unten. Texte stehen linksbündig.
+     Farbe tragen nur die Karten, alles andere bleibt ruhig in Tinte und Papier. */
+  --table: #e7e4ee;
+  --surface: #f6f4fa;
+  --raised: #ffffff;
+  --ink: #221638;
+  --ink2: #5f5679;
+  --line: #cfc9dd;
+  --veil: rgba(34, 22, 56, 0.5);
+  --good: #157a55;
+  --bad: #c93a26;
+  --glut: #e4502e;
+  --flut: #2757c9;
+  --laub: #157a55;
+  --licht: #f5b920;
+  --cream: #fff6e6;
+  --card-ink: #221638;
+  --display: 'Big Shoulders Display', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  --body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --lift: 0 1px 2px rgba(34, 22, 56, 0.22), 0 6px 16px rgba(34, 22, 56, 0.14);
+  --edge: rgba(20, 12, 36, 0.38);
+  --cw: 66px;
+  --sw: 86px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --table: #1b1430;
+    --surface: #261c44;
+    --raised: #32265c;
+    --ink: #f1eef8;
+    --ink2: #aca3c6;
+    --line: #43366e;
+    --veil: rgba(8, 5, 18, 0.66);
+    --good: #4ccb96;
+    --bad: #ff8a73;
+    --lift: 0 1px 2px rgba(0, 0, 0, 0.5), 0 6px 18px rgba(0, 0, 0, 0.4);
+    --edge: rgba(255, 255, 255, 0.3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --table: #1b1430;
+  --surface: #261c44;
+  --raised: #32265c;
+  --ink: #f1eef8;
+  --ink2: #aca3c6;
+  --line: #43366e;
+  --veil: rgba(8, 5, 18, 0.66);
+  --good: #4ccb96;
+  --bad: #ff8a73;
+  --lift: 0 1px 2px rgba(0, 0, 0, 0.5), 0 6px 18px rgba(0, 0, 0, 0.4);
+  --edge: rgba(255, 255, 255, 0.3);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  touch-action: manipulation;
+}
+body {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--table);
+  color: var(--ink);
+  font: 15px/1.4 var(--body);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+button {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+[hidden] {
+  display: none !important;
+}
+
+#app {
+  position: relative;
+  height: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ---------- Karten ---------- */
+.card {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  width: var(--cw);
+  height: calc(var(--cw) * 1.42);
+  border-radius: calc(var(--cw) * 0.1);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--edge), 0 2px 5px rgba(20, 12, 36, 0.28);
+  flex: none;
+}
+.cardsvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cardsvg text {
+  font-family: var(--display);
+  font-weight: 800;
+}
+
+/* ---------- Bausteine ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 54px;
+  padding: 6px 18px;
+  border-radius: 15px;
+  border: 2px solid var(--ink);
+  background: transparent;
+  font: 800 23px/1.05 var(--display);
+  letter-spacing: 0.2px;
+  text-align: center;
+}
+.btn.primary {
+  background: var(--ink);
+  color: var(--table);
+}
+.btn.plain {
+  min-height: 46px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font: 600 15px/1.2 var(--body);
+  letter-spacing: 0;
+}
+.btn:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+:focus-visible {
+  outline: 3px solid var(--flut);
+  outline-offset: 2px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field label,
+.label {
+  font: 800 18px/1 var(--display);
+}
+.field input {
+  height: 50px;
+  padding: 0 14px;
+  border-radius: 13px;
+  border: 1.5px solid var(--line);
+  background: var(--raised);
+  font-size: 17px;
+  -webkit-user-select: text;
+  user-select: text;
+  width: 100%;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+.hint {
+  color: var(--ink2);
+  font-size: 13px;
+}
+.seg {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 6px;
+}
+.seg button {
+  min-height: 46px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font: 800 20px/1 var(--display);
+}
+.seg button[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--table);
+}
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+.switch .knob {
+  flex: none;
+  width: 50px;
+  height: 30px;
+  border-radius: 15px;
+  background: var(--line);
+  position: relative;
+  transition: background 0.15s;
+}
+.switch .knob::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--raised);
+  transition: transform 0.15s;
+}
+.switch[aria-checked='true'] .knob {
+  background: var(--ink);
+}
+.switch[aria-checked='true'] .knob::after {
+  transform: translateX(20px);
+  background: var(--table);
+}
+.switch b {
+  display: block;
+  font: 800 19px/1.1 var(--display);
+}
+.switch span span {
+  display: block;
+  color: var(--ink2);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* ---------- Start ---------- */
+.home {
+  padding: 14px 20px 22px;
+  gap: 16px;
+}
+.fan {
+  position: relative;
+  height: 196px;
+  flex: none;
+}
+.fan .card {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  --cw: 100px;
+  margin-left: -50px;
+  transform-origin: 50% 135%;
+  animation: fanIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+@keyframes fanIn {
+  from {
+    transform: rotate(0deg) translateY(30px);
+    opacity: 0;
+  }
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 800 60px/0.9 var(--display);
+  letter-spacing: -0.5px;
+}
+.lede {
+  color: var(--ink2);
+  font-size: 16px;
+  max-width: 32ch;
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.grow {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------- Unterseiten (Solo-Einstellungen, Mehrspieler) ---------- */
+.page {
+  padding: 8px 20px 22px;
+  gap: 18px;
+}
+.pagehead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  margin: 0 -8px;
+}
+.pagehead h1 {
+  font: 800 30px/1 var(--display);
+}
+.iconbtn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+}
+.iconbtn svg {
+  width: 22px;
+  height: 22px;
+}
+.code {
+  font: 800 64px/1 var(--display);
+  letter-spacing: 6px;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.codein input {
+  font: 800 30px/1 var(--display);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  height: 58px;
+}
+.people {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.people li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 13px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+}
+.people li b {
+  font: 800 21px/1 var(--display);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.people li .tag {
+  font-size: 12px;
+  color: var(--ink2);
+}
+.people li.bot {
+  border-style: dashed;
+  background: transparent;
+}
+.people li.off b {
+  opacity: 0.5;
+}
+.banner {
+  padding: 10px 14px;
+  border-radius: 13px;
+  border: 1.5px solid var(--bad);
+  color: var(--bad);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Spieltisch ---------- */
+.top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 4px;
+  min-height: 54px;
+  flex: none;
+}
+.topmid {
+  flex: 1;
+  min-width: 0;
+}
+.topmid b {
+  display: block;
+  font: 800 22px/1 var(--display);
+  white-space: nowrap;
+}
+.topmid span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--ink2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.trump {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px 0 7px;
+  border-radius: 13px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font: 800 19px/1 var(--display);
+  white-space: nowrap;
+  flex: none;
+}
+.trump .sw {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--line);
+}
+.trump .sw svg {
+  width: 20px;
+  height: 20px;
+}
+.trump small {
+  display: block;
+  font: 600 10.5px/1 var(--body);
+  color: var(--ink2);
+  margin-bottom: 2px;
+}
+.net {
+  margin: 0 10px 2px;
+  padding: 7px 12px;
+  border-radius: 11px;
+  background: var(--bad);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  flex: none;
+}
+.table {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.seat {
+  position: absolute;
+  width: var(--sw);
+  height: 60px;
+  margin: -30px 0 0 calc(var(--sw) / -2);
+  padding: 7px 9px 6px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+.seat.turn {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--line);
+}
+.seat.away {
+  opacity: 0.55;
+}
+.seat .nm {
+  font: 800 18px/1 var(--display);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.seat .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  min-height: 16px;
+}
+.pts {
+  font: 800 16px/1 var(--display);
+  color: var(--ink2);
+}
+.tally {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font: 800 16px/1 var(--display);
+  min-height: 12px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.7px solid var(--ink);
+  flex: none;
+}
+.dot.won {
+  background: var(--ink);
+}
+.dot.over {
+  background: var(--bad);
+  border-color: var(--bad);
+}
+.tally .zero {
+  font: 800 15px/1 var(--display);
+}
+.tally .wait {
+  color: var(--ink2);
+  font: 600 11px/1 var(--body);
+}
+.badge {
+  position: absolute;
+  top: -9px;
+  right: -7px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--table);
+  font: 800 13px/20px var(--display);
+}
+.bubble {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  margin-top: 7px;
+  transform: translateX(-50%);
+  padding: 7px 11px;
+  border-radius: 11px;
+  background: var(--ink);
+  color: var(--table);
+  font: 800 19px/1 var(--display);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 6;
+  animation: pop 2.1s ease forwards;
+}
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6);
+  }
+  8% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#trick .card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: default;
+  transition: filter 0.25s, box-shadow 0.25s;
+}
+#trick .card.dim {
+  filter: brightness(0.72) saturate(0.7);
+}
+#trick .card.win {
+  box-shadow: 0 0 0 3px var(--ink), 0 0 0 6px var(--table), 0 8px 18px rgba(20, 12, 36, 0.4);
+  z-index: 30 !important;
+}
+
+.mebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 10px;
+  padding: 8px 12px;
+  min-height: 44px;
+  border-radius: 13px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  flex: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.mebar .st {
+  flex: 1;
+  min-width: 0;
+  font: 800 20px/1.05 var(--display);
+}
+.mebar.turn {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--table);
+}
+.mebar.turn .dot {
+  border-color: var(--table);
+}
+.mebar.turn .dot.won {
+  background: var(--table);
+}
+.mebar.turn .dot.over {
+  border-color: var(--bad);
+}
+.mebar.turn .pts {
+  color: var(--table);
+}
+.mebar .gb {
+  position: static;
+  flex: none;
+}
+.mebar.turn .gb {
+  background: var(--table);
+  color: var(--ink);
+}
+.hand {
+  position: relative;
+  flex: none;
+  height: 124px;
+  transition: height 0.25s;
+}
+.hand .card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.2s, opacity 0.2s;
+}
+.hand .card.off {
+  filter: brightness(0.74) saturate(0.45);
+}
+.hand .card.sel {
+  box-shadow: 0 0 0 2.5px var(--ink), 0 0 0 5px var(--table), 0 8px 16px rgba(20, 12, 36, 0.4);
+}
+.hand .card.pending {
+  opacity: 0.55;
+}
+.hand .card.nope {
+  animation: nope 0.3s;
+}
+@keyframes nope {
+  25% {
+    margin-left: -5px;
+  }
+  75% {
+    margin-left: 5px;
+  }
+}
+
+/* ---------- Ansage / Trumpfwahl ---------- */
+.panel {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  z-index: 40;
+  padding: 14px;
+  border-radius: 18px;
+  border: 2px solid var(--ink);
+  background: var(--raised);
+  box-shadow: var(--lift);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: rise 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes rise {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+.panel h2 {
+  font: 800 25px/1 var(--display);
+}
+.chips {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.chip {
+  height: 44px;
+  border-radius: 11px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font: 800 22px/1 var(--display);
+  padding: 0;
+}
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--table);
+}
+.chip:disabled {
+  opacity: 0.32;
+  text-decoration: line-through;
+}
+.suitpick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.suitpick button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 13px;
+  font: 800 24px/1 var(--display);
+}
+.suitpick svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* ---------- Blätter (Rundenende, Block, Regeln, Menü) ---------- */
+.sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--veil);
+  animation: fade 0.2s;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+.sheetbody {
+  max-height: 94%;
+  padding: 18px 18px calc(18px + env(safe-area-inset-bottom));
+  border-radius: 22px 22px 0 0;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: rise 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sheethead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sheethead h2 {
+  flex: 1;
+  font: 800 30px/1 var(--display);
+}
+.results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.results li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 4px 12px;
+  padding: 9px 14px;
+  border-radius: 13px;
+  border: 1.5px solid var(--line);
+  background: var(--raised);
+}
+.results li.me {
+  border-color: var(--ink);
+}
+.results .nm {
+  font: 800 22px/1 var(--display);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.results .sub {
+  grid-column: 1;
+  font-size: 12.5px;
+  color: var(--ink2);
+}
+.results .dl {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  font: 800 22px/1 var(--display);
+  padding: 6px 9px;
+  border-radius: 9px;
+  min-width: 52px;
+  text-align: center;
+}
+.results .dl.good {
+  background: var(--good);
+  color: #fff;
+}
+.results .dl.bad {
+  color: var(--bad);
+  border: 1.5px solid var(--bad);
+}
+.results .tt {
+  grid-row: 1 / span 2;
+  grid-column: 3;
+  font: 800 28px/1 var(--display);
+  min-width: 52px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.block {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.block th {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  font: 800 16px/1.1 var(--display);
+  padding: 6px 3px;
+  text-align: right;
+  max-width: 62px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--ink);
+}
+.block th:first-child,
+.block td:first-child {
+  text-align: left;
+  width: 34px;
+}
+.block td {
+  padding: 5px 3px;
+  text-align: right;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.1;
+}
+.block td b {
+  display: block;
+  font: 800 19px/1 var(--display);
+}
+.block td small {
+  font-size: 11px;
+  color: var(--ink2);
+}
+.block td.hit small {
+  color: var(--good);
+  font-weight: 700;
+}
+.block td .rs {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  font: 800 15px/1 var(--display);
+  background: var(--line);
+}
+.block td .rs svg {
+  width: 13px;
+  height: 13px;
+}
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.rules h3 {
+  font: 800 22px/1.1 var(--display);
+  margin-bottom: 4px;
+}
+.rules p,
+.rules li {
+  font-size: 15px;
+  line-height: 1.45;
+  max-width: 62ch;
+}
+.rules ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.legend {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.legend figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12.5px;
+  line-height: 1.25;
+  color: var(--ink2);
+}
+.legend .card {
+  --cw: 100%;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 100 / 142;
+  border-radius: 8px;
+}
+.legend b {
+  display: block;
+  color: var(--ink);
+  font: 800 18px/1 var(--display);
+}
+.minirow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.minirow .card {
+  --cw: 58px;
+}
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(200px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 80;
+  max-width: 86%;
+  padding: 11px 16px;
+  border-radius: 13px;
+  background: var(--ink);
+  color: var(--table);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: var(--lift);
+  animation: rise 0.2s;
+}
+
+@media (max-height: 620px) {
+  .fan {
+    height: 150px;
+  }
+  .fan .card {
+    --cw: 76px;
+    margin-left: -38px;
+    top: 16px;
+  }
+  .wordmark {
+    font-size: 50px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+
+  <section id="home" class="screen home scroll">
+    <div class="fan" id="fan" aria-hidden="true"></div>
+    <h1 class="wordmark">Zauberstich</h1>
+    <p class="lede">Sag an, wie viele Stiche du machst. Punkte gibt es nur, wenn du genau triffst.</p>
+    <div class="grow"></div>
+    <div class="stack">
+      <button class="btn primary" id="hResume" hidden>Weiterspielen</button>
+      <button class="btn primary" id="hSolo">Allein gegen den Computer</button>
+      <button class="btn" id="hFriends">Mit Freunden spielen</button>
+      <button class="btn plain" id="hRules">Regeln und Karten</button>
+    </div>
+  </section>
+
+  <section id="solo" class="screen page scroll" hidden>
+    <div class="pagehead">
+      <button class="iconbtn" data-back aria-label="Zurück"></button>
+      <h1>Allein spielen</h1>
+    </div>
+    <div class="field">
+      <span class="label" id="sPlayersL">Spieler am Tisch</span>
+      <div class="seg" id="sPlayers" role="group" aria-labelledby="sPlayersL"></div>
+      <span class="hint" id="sRounds"></span>
+    </div>
+    <div class="field">
+      <span class="label" id="sLevelL">Stärke der Computergegner</span>
+      <div class="seg" id="sLevel" role="group" aria-labelledby="sLevelL"></div>
+      <span class="hint" id="sLevelHint"></span>
+    </div>
+    <button class="switch" id="sPm1" role="switch" aria-checked="false">
+      <span><b>Variante Plus/Minus 1</b><span>Die Ansagen dürfen zusammen nicht genau aufgehen. Wer zuletzt ansagt, muss ausweichen.</span></span>
+      <span class="knob"></span>
+    </button>
+    <div class="grow"></div>
+    <button class="btn primary" id="sStart">Partie starten</button>
+  </section>
+
+  <section id="mp" class="screen page scroll" hidden>
+    <div class="pagehead">
+      <button class="iconbtn" id="mBack" aria-label="Zurück"></button>
+      <h1 id="mTitle">Mit Freunden</h1>
+    </div>
+    <div id="mBody" class="stack" style="gap:18px;flex:1;min-height:0"></div>
+  </section>
+
+  <section id="game" class="screen" hidden>
+    <header class="top">
+      <button class="iconbtn" id="gMenu" aria-label="Menü"></button>
+      <div class="topmid"><b id="gRound"></b><span id="gSub"></span></div>
+      <button class="trump" id="gTrump"></button>
+    </header>
+    <div class="net" id="gNet" hidden role="status"></div>
+    <div class="table" id="table">
+      <div id="seats"></div>
+      <div id="trick"></div>
+      <div class="panel" id="panel" hidden></div>
+    </div>
+    <div class="mebar" id="mebar" aria-live="polite"></div>
+    <div class="hand" id="hand"></div>
+  </section>
+
+  <div id="sheet" class="sheet" hidden></div>
+  <div id="toast" class="toast" hidden role="status"></div>
+</div>
+
+<template id="rulesTpl">
+  <div class="rules">
+    <section>
+      <h3>Die Karten</h3>
+      <p>60 Karten: die Werte 1 bis 13 in vier Farben, dazu 4 Zauberer und 4 Narren. Den Wert einer Karte siehst du auch am Bild: Je höher die Karte, desto größer das Feuer, desto höher das Wasser, desto mehr Blätter und Strahlen.</p>
+    </section>
+    <div class="legend" id="legend"></div>
+    <section>
+      <h3>Runden</h3>
+      <p>In Runde 1 bekommt jeder eine Karte, in Runde 2 zwei, und so weiter. Zu dritt sind es 20 Runden, zu viert 15, zu fünft 12, zu sechst 10.</p>
+    </section>
+    <section>
+      <h3>Trumpf</h3>
+      <p>Nach dem Geben wird die nächste Karte aufgedeckt. Ihre Farbe ist Trumpf. Liegt ein Narr auf, gibt es keinen Trumpf. Liegt ein Zauberer auf, wählt der Geber die Trumpffarbe. In der letzten Runde sind alle Karten verteilt, dann gibt es ebenfalls keinen Trumpf.</p>
+    </section>
+    <section>
+      <h3>Ansagen</h3>
+      <p>Reihum, beginnend links vom Geber, sagt jeder an, wie viele Stiche er in dieser Runde macht. Null ist erlaubt.</p>
+    </section>
+    <section>
+      <h3>Spielen</h3>
+      <ul>
+        <li>Wer links vom Geber sitzt, spielt aus. Danach spielt immer aus, wer den letzten Stich gewonnen hat.</li>
+        <li>Die angespielte Farbe musst du bedienen. Hast du sie nicht, spielst du eine beliebige Karte.</li>
+        <li>Zauberer und Narr darfst du immer spielen, auch wenn du bedienen könntest.</li>
+        <li>Liegt ein Zauberer als erste Karte, ist die Kartenwahl für alle frei. Liegt ein Narr als erste Karte, bestimmt die nächste Zahlenkarte die Farbe.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Wer den Stich bekommt</h3>
+      <ul>
+        <li>Der erste Zauberer im Stich gewinnt immer.</li>
+        <li>Ohne Zauberer gewinnt der höchste Trumpf.</li>
+        <li>Ohne Trumpf gewinnt die höchste Karte der angespielten Farbe.</li>
+        <li>Ein Narr gewinnt nie. Liegen nur Narren, gewinnt der erste.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Wertung</h3>
+      <p>Ansage genau getroffen: 20 Punkte plus 10 für jeden Stich. Daneben gelegen: 10 Minuspunkte für jeden Stich zu viel oder zu wenig. Nach der letzten Runde gewinnt, wer die meisten Punkte hat.</p>
+    </section>
+    <section>
+      <h3>Anzeige am Tisch</h3>
+      <p>Die Kreise neben einem Namen zeigen die Ansage. Ein gefüllter Kreis ist ein gewonnener Stich, ein leerer fehlt noch, ein roter ist einer zu viel. Der Geber trägt ein G.</p>
+    </section>
+    <section>
+      <h3>Variante Plus/Minus 1</h3>
+      <p>Die Summe aller Ansagen darf nicht der Zahl der Stiche entsprechen. Wer zuletzt ansagt, kann eine Zahl deshalb nicht wählen. So trifft nie die ganze Runde.</p>
+    </section>
+    <p class="hint">Zauberstich folgt den Regeln des Kartenspiels Wizard von Ken Fisher. Es ist ein eigenes, unabhängiges Projekt mit eigener Kartengestaltung. Schrift: Big Shoulders Display, SIL Open Font License.</p>
+  </div>
+</template>
+
+<script>
+(function(){
+var __m={};function __req(p){var k=p.replace(/^.*\//,'').replace(/\.js$/,'');if(!(k in __m))throw new Error('Modul fehlt: '+k);return __m[k];}
+__m["engine"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+/*
+ * Regelwerk (reine Logik, keine Timer, kein DOM).
+ *
+ * Karten sind Zahlen 0..59:
+ *   0..51   Farbkarten: farbe = id / 13 (0..3), wert = id % 13 + 1 (1..13)
+ *   52..55  Zauberer
+ *   56..59  Narren
+ */
+
+const SUIT_COUNT = 4;
+const DECK_SIZE = 60;
+
+const isWizard = (c) => c >= 52 && c < 56;
+const isJester = (c) => c >= 56;
+const isSuitCard = (c) => c < 52;
+const suitOf = (c) => (c < 52 ? (c / 13) | 0 : -1);
+const rankOf = (c) => (c < 52 ? (c % 13) + 1 : c < 56 ? 14 : 0);
+const cardId = (suit, rank) => suit * 13 + rank - 1;
+
+/* Kleiner, serialisierbarer Zufallsgenerator (mulberry32). st = { s: int } */
+function rand(st) {
+  st.s = (st.s + 0x6d2b79f5) | 0;
+  let t = Math.imul(st.s ^ (st.s >>> 15), 1 | st.s);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}
+
+function shuffle(arr, st) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rand(st) * (i + 1));
+    const tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+  }
+  return arr;
+}
+
+/* Farbe, die bedient werden muss, oder -1 (noch offen oder Zauberer zuerst). */
+function leadSuit(cards) {
+  for (let i = 0; i < cards.length; i++) {
+    const c = cards[i];
+    if (isJester(c)) continue;
+    return isWizard(c) ? -1 : suitOf(c);
+  }
+  return -1;
+}
+
+function legalCards(hand, trickCards) {
+  const ls = leadSuit(trickCards);
+  if (ls < 0) return hand.slice();
+  let has = false;
+  for (let i = 0; i < hand.length; i++) {
+    if (suitOf(hand[i]) === ls) {
+      has = true;
+      break;
+    }
+  }
+  if (!has) return hand.slice();
+  return hand.filter((c) => c >= 52 || suitOf(c) === ls);
+}
+
+/* Index der Karte, die den Stich gewinnt (Karten in Spielreihenfolge). */
+function trickWinnerIndex(cards, trump) {
+  for (let i = 0; i < cards.length; i++) if (isWizard(cards[i])) return i;
+  let best = -1;
+  for (let i = 0; i < cards.length; i++) {
+    const c = cards[i];
+    if (isJester(c)) continue;
+    if (best < 0) {
+      best = i;
+      continue;
+    }
+    const b = cards[best];
+    const sb = suitOf(b);
+    const sc = suitOf(c);
+    if (sc === sb) {
+      if (c > b) best = i;
+    } else if (sc === trump) {
+      best = i;
+    }
+  }
+  return best < 0 ? 0 : best;
+}
+
+/* Würde Karte x gewinnen, wenn sie jetzt an den Stich angelegt wird? */
+function wouldWin(cards, x, trump) {
+  if (cards.length === 0) return true;
+  let best = -1;
+  for (let i = 0; i < cards.length; i++) {
+    const c = cards[i];
+    if (isWizard(c)) return false;
+    if (isJester(c)) continue;
+    if (best < 0) {
+      best = c;
+      continue;
+    }
+    const sb = suitOf(best);
+    const sc = suitOf(c);
+    if (sc === sb) {
+      if (c > best) best = c;
+    } else if (sc === trump) {
+      best = c;
+    }
+  }
+  if (isWizard(x)) return true;
+  if (isJester(x)) return false;
+  if (best < 0) return true;
+  const sb = suitOf(best);
+  const sx = suitOf(x);
+  if (sx === sb) return x > best;
+  return sx === trump;
+}
+
+function scoreFor(bid, tricks) {
+  return bid === tricks ? 20 + 10 * tricks : -10 * Math.abs(bid - tricks);
+}
+
+function newGame(opts) {
+  const n = opts.n | 0;
+  if (n < 3 || n > 6) throw new Error('Spielerzahl muss 3 bis 6 sein');
+  const full = DECK_SIZE / n;
+  const rounds = opts.rounds ? Math.max(1, Math.min(full, opts.rounds | 0)) : full;
+  const G = {
+    n,
+    pm1: !!opts.pm1,
+    rounds,
+    round: 0,
+    rng: { s: (opts.seed === undefined ? (Math.random() * 0x7fffffff) | 0 : opts.seed) | 0 },
+    firstDealer: 0,
+    dealer: 0,
+    scores: new Array(n).fill(0),
+    history: [],
+    phase: 'init',
+    hands: [],
+    trumpCard: -1,
+    trumpSuit: -1,
+    bids: [],
+    tricks: [],
+    trick: { leader: 0, plays: [], winner: -1 },
+    lastTrick: null,
+    played: [],
+    voids: [],
+    turn: -1,
+    trickNo: 0,
+    winners: [],
+  };
+  G.firstDealer = Math.floor(rand(G.rng) * n);
+  return G;
+}
+
+function startRound(G) {
+  const n = G.n;
+  G.round += 1;
+  const r = G.round;
+  G.dealer = (G.firstDealer + r - 1) % n;
+  const deck = [];
+  for (let i = 0; i < DECK_SIZE; i++) deck.push(i);
+  shuffle(deck, G.rng);
+  G.hands = [];
+  for (let p = 0; p < n; p++) G.hands.push(deck.slice(p * r, (p + 1) * r).sort((a, b) => a - b));
+  G.trumpCard = n * r < DECK_SIZE ? deck[n * r] : -1;
+  G.bids = new Array(n).fill(null);
+  G.tricks = new Array(n).fill(0);
+  G.played = [];
+  G.voids = [];
+  for (let p = 0; p < n; p++) G.voids.push([false, false, false, false]);
+  G.trickNo = 0;
+  G.lastTrick = null;
+  const first = (G.dealer + 1) % n;
+  G.trick = { leader: first, plays: [], winner: -1 };
+  if (G.trumpCard >= 0 && isWizard(G.trumpCard)) {
+    G.trumpSuit = -1;
+    G.phase = 'trump';
+    G.turn = G.dealer;
+  } else {
+    G.trumpSuit = G.trumpCard >= 0 && isSuitCard(G.trumpCard) ? suitOf(G.trumpCard) : -1;
+    G.phase = 'bid';
+    G.turn = first;
+  }
+}
+
+/* Verbotene Ansage für diesen Sitz (Variante Plus/Minus 1) oder -1. */
+function forbiddenBid(G, seat) {
+  if (!G.pm1 || G.phase !== 'bid' || seat !== G.dealer) return -1;
+  let sum = 0;
+  for (let p = 0; p < G.n; p++) {
+    if (p === seat) continue;
+    if (G.bids[p] === null) return -1;
+    sum += G.bids[p];
+  }
+  const f = G.round - sum;
+  return f >= 0 && f <= G.round ? f : -1;
+}
+
+function currentLegal(G, seat) {
+  if (G.phase !== 'play' || seat !== G.turn) return [];
+  return legalCards(
+    G.hands[seat],
+    G.trick.plays.map((p) => p.card)
+  );
+}
+
+/*
+ * Aktionen: {t:'trump', s}, {t:'bid', n}, {t:'play', c}
+ * Rückgabe: {ok:true} oder {error:'...'}
+ */
+function apply(G, seat, a) {
+  if (!a || typeof a !== 'object') return { error: 'Ungültige Aktion' };
+  const n = G.n;
+  if (a.t === 'trump') {
+    if (G.phase !== 'trump') return { error: 'Gerade wird kein Trumpf gewählt' };
+    if (seat !== G.dealer) return { error: 'Nur der Geber wählt den Trumpf' };
+    const s = a.s;
+    if (!Number.isInteger(s) || s < 0 || s >= SUIT_COUNT) return { error: 'Ungültige Farbe' };
+    G.trumpSuit = s;
+    G.phase = 'bid';
+    G.turn = (G.dealer + 1) % n;
+    return { ok: true };
+  }
+  if (a.t === 'bid') {
+    if (G.phase !== 'bid') return { error: 'Gerade wird nicht angesagt' };
+    if (seat !== G.turn) return { error: 'Du bist nicht an der Reihe' };
+    const b = a.n;
+    if (!Number.isInteger(b) || b < 0 || b > G.round) return { error: 'Ungültige Ansage' };
+    if (b === forbiddenBid(G, seat)) return { error: 'Diese Ansage ist bei Plus/Minus 1 nicht erlaubt' };
+    G.bids[seat] = b;
+    const next = (seat + 1) % n;
+    if (G.bids[next] !== null) {
+      G.phase = 'play';
+      G.turn = G.trick.leader;
+    } else {
+      G.turn = next;
+    }
+    return { ok: true };
+  }
+  if (a.t === 'play') {
+    if (G.phase !== 'play') return { error: 'Gerade wird keine Karte gespielt' };
+    if (seat !== G.turn) return { error: 'Du bist nicht an der Reihe' };
+    const c = a.c;
+    const hand = G.hands[seat];
+    const idx = hand.indexOf(c);
+    if (idx < 0) return { error: 'Diese Karte hast du nicht' };
+    const cards = G.trick.plays.map((p) => p.card);
+    const legal = legalCards(hand, cards);
+    if (legal.indexOf(c) < 0) return { error: 'Du musst die Farbe bedienen' };
+    const ls = leadSuit(cards);
+    if (ls >= 0 && isSuitCard(c) && suitOf(c) !== ls) G.voids[seat][ls] = true;
+    hand.splice(idx, 1);
+    G.trick.plays.push({ seat, card: c });
+    G.played.push(c);
+    if (G.trick.plays.length === n) {
+      const all = G.trick.plays.map((p) => p.card);
+      const w = G.trick.plays[trickWinnerIndex(all, G.trumpSuit)].seat;
+      G.trick.winner = w;
+      G.tricks[w] += 1;
+      G.phase = 'trickEnd';
+      G.turn = -1;
+    } else {
+      G.turn = (seat + 1) % n;
+    }
+    return { ok: true };
+  }
+  return { error: 'Unbekannte Aktion' };
+}
+
+/* Weiter nach Stichende bzw. Rundenende. */
+function advance(G) {
+  if (G.phase === 'init') {
+    startRound(G);
+    return true;
+  }
+  if (G.phase === 'trickEnd') {
+    const w = G.trick.winner;
+    G.lastTrick = G.trick;
+    G.trickNo += 1;
+    if (G.hands[0].length === 0) {
+      const deltas = [];
+      for (let p = 0; p < G.n; p++) {
+        const d = scoreFor(G.bids[p], G.tricks[p]);
+        deltas.push(d);
+        G.scores[p] += d;
+      }
+      G.history.push({
+        round: G.round,
+        dealer: G.dealer,
+        trumpSuit: G.trumpSuit,
+        trumpCard: G.trumpCard,
+        bids: G.bids.slice(),
+        tricks: G.tricks.slice(),
+        deltas,
+        totals: G.scores.slice(),
+      });
+      G.trick = { leader: w, plays: [], winner: -1 };
+      G.phase = 'roundEnd';
+      G.turn = -1;
+    } else {
+      G.trick = { leader: w, plays: [], winner: -1 };
+      G.phase = 'play';
+      G.turn = w;
+    }
+    return true;
+  }
+  if (G.phase === 'roundEnd') {
+    if (G.round >= G.rounds) {
+      const max = Math.max.apply(null, G.scores);
+      G.winners = [];
+      for (let p = 0; p < G.n; p++) if (G.scores[p] === max) G.winners.push(p);
+      G.phase = 'gameEnd';
+      G.turn = -1;
+    } else {
+      startRound(G);
+    }
+    return true;
+  }
+  return false;
+}
+
+module.exports = {
+  SUIT_COUNT,
+  DECK_SIZE,
+  isWizard,
+  isJester,
+  isSuitCard,
+  suitOf,
+  rankOf,
+  cardId,
+  rand,
+  shuffle,
+  leadSuit,
+  legalCards,
+  trickWinnerIndex,
+  wouldWin,
+  scoreFor,
+  newGame,
+  startRound,
+  forbiddenBid,
+  currentLegal,
+  apply,
+  advance,
+};
+
+return module.exports;})(__req);
+__m["bots"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+/*
+ * Computergegner. Jeder Bot sieht nur, was ein Mensch auf seinem Platz auch sieht:
+ * die eigene Hand, die Trumpfkarte, Ansagen, Stiche und alle bereits gespielten Karten.
+ *
+ * Stufen:
+ *   lehrling  Faustregeln mit kleinen Patzern
+ *   geselle   Ansage per Simulation, Spiel nach Faustregeln
+ *   meister   Ansage und Kartenwahl per Simulation (Monte Carlo über mögliche Kartenverteilungen)
+ */
+const E = require('./engine.js');
+
+const LEVELS = {
+  lehrling: { bid: 'heur', play: 'heur', bidNoise: 0.35, slip: 0.1 },
+  geselle: { bid: 'mc', play: 'heur', minWorlds: 8, maxWorlds: 28, budgetMs: 20 },
+  meister: { bid: 'mc', play: 'mc', minWorlds: 8, maxWorlds: 60, budgetMs: 45 },
+};
+
+const now = typeof performance !== 'undefined' && performance.now ? () => performance.now() : () => Date.now();
+
+/* Was ein Sitz wissen darf. */
+function botInfo(G, seat) {
+  return {
+    n: G.n,
+    seat,
+    round: G.round,
+    phase: G.phase,
+    hand: G.hands[seat].slice(),
+    trump: G.trumpSuit,
+    trumpCard: G.trumpCard,
+    bids: G.bids.slice(),
+    tricks: G.tricks.slice(),
+    trick: G.trick.plays.map((p) => p.card),
+    leader: G.trick.leader,
+    played: G.played.slice(),
+    voids: G.voids.map((v) => v.slice()),
+    handSizes: G.hands.map((h) => h.length),
+    dealer: G.dealer,
+    pm1: G.pm1,
+    forbidden: E.forbiddenBid(G, seat),
+  };
+}
+
+function power(c, trump) {
+  if (c >= 56) return 0;
+  if (c >= 52) return 1000;
+  const r = (c % 13) + 1;
+  return ((c / 13) | 0) === trump ? 100 + r : r;
+}
+
+function makeCtx(info) {
+  const seen = new Uint8Array(60);
+  for (let i = 0; i < info.hand.length; i++) seen[info.hand[i]] = 1;
+  for (let i = 0; i < info.played.length; i++) seen[info.played[i]] = 1;
+  if (info.trumpCard >= 0) seen[info.trumpCard] = 1;
+  const unseen = [];
+  const unseenSuit = [0, 0, 0, 0];
+  let unseenWiz = 0;
+  for (let c = 0; c < 60; c++) {
+    if (seen[c]) continue;
+    unseen.push(c);
+    if (c < 52) unseenSuit[(c / 13) | 0]++;
+    else if (c < 56) unseenWiz++;
+  }
+  let oppCards = 0;
+  for (let p = 0; p < info.n; p++) if (p !== info.seat) oppCards += info.handSizes[p];
+  const U = unseen.length;
+  return { seen, unseen, unseenSuit, unseenWiz, U, oppCards, q: U ? Math.min(1, oppCards / U) : 0, trump: info.trump };
+}
+
+function higherUnseen(ctx, c) {
+  const end = ((c / 13) | 0) * 13 + 13;
+  let k = 0;
+  for (let x = c + 1; x < end; x++) if (!ctx.seen[x]) k++;
+  return k;
+}
+
+/* Stichchance einer Karte über Wahrscheinlichkeiten: gut bei wenigen Karten im Spiel. */
+function strengthProb(c, ctx, info) {
+  if (c >= 56) return 0;
+  if (c >= 52) return 0.96;
+  const s = (c / 13) | 0;
+  const nOpp = info.n - 1;
+  const avgH = Math.max(1, ctx.oppCards / nOpp);
+  const keep = 1 - ctx.q;
+  const w = ctx.unseenWiz;
+  const willW = 0.35 + 0.65 / avgH;
+  const hi = higherUnseen(ctx, c);
+  const rem = info.hand.length;
+  if (s === ctx.trump) {
+    const p = Math.pow(keep, 0.9 * hi + willW * w);
+    return rem >= 4 ? Math.max(0.26, 0.26 + 0.72 * p) : p;
+  }
+  const iLead = info.trick.length === 0 && info.leader === info.seat;
+  const leadF = iLead ? 1 : Math.min(0.9, 0.3 + 0.1 * (rem - 1));
+  const pTop = Math.pow(keep, 0.9 * hi);
+  if (ctx.trump < 0) return pTop * Math.pow(keep, willW * w) * leadF;
+  const us = ctx.unseenSuit[s];
+  const pVoid = Math.pow(1 - Math.min(0.95, us / Math.max(1, ctx.U)), Math.max(0, avgH - 1));
+  const willT = 0.55 + 0.45 / avgH;
+  const pSafe = Math.pow(keep, willT * ctx.unseenSuit[ctx.trump] * pVoid + willW * w);
+  return pTop * pSafe * leadF;
+}
+
+/*
+ * Erwartete Stiche je Handkarte. Zwei Sichtweisen werden gemischt:
+ *  - wenige Karten im Spiel: Wahrscheinlichkeit, dass niemand eine höhere Karte hält
+ *  - viele Karten im Spiel: Anteil der eigenen Kartenstärke an allen Karten im Spiel
+ *    (die Stiche einer Runde müssen ja an irgendwen gehen)
+ */
+function handModel(info, ctx) {
+  const trump = ctx.trump;
+  const hand = info.hand;
+  const inHand = new Uint8Array(60);
+  for (let i = 0; i < hand.length; i++) inHand[hand[i]] = 1;
+  const w = new Float64Array(60);
+  let myW = 0;
+  let oppW = 0;
+  for (let s = 0; s < 4; s++) {
+    let hiUnseen = 0;
+    let hiAll = 0;
+    for (let v = 12; v >= 0; v--) {
+      const c = s * 13 + v;
+      const mine = inHand[c] === 1;
+      if (!mine && ctx.seen[c]) continue;
+      const hi = mine ? hiUnseen : hiAll;
+      const wt = s === trump ? 0.35 + 0.65 * Math.pow(0.8, hi) : (trump < 0 ? 0.75 : 0.6) * Math.pow(0.72, hi);
+      if (mine) {
+        w[c] = wt;
+        myW += wt;
+      } else {
+        oppW += wt;
+        hiUnseen++;
+      }
+      hiAll++;
+    }
+  }
+  oppW *= ctx.q;
+  const myWiz = countWizards(hand);
+  const R = Math.max(0, hand.length - 0.95 * myWiz - 0.95 * ctx.q * ctx.unseenWiz);
+  const denom = myW + oppW;
+  const per = new Map();
+  let total = 0;
+  const q = Math.sqrt(ctx.q);
+  for (let i = 0; i < hand.length; i++) {
+    const c = hand[i];
+    let v;
+    if (c >= 56) v = 0;
+    else if (c >= 52) v = 0.95;
+    else {
+      const share = denom > 0 ? Math.min(0.97, (w[c] / denom) * R) : 0;
+      v = (1 - q) * strengthProb(c, ctx, info) + q * share;
+    }
+    per.set(c, v);
+    total += v;
+  }
+  return { per, total };
+}
+
+function estimateTricks(info, ctx) {
+  return handModel(info, ctx).total;
+}
+
+/* Chance, mit Karte c genau diesen Stich zu gewinnen. */
+function pWinNow(c, info, ctx, trickCards, later) {
+  if (!E.wouldWin(trickCards, c, ctx.trump)) return 0;
+  if (later.length === 0) return 1;
+  if (c >= 52 && c < 56) return 1;
+  if (c >= 56) return 0.01;
+  let H = 0;
+  for (let i = 0; i < later.length; i++) H += info.handSizes[later[i]];
+  const U = Math.max(1, ctx.U);
+  const keep = 1 - Math.min(1, H / U);
+  const avgH = Math.max(1, H / later.length);
+  const willT = 0.55 + 0.45 / avgH;
+  const willW = 0.35 + 0.65 / avgH;
+  const s = (c / 13) | 0;
+  const ls = E.leadSuit(trickCards);
+  const led = ls < 0 ? s : ls;
+  const hi = higherUnseen(ctx, c);
+  let kv = 0;
+  for (let i = 0; i < later.length; i++) if (info.voids[later[i]][led]) kv++;
+  const base = Math.pow(1 - Math.min(0.95, ctx.unseenSuit[led] / U), Math.max(0, avgH - 1));
+  const pVoid = (kv + (later.length - kv) * base) / later.length;
+  let ex;
+  if (s === ctx.trump) {
+    ex = 0.85 * hi * (led === ctx.trump ? 1 : pVoid) + willW * ctx.unseenWiz;
+  } else {
+    const trumpsOut = ctx.trump >= 0 ? ctx.unseenSuit[ctx.trump] : 0;
+    ex = 0.85 * hi * (1 - kv / later.length) + willT * trumpsOut * pVoid + willW * ctx.unseenWiz;
+  }
+  return Math.pow(keep, ex);
+}
+
+function argBest(list, key, sign) {
+  let best = list[0];
+  let bk = key(best) * sign;
+  for (let i = 1; i < list.length; i++) {
+    const k = key(list[i]) * sign;
+    if (k > bk) {
+      bk = k;
+      best = list[i];
+    }
+  }
+  return best;
+}
+
+function countWizards(hand) {
+  let k = 0;
+  for (let i = 0; i < hand.length; i++) if (hand[i] >= 52 && hand[i] < 56) k++;
+  return k;
+}
+
+function laterSeats(info) {
+  const later = [];
+  for (let k = info.trick.length + 1; k < info.n; k++) later.push((info.leader + k) % info.n);
+  return later;
+}
+
+/* Kartenwahl nach Faustregeln (ohne Simulation). */
+function heuristicPlay(info) {
+  const ctx = makeCtx(info);
+  const trickCards = info.trick;
+  const legal = E.legalCards(info.hand, trickCards);
+  if (legal.length === 1) return legal[0];
+  const later = laterSeats(info);
+  const need = info.bids[info.seat] - info.tricks[info.seat];
+  const rem = info.hand.length;
+  const pw = new Map();
+  for (const c of legal) pw.set(c, pWinNow(c, info, ctx, trickCards, later));
+  const pow = (c) => power(c, ctx.trump);
+
+  const avoid = () => {
+    const safe = legal.filter((c) => pw.get(c) < 0.08);
+    if (safe.length) {
+      const nonJ = safe.filter((c) => c < 56);
+      return argBest(nonJ.length ? nonJ : safe, pow, 1);
+    }
+    return argBest(legal, (c) => -pw.get(c) + pow(c) * 1e-6, 1);
+  };
+
+  if (need <= 0) return avoid();
+
+  if (need >= rem) {
+    const best = Math.max.apply(null, legal.map((c) => pw.get(c)));
+    if (best < 0.02) return argBest(legal, pow, -1);
+    return argBest(
+      legal.filter((c) => pw.get(c) >= best - 0.1),
+      pow,
+      -1
+    );
+  }
+
+  const wiz = countWizards(info.hand);
+  if (need <= wiz) {
+    const wz = legal.find((c) => c >= 52 && c < 56 && pw.get(c) > 0.5);
+    if (wz !== undefined) return wz;
+    const rest = legal.filter((c) => pw.get(c) < 0.08 && (c < 52 || c >= 56 || need < wiz));
+    if (rest.length) {
+      const nonJ = rest.filter((c) => c < 56);
+      return argBest(nonJ.length ? nonJ : rest, pow, 1);
+    }
+    return avoid();
+  }
+
+  const hm = handModel(info, ctx);
+  const st = hm.per;
+  const sumRest = hm.total;
+  const good = legal.filter((c) => pw.get(c) >= 0.62);
+  if (good.length) {
+    const nonWiz = good.filter((c) => c < 52);
+    return argBest(nonWiz.length ? nonWiz : good, pow, -1);
+  }
+  const maybe = legal.filter((c) => pw.get(c) >= 0.3);
+  if (maybe.length && sumRest < need + 0.25) return argBest(maybe, (c) => pw.get(c), 1);
+  if (sumRest > need + 0.6) return avoid();
+  const quiet = legal.filter((c) => pw.get(c) < 0.3);
+  const pool = quiet.length ? quiet : legal;
+  const lowNonJ = pool.filter((c) => c < 56);
+  if (lowNonJ.length && need < info.hand.filter((c) => c < 56).length) return argBest(lowNonJ, (c) => st.get(c), -1);
+  return argBest(pool, (c) => st.get(c), -1);
+}
+
+/* ---------- Simulation ---------- */
+
+function shuffleRnd(arr, rnd) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    const t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+  }
+  return arr;
+}
+
+/* Verteilt die ungesehenen Karten zufällig auf die Gegner (bekannte Fehlfarben werden beachtet). */
+function sampleWorld(info, ctx, rnd) {
+  const n = info.n;
+  for (let attempt = 0; attempt < 8; attempt++) {
+    const pool = shuffleRnd(ctx.unseen.slice(), rnd);
+    const hands = [];
+    const need = [];
+    let total = 0;
+    for (let p = 0; p < n; p++) {
+      hands.push(p === info.seat ? info.hand.slice() : []);
+      need.push(p === info.seat ? 0 : info.handSizes[p]);
+      total += need[p];
+    }
+    let stock = pool.length - total;
+    let ok = stock >= 0;
+    for (let i = 0; ok && i < pool.length; i++) {
+      const c = pool[i];
+      const s = c < 52 ? (c / 13) | 0 : -1;
+      let sum = stock;
+      for (let p = 0; p < n; p++) {
+        if (need[p] > 0 && (s < 0 || attempt >= 6 || !info.voids[p][s])) sum += need[p];
+      }
+      if (sum <= 0) {
+        ok = false;
+        break;
+      }
+      let x = rnd() * sum;
+      let placed = false;
+      for (let p = 0; p < n; p++) {
+        if (need[p] > 0 && (s < 0 || attempt >= 6 || !info.voids[p][s])) {
+          x -= need[p];
+          if (x < 0) {
+            hands[p].push(c);
+            need[p]--;
+            placed = true;
+            break;
+          }
+        }
+      }
+      if (!placed) {
+        if (stock <= 0) {
+          ok = false;
+          break;
+        }
+        stock--;
+      }
+    }
+    if (ok) {
+      let done = true;
+      for (let p = 0; p < n; p++) if (need[p] !== 0) done = false;
+      if (done) return hands;
+    }
+  }
+  /* Notlösung: ohne Rücksicht auf Fehlfarben */
+  const pool = shuffleRnd(ctx.unseen.slice(), rnd);
+  const hands = [];
+  let k = 0;
+  for (let p = 0; p < n; p++) {
+    if (p === info.seat) hands.push(info.hand.slice());
+    else {
+      hands.push(pool.slice(k, k + info.handSizes[p]));
+      k += info.handSizes[p];
+    }
+  }
+  return hands;
+}
+
+function pickLow(list, trump, hand, need) {
+  /* schwächste Karte; den Narren nur dann zuerst, wenn er nicht mehr als Notausgang gebraucht wird */
+  let nonJ = 0;
+  for (let i = 0; i < hand.length; i++) if (hand[i] < 56) nonJ++;
+  let best = -1;
+  let bp = Infinity;
+  const keepJester = need < nonJ;
+  for (let i = 0; i < list.length; i++) {
+    const c = list[i];
+    let p = power(c, trump);
+    if (c >= 56 && keepJester) p = 50;
+    if (p < bp) {
+      bp = p;
+      best = c;
+    }
+  }
+  return best;
+}
+
+function pickDanger(list, trump) {
+  let best = list[0];
+  let bp = -1;
+  for (let i = 0; i < list.length; i++) {
+    const p = power(list[i], trump);
+    if (p > bp) {
+      bp = p;
+      best = list[i];
+    }
+  }
+  return best;
+}
+
+/* Gewinne ich den Stich, wenn ich c spiele und die Übrigen einfach reagieren? */
+function simulateRest(W, seat, c) {
+  const n = W.n;
+  const trump = W.trump;
+  const cards = W.tc.concat([c]);
+  let mine = true;
+  for (let j = W.tc.length + 1; j < n; j++) {
+    const q = (W.leader + j) % n;
+    const hq = W.hands[q];
+    const lq = E.legalCards(hq, cards);
+    const needq = W.bids[q] - W.tricks[q];
+    let pick = -1;
+    if (needq > 0) {
+      let bp = Infinity;
+      for (let i = 0; i < lq.length; i++) {
+        const x = lq[i];
+        if (E.wouldWin(cards, x, trump)) {
+          const p = power(x, trump);
+          if (p < bp) {
+            bp = p;
+            pick = x;
+          }
+        }
+      }
+      if (pick < 0) pick = pickLow(lq, trump, hq, needq);
+    } else {
+      let bp = -1;
+      for (let i = 0; i < lq.length; i++) {
+        const x = lq[i];
+        if (!E.wouldWin(cards, x, trump)) {
+          const p = power(x, trump);
+          if (p > bp) {
+            bp = p;
+            pick = x;
+          }
+        }
+      }
+      if (pick < 0) pick = pickDanger(lq, trump);
+    }
+    if (E.wouldWin(cards, pick, trump)) mine = false;
+    cards.push(pick);
+  }
+  return mine;
+}
+
+function greedyPick(W, seat) {
+  const hand = W.hands[seat];
+  const legal = E.legalCards(hand, W.tc);
+  if (legal.length === 1) return legal[0];
+  const trump = W.trump;
+  const need = W.bids[seat] - W.tricks[seat];
+  const last = W.tc.length === W.n - 1;
+  const wins = [];
+  const loses = [];
+  for (let i = 0; i < legal.length; i++) {
+    const c = legal[i];
+    let w = E.wouldWin(W.tc, c, trump);
+    if (w && !last) w = simulateRest(W, seat, c);
+    (w ? wins : loses).push(c);
+  }
+  if (need > 0) {
+    const wiz = countWizards(hand);
+    if (need <= wiz) {
+      for (let i = 0; i < wins.length; i++) if (wins[i] >= 52 && wins[i] < 56) return wins[i];
+      const pool = loses.filter((c) => c < 52 || c >= 56 || need < wiz);
+      if (pool.length) return pickDanger(pool, trump);
+    }
+    if (wins.length) {
+      let best = wins[0];
+      let bp = power(best, trump);
+      for (let i = 1; i < wins.length; i++) {
+        const p = power(wins[i], trump);
+        if (p < bp) {
+          bp = p;
+          best = wins[i];
+        }
+      }
+      return best;
+    }
+    return pickLow(loses, trump, hand, need);
+  }
+  if (loses.length) {
+    const nonJ = loses.filter((c) => c < 56);
+    return pickDanger(nonJ.length ? nonJ : loses, trump);
+  }
+  return pickDanger(wins, trump);
+}
+
+function removeCard(hand, c) {
+  const i = hand.indexOf(c);
+  if (i >= 0) hand.splice(i, 1);
+}
+
+/* Spielt die Runde in Welt W zu Ende; gibt die Stichzahlen zurück. */
+function rollout(W) {
+  const n = W.n;
+  for (;;) {
+    if (W.tc.length === n) {
+      const w = (W.leader + E.trickWinnerIndex(W.tc, W.trump)) % n;
+      W.tricks[w]++;
+      if (W.hands[w].length === 0) return W.tricks;
+      W.leader = w;
+      W.tc = [];
+    }
+    const seat = (W.leader + W.tc.length) % n;
+    const c = greedyPick(W, seat);
+    removeCard(W.hands[seat], c);
+    W.tc.push(c);
+  }
+}
+
+function makeWorld(info, hands, bids) {
+  return {
+    n: info.n,
+    trump: info.trump,
+    hands: hands.map((h) => h.slice()),
+    bids,
+    tricks: info.tricks.slice(),
+    tc: info.trick.slice(),
+    leader: info.leader,
+  };
+}
+
+function quickBid(info, hands, p) {
+  const sub = {
+    n: info.n,
+    seat: p,
+    hand: hands[p],
+    played: info.played,
+    trumpCard: info.trumpCard,
+    trump: info.trump,
+    handSizes: info.handSizes,
+    trick: info.trick,
+    leader: info.leader,
+  };
+  const est = estimateTricks(sub, makeCtx(sub));
+  return Math.max(0, Math.min(hands[p].length, Math.round(est)));
+}
+
+function heuristicBid(info) {
+  const est = estimateTricks(info, makeCtx(info));
+  return Math.max(0, Math.min(info.hand.length, Math.round(est)));
+}
+
+function fixForbidden(b, info, est) {
+  if (b !== info.forbidden) return b;
+  const r = info.hand.length;
+  const up = b + 1 <= r ? b + 1 : -1;
+  const down = b - 1 >= 0 ? b - 1 : -1;
+  if (up < 0) return down;
+  if (down < 0) return up;
+  return est >= b ? up : down;
+}
+
+function mcBid(info, cfg, rnd) {
+  const ctx = makeCtx(info);
+  const r = info.hand.length;
+  const est = estimateTricks(info, ctx);
+  const center = Math.max(0, Math.min(r, Math.round(est)));
+  const seat = info.seat;
+  const worlds = [];
+  const totals = new Map();
+  const evalBid = (b, from) => {
+    let t = totals.get(b) || 0;
+    for (let k = from; k < worlds.length; k++) {
+      const bids = worlds[k].bids.slice();
+      bids[seat] = b;
+      const tricks = rollout(makeWorld(info, worlds[k].hands, bids));
+      t += E.scoreFor(b, tricks[seat]);
+    }
+    totals.set(b, t);
+  };
+  const valid = (b) => b >= 0 && b <= r && b !== info.forbidden;
+  let cands = [];
+  for (let b = center - 1; b <= center + 1; b++) if (valid(b)) cands.push(b);
+  const t0 = now();
+  while (worlds.length < cfg.maxWorlds && (worlds.length < cfg.minWorlds || now() - t0 < cfg.budgetMs)) {
+    const hands = sampleWorld(info, ctx, rnd);
+    const bids = info.bids.slice();
+    for (let p = 0; p < info.n; p++) if (p !== seat && bids[p] === null) bids[p] = quickBid(info, hands, p);
+    worlds.push({ hands, bids });
+    const from = worlds.length - 1;
+    for (let i = 0; i < cands.length; i++) evalBid(cands[i], from);
+    /* liegt das Beste am Rand des Fensters, wird das Fenster dorthin erweitert */
+    if (worlds.length >= 4 && worlds.length % 4 === 0 && cands.length < 9) {
+      let best = cands[0];
+      for (const b of cands) if (totals.get(b) > totals.get(best)) best = b;
+      const lo = Math.min.apply(null, cands);
+      const hi = Math.max.apply(null, cands);
+      let ext = -1;
+      if (best === hi) {
+        ext = hi + 1;
+        if (ext === info.forbidden) ext++;
+      } else if (best === lo) {
+        ext = lo - 1;
+        if (ext === info.forbidden) ext--;
+      }
+      if (ext >= 0 && ext <= r && cands.indexOf(ext) < 0) {
+        cands.push(ext);
+        evalBid(ext, 0);
+      }
+    }
+  }
+  if (!cands.length) return fixForbidden(center, info, est);
+  let best = cands[0];
+  for (const b of cands) {
+    const d = totals.get(b) - totals.get(best);
+    if (d > 1e-9 || (Math.abs(d) <= 1e-9 && Math.abs(b - est) < Math.abs(best - est))) best = b;
+  }
+  return best;
+}
+
+function mcPlay(info, cfg, rnd) {
+  const ctx = makeCtx(info);
+  const legalAll = E.legalCards(info.hand, info.trick);
+  if (legalAll.length === 1) return legalAll[0];
+  /* gleichwertige Karten zusammenfassen: ein Zauberer, ein Narr, lückenlose Nachbarn einer Farbe */
+  const sorted = legalAll.slice().sort((a, b) => a - b);
+  const legal = [];
+  let prev = -99;
+  for (const c of sorted) {
+    if (c >= 56) {
+      if (prev < 56) legal.push(c);
+    } else if (c >= 52) {
+      if (prev < 52) legal.push(c);
+    } else {
+      let same = prev >= 0 && prev < 52 && ((prev / 13) | 0) === ((c / 13) | 0);
+      if (same) for (let x = prev + 1; x < c; x++) if (!ctx.seen[x]) same = false;
+      if (!same) legal.push(c);
+    }
+    prev = c;
+  }
+  if (legal.length === 1) return legal[0];
+  const seat = info.seat;
+  const bid = info.bids[seat];
+  const totals = new Float64Array(legal.length);
+  const t0 = now();
+  let worlds = 0;
+  while (worlds < cfg.maxWorlds && (worlds < cfg.minWorlds || now() - t0 < cfg.budgetMs)) {
+    const hands = sampleWorld(info, ctx, rnd);
+    for (let i = 0; i < legal.length; i++) {
+      const W = makeWorld(info, hands, info.bids);
+      removeCard(W.hands[seat], legal[i]);
+      W.tc.push(legal[i]);
+      const tricks = rollout(W);
+      let u = E.scoreFor(bid, tricks[seat]);
+      let opp = 0;
+      for (let p = 0; p < info.n; p++) if (p !== seat) opp += E.scoreFor(info.bids[p], tricks[p]);
+      u -= (0.12 * opp) / (info.n - 1);
+      totals[i] += u;
+    }
+    worlds++;
+  }
+  const prior = heuristicPlay(info);
+  let best = 0;
+  for (let i = 1; i < legal.length; i++) {
+    const d = totals[i] - totals[best];
+    if (d > 1e-9 || (Math.abs(d) <= 1e-9 && legal[i] === prior)) best = i;
+  }
+  return legal[best];
+}
+
+/* ---------- Öffentliche Schnittstelle ---------- */
+
+function levelCfg(level, override) {
+  const base = LEVELS[level] || LEVELS.geselle;
+  return override ? Object.assign({}, base, override) : base;
+}
+
+function chooseBid(info, level, rnd, override) {
+  const cfg = levelCfg(level, override);
+  rnd = rnd || Math.random;
+  const r = info.hand.length;
+  let b;
+  if (cfg.bid === 'mc') b = mcBid(info, cfg, rnd);
+  else {
+    const est = estimateTricks(info, makeCtx(info));
+    b = Math.max(0, Math.min(r, Math.round(est)));
+    if (cfg.bidNoise && rnd() < cfg.bidNoise) b = Math.max(0, Math.min(r, b + (rnd() < 0.5 ? -1 : 1)));
+    b = fixForbidden(b, info, est);
+  }
+  return b;
+}
+
+function choosePlay(info, level, rnd, override) {
+  const cfg = levelCfg(level, override);
+  rnd = rnd || Math.random;
+  if (cfg.play === 'mc') return mcPlay(info, cfg, rnd);
+  if (cfg.slip && rnd() < cfg.slip) {
+    const legal = E.legalCards(info.hand, info.trick);
+    return legal[Math.floor(rnd() * legal.length)];
+  }
+  return heuristicPlay(info);
+}
+
+function chooseTrump(info, level, rnd) {
+  rnd = rnd || Math.random;
+  const score = [0, 0, 0, 0];
+  for (const c of info.hand) if (c < 52) score[(c / 13) | 0] += 0.5 + ((c % 13) + 1) / 13;
+  let best = 0;
+  let ties = 1;
+  for (let s = 1; s < 4; s++) {
+    if (score[s] > score[best] + 1e-9) {
+      best = s;
+      ties = 1;
+    } else if (Math.abs(score[s] - score[best]) <= 1e-9) {
+      ties++;
+      if (rnd() < 1 / ties) best = s;
+    }
+  }
+  return best;
+}
+
+module.exports = {
+  LEVELS,
+  botInfo,
+  chooseBid,
+  choosePlay,
+  chooseTrump,
+  heuristicPlay,
+  heuristicBid,
+  estimateTricks,
+  makeCtx,
+  sampleWorld,
+};
+
+return module.exports;})(__req);
+__m["host"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+/*
+ * Spielleitung: führt eine Partie, lässt Bots ziehen und taktet den Ablauf.
+ * Läuft unverändert im Browser (Solo) und auf dem Server (Mehrspieler).
+ */
+const E = require('./engine.js');
+const B = require('./bots.js');
+
+const DELAY = { deal: 1400, botBid: 750, botPlay: 850, botTrump: 1100, trickEnd: 1700, allReady: 250, botsOnly: 2500 };
+
+class GameHost {
+  /*
+   * cfg: {
+   *   seats: [{ name, kind: 'human' | 'bot', level }],
+   *   pm1: Variante Plus/Minus 1, seed, rounds (nur für Tests),
+   *   speed: Faktor für Wartezeiten (1 = normal),
+   *   roundEndTimeout: ms bis zur nächsten Runde, wenn nicht alle bestätigen (0 = warten),
+   *   awayGrace: ms, nach denen ein Bot für einen abwesenden Menschen zieht (0 = nie)
+   * }
+   * hooks: { onChange(host), setTimeout, clearTimeout, random }
+   */
+  constructor(cfg, hooks) {
+    this.cfg = cfg;
+    this.hooks = hooks || {};
+    const n = cfg.seats.length;
+    this.G = E.newGame({ n, pm1: cfg.pm1, seed: cfg.seed, rounds: cfg.rounds });
+    this.auto = new Array(n).fill(false);
+    this.away = new Array(n).fill(false);
+    this.ready = new Array(n).fill(false);
+    this.v = 0;
+    this.fresh = false;
+    this.timer = null;
+    this.dead = false;
+  }
+
+  static restore(snap, hooks) {
+    const h = new GameHost(snap.cfg, hooks);
+    h.G = snap.G;
+    h.auto = snap.auto || h.auto;
+    h.away = snap.away || h.away;
+    h.ready = snap.ready || h.ready;
+    h.v = snap.v || 0;
+    h.fresh = false;
+    return h;
+  }
+
+  snapshot() {
+    return { cfg: this.cfg, G: this.G, auto: this.auto, away: this.away, ready: this.ready, v: this.v };
+  }
+
+  start() {
+    if (this.G.phase === 'init') {
+      E.advance(this.G);
+      this.fresh = true;
+    }
+    this._changed();
+  }
+
+  /* Nach restore(): Timer wieder aufnehmen, ohne den Stand zu verändern. */
+  resume() {
+    this._plan();
+  }
+
+  destroy() {
+    this.dead = true;
+    this._clear();
+  }
+
+  setSpeed(f) {
+    this.cfg.speed = f;
+    this._plan();
+  }
+
+  setAuto(seat, on) {
+    if (this.auto[seat] === !!on) return;
+    this.auto[seat] = !!on;
+    this._changed();
+  }
+
+  setAway(seat, on) {
+    if (this.away[seat] === !!on) return;
+    this.away[seat] = !!on;
+    this._changed();
+  }
+
+  isHuman(seat) {
+    return this.cfg.seats[seat].kind === 'human';
+  }
+
+  act(seat, a) {
+    const G = this.G;
+    if (!Number.isInteger(seat) || seat < 0 || seat >= G.n) return { error: 'Unbekannter Platz' };
+    if (a && a.t === 'ready') {
+      if (G.phase !== 'roundEnd') return { error: 'Die Runde läuft noch' };
+      this.ready[seat] = true;
+      this._changed();
+      return { ok: true };
+    }
+    const res = E.apply(G, seat, a);
+    if (res.ok) {
+      this.fresh = false;
+      this._changed();
+    }
+    return res;
+  }
+
+  view(seat) {
+    const G = this.G;
+    const me = Number.isInteger(seat) && seat >= 0 && seat < G.n ? seat : -1;
+    return {
+      v: this.v,
+      phase: G.phase,
+      n: G.n,
+      round: G.round,
+      rounds: G.rounds,
+      dealer: G.dealer,
+      turn: G.turn,
+      trumpCard: G.trumpCard,
+      trumpSuit: G.trumpSuit,
+      pm1: G.pm1,
+      trickNo: G.trickNo,
+      seats: this.cfg.seats.map((s, i) => ({
+        name: s.name,
+        kind: s.kind,
+        level: s.kind === 'bot' ? s.level : undefined,
+        bid: G.bids[i] === undefined ? null : G.bids[i],
+        tricks: G.tricks[i] || 0,
+        score: G.scores[i],
+        cards: G.hands[i] ? G.hands[i].length : 0,
+        auto: this.auto[i],
+        away: this.away[i],
+        ready: this.ready[i],
+      })),
+      trick: { leader: G.trick.leader, plays: G.trick.plays.slice(), winner: G.trick.winner },
+      lastTrick: G.lastTrick ? { leader: G.lastTrick.leader, plays: G.lastTrick.plays.slice(), winner: G.lastTrick.winner } : null,
+      me,
+      hand: me >= 0 && G.hands[me] ? G.hands[me].slice() : [],
+      legal: me >= 0 ? E.currentLegal(G, me) : [],
+      noBid: me >= 0 ? E.forbiddenBid(G, me) : -1,
+      history: G.history,
+      winners: G.winners,
+    };
+  }
+
+  _humansWaiting() {
+    const out = [];
+    for (let i = 0; i < this.G.n; i++) {
+      if (this.isHuman(i) && !this.auto[i] && !this.away[i] && !this.ready[i]) out.push(i);
+    }
+    return out;
+  }
+
+  _anyHumanPresent() {
+    for (let i = 0; i < this.G.n; i++) if (this.isHuman(i) && !this.auto[i] && !this.away[i]) return true;
+    return false;
+  }
+
+  _clear() {
+    if (this.timer !== null) {
+      (this.hooks.clearTimeout || clearTimeout)(this.timer);
+      this.timer = null;
+    }
+  }
+
+  _later(fn, ms) {
+    const sp = this.cfg.speed === undefined ? 1 : this.cfg.speed;
+    this.timer = (this.hooks.setTimeout || setTimeout)(
+      () => {
+        this.timer = null;
+        if (!this.dead) fn();
+      },
+      Math.max(0, Math.round(ms * sp))
+    );
+  }
+
+  _plan() {
+    this._clear();
+    if (this.dead) return;
+    const G = this.G;
+    if (G.phase === 'trump' || G.phase === 'bid' || G.phase === 'play') {
+      const seat = G.turn;
+      const bot = !this.isHuman(seat) || this.auto[seat];
+      if (bot) {
+        const base = G.phase === 'play' ? DELAY.botPlay : G.phase === 'bid' ? DELAY.botBid : DELAY.botTrump;
+        this._later(() => this._botAct(seat), base + (this.fresh ? DELAY.deal : 0));
+      } else if (this.away[seat] && this.cfg.awayGrace) {
+        const sp = this.cfg.speed === undefined ? 1 : this.cfg.speed;
+        this._later(() => this._botAct(seat), this.cfg.awayGrace / (sp || 1));
+      }
+    } else if (G.phase === 'trickEnd') {
+      this._later(() => this._advance(), DELAY.trickEnd);
+    } else if (G.phase === 'roundEnd') {
+      if (this._humansWaiting().length === 0) {
+        this._later(() => this._advance(), this._anyHumanPresent() ? DELAY.allReady : DELAY.botsOnly);
+      } else if (this.cfg.roundEndTimeout) {
+        const sp = this.cfg.speed === undefined ? 1 : this.cfg.speed;
+        this._later(() => this._advance(), this.cfg.roundEndTimeout / (sp || 1));
+      }
+    }
+  }
+
+  _advance() {
+    const before = this.G.round;
+    E.advance(this.G);
+    if (this.G.round !== before) {
+      this.ready.fill(false);
+      this.fresh = true;
+    }
+    this._changed();
+  }
+
+  _botAct(seat) {
+    const G = this.G;
+    if (G.turn !== seat) return;
+    const level = this.isHuman(seat) ? 'geselle' : this.cfg.seats[seat].level || 'geselle';
+    const rnd = this.hooks.random || Math.random;
+    const info = B.botInfo(G, seat);
+    let a;
+    if (G.phase === 'trump') a = { t: 'trump', s: B.chooseTrump(info, level, rnd) };
+    else if (G.phase === 'bid') a = { t: 'bid', n: B.chooseBid(info, level, rnd, this.cfg.botOverride) };
+    else if (G.phase === 'play') a = { t: 'play', c: B.choosePlay(info, level, rnd, this.cfg.botOverride) };
+    else return;
+    let res = E.apply(G, seat, a);
+    if (!res.ok) {
+      /* Sicherheitsnetz: irgendein gültiger Zug */
+      if (G.phase === 'trump') res = E.apply(G, seat, { t: 'trump', s: 0 });
+      else if (G.phase === 'bid') res = E.apply(G, seat, { t: 'bid', n: E.forbiddenBid(G, seat) === 0 ? 1 : 0 });
+      else res = E.apply(G, seat, { t: 'play', c: E.currentLegal(G, seat)[0] });
+    }
+    this.fresh = false;
+    this._changed();
+  }
+
+  _changed() {
+    this.v++;
+    this._plan();
+    if (this.hooks.onChange) this.hooks.onChange(this);
+  }
+}
+
+module.exports = { GameHost, DELAY };
+
+return module.exports;})(__req);
+__m["room"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+/*
+ * Ein Spielraum: Warteraum, Sitzverteilung, Weiterleitung der Aktionen an die Spielleitung.
+ * Unabhängig vom Transportweg. Läuft auf dem Server oder im Browser des Raum-Eröffners.
+ */
+const { GameHost } = require('./host.js');
+const B = require('./bots.js');
+
+const BOT_NAMES = ['Mira', 'Ignaz', 'Thekla', 'Balduin', 'Fenja', 'Kasimir', 'Ottilie', 'Leopold'];
+const MAX_PLAYERS = 6;
+
+function cleanName(s) {
+  const t = String(s === undefined || s === null ? '' : s)
+    .replace(/[\u0000-\u001f\u007f<>]/g, '')
+    .trim()
+    .slice(0, 14);
+  return t || 'Gast';
+}
+
+class Room {
+  /* hooks: { onUpdate(room), setTimeout, clearTimeout, random } */
+  constructor(code, hooks) {
+    this.code = code;
+    this.hooks = hooks || {};
+    this.players = [];
+    this.owner = null;
+    this.cfg = { size: 4, level: 'geselle', pm1: false };
+    this.phase = 'lobby';
+    this.host = null;
+    this.seatOf = {};
+    this.touched = Date.now();
+    this.v = 0;
+    this.testCfg = null;
+  }
+
+  static restore(snap, hooks) {
+    const r = new Room(snap.code, hooks);
+    r.players = snap.players;
+    r.owner = snap.owner;
+    r.cfg = snap.cfg;
+    r.phase = snap.phase;
+    r.seatOf = snap.seatOf || {};
+    r.v = (snap.v || 0) + 1;
+    if (snap.game) {
+      r.host = GameHost.restore(snap.game, r._hostHooks());
+      r.host.resume();
+    }
+    return r;
+  }
+
+  snapshot() {
+    return {
+      code: this.code,
+      players: this.players,
+      owner: this.owner,
+      cfg: this.cfg,
+      phase: this.phase,
+      seatOf: this.seatOf,
+      v: this.v,
+      game: this.host ? this.host.snapshot() : null,
+    };
+  }
+
+  destroy() {
+    if (this.host) this.host.destroy();
+    this.host = null;
+  }
+
+  _hostHooks() {
+    return {
+      setTimeout: this.hooks.setTimeout,
+      clearTimeout: this.hooks.clearTimeout,
+      random: this.hooks.random,
+      onChange: () => this._changed(),
+    };
+  }
+
+  _changed() {
+    this.v++;
+    this.touched = Date.now();
+    if (this.hooks.onUpdate) this.hooks.onUpdate(this);
+  }
+
+  _player(pid) {
+    return this.players.find((p) => p.pid === pid);
+  }
+
+  has(pid) {
+    return !!this._player(pid);
+  }
+
+  join(pid, name) {
+    const known = this._player(pid);
+    if (known) {
+      if (name && this.phase === 'lobby') known.name = this._uniqueName(cleanName(name), pid);
+      this._changed();
+      return { ok: true };
+    }
+    if (this.phase !== 'lobby') return { error: 'Die Partie läuft schon. Warte auf die nächste.' };
+    if (this.players.length >= MAX_PLAYERS) return { error: 'Der Raum ist voll (6 Spieler).' };
+    this.players.push({ pid, name: this._uniqueName(cleanName(name), pid), online: true });
+    if (!this.owner) this.owner = pid;
+    if (this.cfg.size < this.players.length) this.cfg.size = this.players.length;
+    this._changed();
+    return { ok: true };
+  }
+
+  _uniqueName(name, pid) {
+    let out = name;
+    let k = 2;
+    while (this.players.some((p) => p.pid !== pid && p.name.toLowerCase() === out.toLowerCase())) {
+      out = name.slice(0, 12) + ' ' + k++;
+    }
+    return out;
+  }
+
+  leave(pid) {
+    const p = this._player(pid);
+    if (!p) return { ok: true };
+    if (this.phase === 'lobby') {
+      this.players = this.players.filter((x) => x.pid !== pid);
+      if (this.owner === pid) this.owner = this.players.length ? this.players[0].pid : null;
+    } else {
+      p.online = false;
+      const seat = this.seatOf[pid];
+      if (this.host && seat !== undefined) {
+        this.host.away[seat] = true;
+        this.host.setAuto(seat, true);
+        return { ok: true };
+      }
+    }
+    this._changed();
+    return { ok: true };
+  }
+
+  setOnline(pid, on) {
+    const p = this._player(pid);
+    if (!p || p.online === !!on) return;
+    p.online = !!on;
+    const seat = this.seatOf[pid];
+    if (this.host && seat !== undefined) {
+      if (on) this.host.auto[seat] = false;
+      this.host.away[seat] = !on;
+      this.host._changed();
+      return;
+    }
+    this._changed();
+  }
+
+  handle(pid, msg) {
+    const p = this._player(pid);
+    if (!p) return { error: 'Du bist nicht in diesem Raum.' };
+    if (!msg || typeof msg !== 'object') return { error: 'Ungültige Nachricht' };
+    const isOwner = pid === this.owner;
+    const t = msg.t;
+    if (t === 'cfg') {
+      if (!isOwner) return { error: 'Nur wer den Raum eröffnet hat, ändert die Einstellungen.' };
+      if (this.phase !== 'lobby') return { error: 'Die Partie läuft schon.' };
+      if (Number.isInteger(msg.size)) this.cfg.size = Math.max(3, this.players.length, Math.min(MAX_PLAYERS, msg.size));
+      if (typeof msg.level === 'string' && B.LEVELS[msg.level]) this.cfg.level = msg.level;
+      if (typeof msg.pm1 === 'boolean') this.cfg.pm1 = msg.pm1;
+      this._changed();
+      return { ok: true };
+    }
+    if (t === 'start') {
+      if (!isOwner) return { error: 'Nur wer den Raum eröffnet hat, startet die Partie.' };
+      if (this.phase !== 'lobby') return { error: 'Die Partie läuft schon.' };
+      this._start();
+      return { ok: true };
+    }
+    if (t === 'again' || t === 'end') {
+      if (!isOwner) return { error: 'Nur wer den Raum eröffnet hat, kann das.' };
+      if (this.phase !== 'game') return { error: 'Es läuft keine Partie.' };
+      if (t === 'again' && this.host.G.phase !== 'gameEnd') return { error: 'Die Partie läuft noch.' };
+      this.host.destroy();
+      this.host = null;
+      this.seatOf = {};
+      this.phase = 'lobby';
+      this.players = this.players.filter((x) => x.online || x.pid === this.owner);
+      this.cfg.size = Math.max(3, this.cfg.size, this.players.length);
+      this._changed();
+      return { ok: true };
+    }
+    if (t === 'auto') {
+      if (!isOwner) return { error: 'Nur wer den Raum eröffnet hat, kann das.' };
+      if (!this.host || !Number.isInteger(msg.seat) || msg.seat < 0 || msg.seat >= this.host.G.n) return { error: 'Unbekannter Platz' };
+      if (!this.host.isHuman(msg.seat)) return { error: 'Dort sitzt schon ein Computer.' };
+      this.host.setAuto(msg.seat, !!msg.on);
+      return { ok: true };
+    }
+    if (t === 'bid' || t === 'play' || t === 'trump' || t === 'ready') {
+      if (!this.host) return { error: 'Es läuft keine Partie.' };
+      const seat = this.seatOf[pid];
+      if (seat === undefined) return { error: 'Du spielst in dieser Partie nicht mit.' };
+      if (this.host.auto[seat]) this.host.auto[seat] = false;
+      return this.host.act(seat, msg);
+    }
+    return { error: 'Unbekannte Aktion' };
+  }
+
+  _start() {
+    const rnd = this.hooks.random || Math.random;
+    const size = Math.max(3, this.players.length, Math.min(MAX_PLAYERS, this.cfg.size));
+    const taken = this.players.map((p) => p.name.toLowerCase());
+    const names = BOT_NAMES.filter((b) => taken.indexOf(b.toLowerCase()) < 0);
+    for (let i = names.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      const tmp = names[i];
+      names[i] = names[j];
+      names[j] = tmp;
+    }
+    const seats = this.players.map((p) => ({ name: p.name, kind: 'human', pid: p.pid }));
+    while (seats.length < size) seats.push({ name: names[seats.length - this.players.length], kind: 'bot', level: this.cfg.level });
+    for (let i = seats.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      const tmp = seats[i];
+      seats[i] = seats[j];
+      seats[j] = tmp;
+    }
+    this.seatOf = {};
+    seats.forEach((s, i) => {
+      if (s.pid) this.seatOf[s.pid] = i;
+    });
+    const cfg = Object.assign(
+      { seats, pm1: this.cfg.pm1, roundEndTimeout: 30000, awayGrace: 90000 },
+      this.testCfg || {}
+    );
+    this.host = new GameHost(cfg, this._hostHooks());
+    for (const p of this.players) if (!p.online) this.host.away[this.seatOf[p.pid]] = true;
+    this.phase = 'game';
+    this.host.start();
+  }
+
+  viewFor(pid) {
+    let game = null;
+    if (this.host) {
+      const seat = this.seatOf[pid];
+      game = this.host.view(seat === undefined ? -1 : seat);
+      const pidOf = {};
+      for (const k of Object.keys(this.seatOf)) pidOf[this.seatOf[k]] = k;
+      game.seats.forEach((s, i) => {
+        delete s.pid;
+        if (pidOf[i] !== undefined) {
+          const pl = this._player(pidOf[i]);
+          s.online = pl ? pl.online : false;
+        }
+      });
+    }
+    return {
+      v: this.v,
+      code: this.code,
+      phase: this.phase,
+      owner: this.owner === pid,
+      players: this.players.map((p) => ({ name: p.name, owner: p.pid === this.owner, online: p.online, you: p.pid === pid })),
+      cfg: this.cfg,
+      game,
+    };
+  }
+}
+
+function makeCode(rnd, prefixAlphabet) {
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  rnd = rnd || Math.random;
+  let s = '';
+  const first = prefixAlphabet || A;
+  s += first[Math.floor(rnd() * first.length)];
+  for (let i = 0; i < 4; i++) s += A[Math.floor(rnd() * A.length)];
+  return s;
+}
+
+module.exports = { Room, makeCode, cleanName, BOT_NAMES, MAX_PLAYERS };
+
+return module.exports;})(__req);
+__m["cards"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+/*
+ * Kartenbilder als SVG. Vier Farben mit eigenem Motiv, bei dem der Kartenwert
+ * im Bild steckt: Glut = so viele Flammen, Flut = so viele Wellen (der Pegel steigt),
+ * Laub = so viele Blätter, Licht = so viele Strahlen.
+ */
+
+const INK = '#221638';
+const CREAM = '#FFF6E6';
+
+const SUITS = [
+  { key: 'glut', name: 'Glut', bg: '#E4502E', fg: CREAM },
+  { key: 'flut', name: 'Flut', bg: '#2757C9', fg: CREAM },
+  { key: 'laub', name: 'Laub', bg: '#157A55', fg: CREAM },
+  { key: 'licht', name: 'Licht', bg: '#F5B920', fg: INK },
+];
+
+const f = (x) => (Math.round(x * 100) / 100).toString();
+
+/* Farbsymbol im 16er-Raster */
+function glyph(s, color) {
+  if (s === 0) {
+    return `<path fill="${color}" d="M8.3 1.2C9.2 4.2 12.6 5.6 12.6 9.6A4.6 4.6 0 0 1 3.4 9.6C3.4 7.9 4.2 6.8 5.2 5.9C5.4 7.4 6.2 8 7 7.6C6.6 5.6 7 3 8.3 1.2Z"/>`;
+  }
+  if (s === 1) {
+    const w = 'q1.63-2.7 3.25 0t3.25 0t3.25 0t3.25 0';
+    return `<path fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" d="M1.5 5.6${w}M1.5 11${w}"/>`;
+  }
+  if (s === 2) {
+    return `<path fill="${color}" d="M2.4 13.6C2.4 6.4 6.4 2.4 13.6 2.4C13.6 9.6 9.6 13.6 2.4 13.6Z"/>`;
+  }
+  let rays = '';
+  for (let k = 0; k < 8; k++) {
+    const a = (k * Math.PI) / 4;
+    rays += `M${f(8 + 4.9 * Math.cos(a))} ${f(8 + 4.9 * Math.sin(a))}L${f(8 + 7 * Math.cos(a))} ${f(8 + 7 * Math.sin(a))}`;
+  }
+  return `<circle cx="8" cy="8" r="3" fill="${color}"/><path fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" d="${rays}"/>`;
+}
+
+function glyphSVG(s, color) {
+  return `<svg viewBox="0 0 16 16" aria-hidden="true">${glyph(s, color || 'currentColor')}</svg>`;
+}
+
+function sparkle(cx, cy, r, color) {
+  return `<path fill="${color}" d="M${f(cx)} ${f(cy - r)}Q${f(cx)} ${f(cy)} ${f(cx + r)} ${f(cy)}Q${f(cx)} ${f(cy)} ${f(cx)} ${f(cy + r)}Q${f(cx)} ${f(cy)} ${f(cx - r)} ${f(cy)}Q${f(cx)} ${f(cy)} ${f(cx)} ${f(cy - r)}Z"/>`;
+}
+
+/* ---- Motive ---- */
+
+function artGlut(n) {
+  const base = 124;
+  const cx = 53;
+  const H = 36 + n * 3.5;
+  const step = Math.min(9.5, 60 / n);
+  const order = [];
+  for (let i = 0; i < n; i++) order.push(i);
+  /* von außen nach innen zeichnen, damit die Mitte vorn liegt */
+  order.sort((a, b) => Math.abs(b - (n - 1) / 2) - Math.abs(a - (n - 1) / 2));
+  let out = '';
+  for (const i of order) {
+    const x = cx + (i - (n - 1) / 2) * step;
+    const t = (x - cx) / 31;
+    const h = H * (1 - 0.56 * Math.pow(Math.abs(t), 1.25));
+    const w = 11 + 5 * (1 - Math.abs(t));
+    const lean = t * 5;
+    const col = i % 2 === 0 ? '#FFB52E' : '#FFD45C';
+    out += `<path fill="${col}" d="M${f(x - w / 2)} ${base}Q${f(x - w / 2 - 1)} ${f(base - h * 0.5)} ${f(x + lean)} ${f(base - h)}Q${f(x + w / 2 + 1)} ${f(base - h * 0.5)} ${f(x + w / 2)} ${base}Q${f(x)} ${f(base + w * 0.5)} ${f(x - w / 2)} ${base}Z"/>`;
+  }
+  /* heller Kern */
+  const kh = Math.min(30, 12 + n * 1.6);
+  out += `<path fill="${CREAM}" d="M${cx - 5} ${base}Q${cx - 6} ${f(base - kh * 0.5)} ${cx} ${f(base - kh)}Q${cx + 6} ${f(base - kh * 0.5)} ${cx + 5} ${base}Q${cx} ${base + 4} ${cx - 5} ${base}Z"/>`;
+  out += `<path fill="none" stroke="#6B1C12" stroke-width="5.5" stroke-linecap="round" d="M35 132L71 123M35 123L71 132"/>`;
+  return out;
+}
+
+function artFlut(n) {
+  const gap = 6.3;
+  const yTop = 128 - (n - 1) * gap;
+  const seg = 13;
+  const wave = (y, shift) => {
+    let d = `M${f(-seg + shift)} ${f(y)}`;
+    for (let k = 0; k < 10; k++) d += `${k === 0 ? 'q' + f(seg / 2) + ' -4.2 ' + seg + ' 0' : 't' + seg + ' 0'}`;
+    return d;
+  };
+  let out = `<path fill="#1C449F" d="${wave(yTop, 0)}V150H-20Z"/>`;
+  let d = '';
+  for (let i = 0; i < n; i++) d += wave(128 - i * gap, i % 2 ? seg / 2 : 0);
+  out += `<path fill="none" stroke="#A9C6FF" stroke-width="2.4" stroke-linecap="round" d="${d}"/>`;
+  return out;
+}
+
+function artLaub(n) {
+  const x0 = 55;
+  const yBase = 132;
+  const gap = 6.6;
+  const top = yBase - 9 - n * gap;
+  const sway = (y) => x0 + 2.4 * Math.sin((yBase - y) / 15);
+  let stem = `M${f(sway(yBase))} ${yBase}`;
+  for (let y = yBase - 4; y >= top; y -= 4) stem += `L${f(sway(y))} ${f(y)}`;
+  let out = `<path fill="none" stroke="#D6F0A8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" d="${stem}"/>`;
+  let ribs = '';
+  for (let i = 0; i < n; i++) {
+    const y = yBase - 9 - i * gap;
+    const x = sway(y);
+    const right = i % 2 === 0;
+    const isTop = i === n - 1;
+    const L = isTop ? 17 : 22;
+    const a = isTop ? -Math.PI / 2 + (right ? 0.18 : -0.18) : right ? -0.6 : Math.PI + 0.6;
+    const tx = x + L * Math.cos(a);
+    const ty = y + L * Math.sin(a);
+    const mx = (x + tx) / 2;
+    const my = (y + ty) / 2;
+    const px = -Math.sin(a) * 8;
+    const py = Math.cos(a) * 8;
+    out += `<path fill="${isTop ? CREAM : '#D6F0A8'}" d="M${f(x)} ${f(y)}Q${f(mx + px)} ${f(my + py)} ${f(tx)} ${f(ty)}Q${f(mx - px)} ${f(my - py)} ${f(x)} ${f(y)}Z"/>`;
+    ribs += `M${f(x + (tx - x) * 0.18)} ${f(y + (ty - y) * 0.18)}L${f(x + (tx - x) * 0.72)} ${f(y + (ty - y) * 0.72)}`;
+  }
+  out += `<path fill="none" stroke="#157A55" stroke-width="1.1" stroke-linecap="round" d="${ribs}"/>`;
+  return out;
+}
+
+function artLicht(n) {
+  const cx = 53;
+  const cy = 80;
+  let d = '';
+  for (let k = 0; k < n; k++) {
+    const a = -Math.PI / 2 + (k * 2 * Math.PI) / n;
+    d += `M${f(cx + 20 * Math.cos(a))} ${f(cy + 20 * Math.sin(a))}L${f(cx + 33 * Math.cos(a))} ${f(cy + 33 * Math.sin(a))}`;
+  }
+  return (
+    `<path fill="none" stroke="${INK}" stroke-width="5.6" stroke-linecap="round" d="${d}"/>` +
+    `<circle cx="${cx}" cy="${cy}" r="13" fill="${CREAM}"/><circle cx="${cx}" cy="${cy}" r="13" fill="none" stroke="${INK}" stroke-width="2.6"/>`
+  );
+}
+
+function artWizard(i) {
+  const cols = [SUITS[0].bg, SUITS[3].bg, SUITS[2].bg, SUITS[1].bg];
+  /* Hut aus vier Bändern; die Kanten laufen vom Rand (y 110) zur Spitze */
+  const xl = (y) => 25 + (110 - y) * 0.4058;
+  const xr = (y) => 79 - (110 - y) * 0.3065;
+  const ys = [110, 93, 76, 59];
+  let bands = '';
+  for (let b = 0; b < 3; b++) {
+    const y0 = ys[b];
+    const y1 = ys[b + 1];
+    bands += `<path fill="${cols[(b + i) % 4]}" d="M${f(xl(y0))} ${y0}L${f(xr(y0))} ${y0}L${f(xr(y1))} ${f(y1 - 0.4)}L${f(xl(y1))} ${f(y1 - 0.4)}Z"/>`;
+  }
+  bands += `<path fill="${cols[(3 + i) % 4]}" d="M${f(xl(59))} 59L53 41q3-8 11-4q-6 4-4 11L${f(xr(59))} 59Z"/>`;
+  return (
+    bands +
+    `<ellipse cx="52" cy="111" rx="35" ry="8" fill="${CREAM}"/>` +
+    `<path fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" d="M29 110.5Q52 117 75 110.5"/>` +
+    sparkle(22, 66, 7.5, SUITS[3].bg) +
+    sparkle(84, 58, 5.5, CREAM) +
+    sparkle(80, 30, 4, SUITS[3].bg) +
+    sparkle(16, 92, 3.2, CREAM) +
+    sparkle(88, 88, 3.2, SUITS[3].bg)
+  );
+}
+
+function artJester(i) {
+  const cols = [SUITS[0].bg, SUITS[3].bg, SUITS[1].bg, SUITS[2].bg];
+  const c = (k) => cols[(k + i) % 4];
+  const dots = [
+    [16, 62, 0],
+    [88, 50, 1],
+    [78, 24, 2],
+    [26, 124, 3],
+    [84, 118, 0],
+    [60, 130, 1],
+    [44, 22, 3],
+    [92, 84, 2],
+    [10, 96, 1],
+  ];
+  let conf = '';
+  dots.forEach((d, k) => {
+    conf += k % 3 === 0 ? `<rect x="${d[0] - 3}" y="${d[1] - 1.3}" width="6" height="2.6" rx="1.3" fill="${c(d[2])}" transform="rotate(${k * 37} ${d[0]} ${d[1]})"/>` : `<circle cx="${d[0]}" cy="${d[1]}" r="1.9" fill="${c(d[2])}"/>`;
+  });
+  return (
+    conf +
+    `<path fill="${c(0)}" d="M31 106C29 92 25 80 20 70C33 74 43 88 48 106Z"/>` +
+    `<path fill="${c(2)}" d="M75 106C77 92 81 80 86 70C73 74 63 88 58 106Z"/>` +
+    `<path fill="${c(1)}" d="M40 106C42 82 48 60 53 44C58 60 64 82 66 106Z"/>` +
+    `<rect x="28" y="102" width="50" height="11" rx="5.5" fill="${INK}"/>` +
+    `<circle cx="19" cy="68" r="5" fill="${INK}"/><circle cx="87" cy="68" r="5" fill="${INK}"/><circle cx="53" cy="42" r="5" fill="${INK}"/>`
+  );
+}
+
+function index(label, color, s) {
+  const ls = label.length > 1 ? ' letter-spacing="-1.2"' : '';
+  return (
+    `<text x="9" y="33" font-size="31" fill="${color}"${ls}>${label}</text>` +
+    (s >= 0 ? `<g transform="translate(9.5 38) scale(0.9)">${glyph(s, color)}</g>` : '')
+  );
+}
+
+const cache = {};
+
+function cardSVG(id) {
+  if (cache[id]) return cache[id];
+  let bg;
+  let body;
+  if (id >= 56) {
+    bg = '#F4F2F8';
+    body = artJester(id - 56) + index('N', INK, -1);
+  } else if (id >= 52) {
+    bg = INK;
+    body = artWizard(id - 52) + index('Z', CREAM, -1);
+  } else {
+    const s = (id / 13) | 0;
+    const n = (id % 13) + 1;
+    const S = SUITS[s];
+    bg = S.bg;
+    const art = s === 0 ? artGlut(n) : s === 1 ? artFlut(n) : s === 2 ? artLaub(n) : artLicht(n);
+    body = art + index(String(n), S.fg, s);
+  }
+  const svg = `<svg class="cardsvg" viewBox="0 0 100 142" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100" height="142" fill="${bg}"/>${body}</svg>`;
+  cache[id] = svg;
+  return svg;
+}
+
+function pinwheel(cx, cy, r) {
+  const cols = [SUITS[0].bg, SUITS[3].bg, SUITS[2].bg, SUITS[1].bg];
+  let out = '';
+  for (let k = 0; k < 4; k++) {
+    out += `<path fill="${cols[k]}" transform="rotate(${k * 90} ${cx} ${cy})" d="M${cx} ${cy}C${f(cx - r * 0.42)} ${f(cy - r * 0.36)} ${f(cx - r * 0.3)} ${f(cy - r * 0.86)} ${cx} ${f(cy - r)}C${f(cx + r * 0.3)} ${f(cy - r * 0.86)} ${f(cx + r * 0.42)} ${f(cy - r * 0.36)} ${cx} ${cy}Z"/>`;
+  }
+  return out;
+}
+
+let backCache = '';
+function backSVG() {
+  if (backCache) return backCache;
+  backCache =
+    `<svg class="cardsvg" viewBox="0 0 100 142" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100" height="142" fill="${INK}"/>` +
+    `<rect x="6" y="6" width="88" height="130" rx="6" fill="none" stroke="#4A3878" stroke-width="1.4"/>` +
+    pinwheel(50, 71, 30) +
+    sparkle(50, 71, 6, CREAM) +
+    sparkle(18, 20, 3.4, '#4A3878') +
+    sparkle(82, 122, 3.4, '#4A3878') +
+    sparkle(82, 20, 2.2, '#4A3878') +
+    sparkle(18, 122, 2.2, '#4A3878') +
+    `</svg>`;
+  return backCache;
+}
+
+function logoSVG() {
+  return `<svg viewBox="0 0 64 64" aria-hidden="true">${pinwheel(32, 32, 29)}${sparkle(32, 32, 6, CREAM)}</svg>`;
+}
+
+function cardName(id) {
+  if (id >= 56) return 'Narr';
+  if (id >= 52) return 'Zauberer';
+  return SUITS[(id / 13) | 0].name + ' ' + ((id % 13) + 1);
+}
+
+module.exports = { SUITS, INK, CREAM, cardSVG, backSVG, glyphSVG, logoSVG, cardName, pinwheel, sparkle };
+
+return module.exports;})(__req);
+__m["mqtt"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+/*
+ * Sehr kleiner MQTT-3.1.1-Client über WebSocket (nur was das Spiel braucht:
+ * verbinden, abonnieren, senden mit QoS 0, Lebenszeichen).
+ */
+const enc = new TextEncoder();
+const dec = new TextDecoder();
+
+function varint(n) {
+  const out = [];
+  do {
+    let b = n % 128;
+    n = Math.floor(n / 128);
+    if (n > 0) b |= 128;
+    out.push(b);
+  } while (n > 0);
+  return out;
+}
+
+function str(s) {
+  const b = enc.encode(s);
+  const out = new Uint8Array(b.length + 2);
+  out[0] = b.length >> 8;
+  out[1] = b.length & 255;
+  out.set(b, 2);
+  return out;
+}
+
+function packet(first, parts) {
+  let len = 0;
+  for (const p of parts) len += p.length;
+  const head = [first].concat(varint(len));
+  const out = new Uint8Array(head.length + len);
+  out.set(head, 0);
+  let o = head.length;
+  for (const p of parts) {
+    out.set(p, o);
+    o += p.length;
+  }
+  return out;
+}
+
+class MiniMqtt {
+  /* opts: { clientId, keepalive (s), onMessage(topic, bytes), onClose() } */
+  constructor(url, opts) {
+    this.url = url;
+    this.o = opts || {};
+    this.ws = null;
+    this.buf = new Uint8Array(0);
+    this.open = false;
+    this.pid = 1;
+    this.lastRx = 0;
+    this.timer = null;
+  }
+
+  connect(timeoutMs) {
+    return new Promise((resolve, reject) => {
+      let done = false;
+      const fail = (msg) => {
+        if (done) return;
+        done = true;
+        clearTimeout(to);
+        try {
+          if (this.ws) this.ws.close();
+        } catch (e) {}
+        reject(new Error(msg));
+      };
+      const to = setTimeout(() => fail('Zeitüberschreitung'), timeoutMs || 7000);
+      let ws;
+      try {
+        ws = new WebSocket(this.url, ['mqtt']);
+      } catch (e) {
+        fail('Verbindung nicht möglich');
+        return;
+      }
+      this.ws = ws;
+      ws.binaryType = 'arraybuffer';
+      ws.onopen = () => {
+        const id = this.o.clientId || 'zs' + Math.random().toString(36).slice(2, 14);
+        const ka = this.o.keepalive || 30;
+        ws.send(packet(0x10, [[0, 4, 77, 81, 84, 84, 4, 2, ka >> 8, ka & 255], str(id)]));
+      };
+      ws.onmessage = (ev) => {
+        this.lastRx = Date.now();
+        this._feed(new Uint8Array(ev.data), (rc) => {
+          if (done) return;
+          if (rc === 0) {
+            done = true;
+            clearTimeout(to);
+            this.open = true;
+            this._startPing();
+            resolve();
+          } else fail('Relay lehnt die Verbindung ab (' + rc + ')');
+        });
+      };
+      ws.onerror = () => fail('Verbindung fehlgeschlagen');
+      ws.onclose = () => {
+        const was = this.open;
+        this.open = false;
+        this._stopPing();
+        if (!done) fail('Verbindung geschlossen');
+        else if (was && this.o.onClose) this.o.onClose();
+      };
+    });
+  }
+
+  _feed(chunk, onConnack) {
+    let buf = chunk;
+    if (this.buf.length) {
+      buf = new Uint8Array(this.buf.length + chunk.length);
+      buf.set(this.buf, 0);
+      buf.set(chunk, this.buf.length);
+    }
+    let off = 0;
+    for (;;) {
+      if (buf.length - off < 2) break;
+      const first = buf[off];
+      let mul = 1;
+      let len = 0;
+      let i = off + 1;
+      let ok = false;
+      for (let k = 0; k < 4 && i < buf.length; k++) {
+        const b = buf[i++];
+        len += (b & 127) * mul;
+        mul *= 128;
+        if (!(b & 128)) {
+          ok = true;
+          break;
+        }
+      }
+      if (!ok || buf.length - i < len) break;
+      const body = buf.subarray(i, i + len);
+      const type = first >> 4;
+      if (type === 2) {
+        if (onConnack) onConnack(body[1]);
+      } else if (type === 3) {
+        const tl = (body[0] << 8) | body[1];
+        const topic = dec.decode(body.subarray(2, 2 + tl));
+        let p = 2 + tl;
+        if ((first >> 1) & 3) p += 2;
+        if (this.o.onMessage) {
+          try {
+            this.o.onMessage(topic, body.slice(p));
+          } catch (e) {}
+        }
+      }
+      off = i + len;
+    }
+    this.buf = off < buf.length ? buf.slice(off) : new Uint8Array(0);
+  }
+
+  subscribe(topics) {
+    const parts = [[this.pid >> 8, this.pid & 255]];
+    this.pid = (this.pid % 60000) + 1;
+    for (const t of topics) {
+      parts.push(str(t));
+      parts.push([0]);
+    }
+    return this._send(packet(0x82, parts));
+  }
+
+  publish(topic, payload, retain) {
+    return this._send(packet(0x30 | (retain ? 1 : 0), [str(topic), payload]));
+  }
+
+  _send(p) {
+    if (this.ws && this.ws.readyState === 1) {
+      try {
+        this.ws.send(p);
+        return true;
+      } catch (e) {}
+    }
+    return false;
+  }
+
+  _startPing() {
+    const ka = (this.o.keepalive || 30) * 1000;
+    this.lastRx = Date.now();
+    this.timer = setInterval(() => {
+      if (Date.now() - this.lastRx > ka * 1.7) {
+        try {
+          this.ws.close();
+        } catch (e) {}
+        return;
+      }
+      this._send(new Uint8Array([0xc0, 0]));
+    }, ka / 2);
+  }
+
+  _stopPing() {
+    if (this.timer) clearInterval(this.timer);
+    this.timer = null;
+  }
+
+  close() {
+    this.o.onClose = null;
+    this.o.onMessage = null;
+    this._stopPing();
+    try {
+      this._send(new Uint8Array([0xe0, 0]));
+      if (this.ws) this.ws.close();
+    } catch (e) {}
+    this.open = false;
+  }
+}
+
+module.exports = { MiniMqtt };
+
+return module.exports;})(__req);
+__m["net"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+/*
+ * Mehrspieler ohne eigenen Server.
+ * Das Gerät, das den Raum eröffnet, führt die Partie (Room). Die anderen Geräte
+ * senden ihre Züge und bekommen ihre Sicht zurück. Dazwischen reicht ein
+ * öffentlicher MQTT-Relay die Nachrichten weiter. Alles ist mit einem Schlüssel
+ * aus dem Raumcode verschlüsselt (AES-GCM).
+ */
+const { MiniMqtt } = require('./mqtt.js');
+const { Room, makeCode } = require('../shared/room.js');
+
+const DEFAULT_BROKERS = [
+  'wss://broker.emqx.io:8084/mqtt',
+  'wss://broker.hivemq.com:8884/mqtt',
+  'wss://mqtt.eclipseprojects.io/mqtt',
+  'wss://test.mosquitto.org:8081/mqtt',
+];
+/* Der erste Buchstabe des Raumcodes sagt, über welchen Relay der Raum läuft. */
+const PREFIX = ['ABCDEF', 'GHJKLM', 'NPQRST', 'UVWXYZ'];
+
+const G = typeof globalThis !== 'undefined' ? globalThis : {};
+const subtle = G.crypto && G.crypto.subtle ? G.crypto.subtle : null;
+const te = new TextEncoder();
+const td = new TextDecoder();
+
+function brokers() {
+  return G.__ZS_BROKERS || DEFAULT_BROKERS;
+}
+
+function brokerIndexFor(code) {
+  for (let i = 0; i < PREFIX.length; i++) if (PREFIX[i].indexOf(code[0]) >= 0) return i % brokers().length;
+  return 0;
+}
+
+function normCode(s) {
+  return String(s || '')
+    .toUpperCase()
+    .replace(/[^A-Z]/g, '')
+    .slice(0, 5);
+}
+
+function hash53(s) {
+  let h1 = 0xdeadbeef ^ 7;
+  let h2 = 0x41c6ce57 ^ 7;
+  for (let i = 0; i < s.length; i++) {
+    const ch = s.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');
+}
+
+async function deriveKey(code) {
+  if (!subtle) return null;
+  const base = await subtle.importKey('raw', te.encode('zauberstich:' + code), 'PBKDF2', false, ['deriveKey']);
+  return subtle.deriveKey({ name: 'PBKDF2', salt: te.encode('zst-relay-v1'), iterations: 20000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+
+async function seal(key, obj) {
+  const pt = te.encode(JSON.stringify(obj));
+  if (!key) {
+    const out = new Uint8Array(pt.length + 1);
+    out[0] = 0;
+    out.set(pt, 1);
+    return out;
+  }
+  const iv = G.crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await subtle.encrypt({ name: 'AES-GCM', iv }, key, pt));
+  const out = new Uint8Array(13 + ct.length);
+  out[0] = 1;
+  out.set(iv, 1);
+  out.set(ct, 13);
+  return out;
+}
+
+async function unseal(key, bytes) {
+  try {
+    if (!key) return bytes[0] === 0 ? JSON.parse(td.decode(bytes.subarray(1))) : null;
+    if (bytes[0] !== 1 || bytes.length < 30) return null;
+    const pt = await subtle.decrypt({ name: 'AES-GCM', iv: bytes.slice(1, 13) }, key, bytes.slice(13));
+    return JSON.parse(td.decode(new Uint8Array(pt)));
+  } catch (e) {
+    return null;
+  }
+}
+
+/* Verbindung zu einem Relay mit automatischem Wiederverbinden. */
+class Link {
+  constructor(code, handlers) {
+    this.code = code;
+    this.h = handlers || {};
+    this.base = 'zst1/' + hash53('zst|' + code);
+    this.mq = null;
+    this.key = null;
+    this.subs = [];
+    this.closed = false;
+    this.state = 'idle';
+    this.inQ = Promise.resolve();
+    this.outQ = Promise.resolve();
+    this.retry = 0;
+    this.rt = null;
+  }
+
+  async open(url) {
+    this.url = url;
+    this.key = await deriveKey(this.code);
+    await this._connect();
+  }
+
+  async _connect() {
+    this._set('connecting');
+    const mq = new MiniMqtt(this.url, {
+      keepalive: 25,
+      onMessage: (t, b) => this._in(t, b),
+      onClose: () => this._lost(),
+    });
+    try {
+      await mq.connect(8000);
+    } catch (e) {
+      this._set('offline');
+      throw e;
+    }
+    if (this.closed) {
+      mq.close();
+      return;
+    }
+    this.mq = mq;
+    if (this.subs.length) mq.subscribe(this.subs.map((s) => this.base + '/' + s));
+    this.retry = 0;
+    this._set('online');
+  }
+
+  subscribe(suffixes) {
+    const fresh = suffixes.filter((s) => this.subs.indexOf(s) < 0);
+    this.subs = this.subs.concat(fresh);
+    if (fresh.length && this.mq && this.mq.open) this.mq.subscribe(fresh.map((s) => this.base + '/' + s));
+  }
+
+  _lost() {
+    if (this.closed) return;
+    this.mq = null;
+    this._set('offline');
+    this._again();
+  }
+
+  _again() {
+    if (this.closed) return;
+    clearTimeout(this.rt);
+    const wait = Math.min(8000, 700 * Math.pow(1.8, this.retry++));
+    this.rt = setTimeout(() => {
+      this._connect().catch(() => this._again());
+    }, wait);
+  }
+
+  /* sofort neu verbinden, z. B. wenn die Seite wieder sichtbar wird */
+  kick() {
+    if (this.closed || this.state === 'online' || this.state === 'connecting') return;
+    clearTimeout(this.rt);
+    this.retry = 0;
+    this._connect().catch(() => this._again());
+  }
+
+  send(suffix, obj) {
+    this.outQ = this.outQ
+      .then(() => seal(this.key, obj))
+      .then((bytes) => {
+        if (this.mq && this.mq.open) this.mq.publish(this.base + '/' + suffix, bytes);
+      })
+      .catch(() => {});
+    return this.outQ;
+  }
+
+  _in(topic, bytes) {
+    const suffix = topic.slice(this.base.length + 1);
+    this.inQ = this.inQ
+      .then(() => unseal(this.key, bytes))
+      .then((obj) => {
+        if (obj && !this.closed && this.h.onMessage) this.h.onMessage(suffix, obj);
+      })
+      .catch(() => {});
+  }
+
+  _set(s) {
+    if (this.state === s) return;
+    this.state = s;
+    if (this.h.onState) this.h.onState(s);
+  }
+
+  close() {
+    this.closed = true;
+    clearTimeout(this.rt);
+    if (this.mq) this.mq.close();
+    this.mq = null;
+  }
+}
+
+/*
+ * Probiert alle Relays gleichzeitig. Der erste in der Liste hat Vorrang;
+ * antwortet er nicht schnell genug, gewinnt der beste der übrigen.
+ */
+function pickBroker() {
+  const list = brokers();
+  return new Promise((resolve, reject) => {
+    let pending = list.length;
+    let done = false;
+    let best = -1;
+    let timer = null;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      if (best >= 0) resolve(best);
+      else reject(new Error('Kein Relay erreichbar. Prüfe deine Internetverbindung und versuche es noch einmal.'));
+    };
+    list.forEach((url, i) => {
+      const mq = new MiniMqtt(url, {});
+      mq.connect(7000).then(
+        () => {
+          mq.close();
+          if (best < 0 || i < best) best = i;
+          if (i === 0) finish();
+          else if (!timer) timer = setTimeout(finish, 1500);
+          if (--pending === 0) finish();
+        },
+        () => {
+          if (--pending === 0) finish();
+        }
+      );
+    });
+  });
+}
+
+function setBrokers(list) {
+  G.__ZS_BROKERS = list && list.length ? list : undefined;
+}
+
+function relayName(code) {
+  try {
+    return new URL(brokers()[brokerIndexFor(code)]).host;
+  } catch (e) {
+    return '';
+  }
+}
+
+function toUI(v) {
+  return { room: { v: v.v, code: v.code, phase: v.phase, owner: v.owner, players: v.players, cfg: v.cfg }, game: v.game };
+}
+
+/* Raum eröffnen: dieses Gerät führt die Partie. */
+class HostSession {
+  /* o: { pid, name, snap, onView, onState, onSnapshot, hooks } */
+  constructor(o) {
+    this.kind = 'host';
+    this.o = o;
+    this.pid = o.pid;
+    this.guests = {};
+    this.room = null;
+    this.link = null;
+    this.flush = null;
+    this.tick = null;
+    this.closed = false;
+  }
+
+  get code() {
+    return this.room ? this.room.code : '';
+  }
+
+  async start() {
+    const o = this.o;
+    const hooks = Object.assign({}, o.hooks || {}, { onUpdate: () => this._dirty() });
+    let idx;
+    if (o.snap) {
+      idx = brokerIndexFor(o.snap.code);
+      this.room = Room.restore(o.snap, hooks);
+      for (const p of this.room.players) if (p.pid !== this.pid) p.online = false;
+      if (this.room.host) this.room.players.forEach((p) => (this.room.host.away[this.room.seatOf[p.pid]] = !p.online));
+    } else {
+      idx = await pickBroker();
+      this.room = new Room(makeCode(Math.random, PREFIX[idx % PREFIX.length]), hooks);
+      this.room.join(this.pid, o.name);
+    }
+    this.link = new Link(this.room.code, {
+      onMessage: (sfx, m) => this._msg(sfx, m),
+      onState: (s) => {
+        if (s === 'online') this._dirty();
+        if (o.onState) o.onState(s);
+      },
+    });
+    this.link.subscribe(['up']);
+    await this.link.open(brokers()[idx]);
+    this.tick = setInterval(() => this._tick(), 4000);
+    this._dirty();
+  }
+
+  _dirty() {
+    if (this.flush || this.closed) return;
+    this.flush = setTimeout(() => {
+      this.flush = null;
+      this._push();
+    }, 0);
+  }
+
+  _push() {
+    if (this.closed || !this.room) return;
+    const room = this.room;
+    if (this.o.onSnapshot) this.o.onSnapshot(room.snapshot());
+    for (const p of room.players) {
+      if (p.pid !== this.pid) this.link.send('d/' + p.pid, { t: 'view', view: room.viewFor(p.pid) });
+    }
+    if (this.o.onView) this.o.onView(toUI(room.viewFor(this.pid)));
+  }
+
+  _msg(sfx, m) {
+    if (sfx !== 'up' || !m || typeof m.pid !== 'string' || this.closed) return;
+    const pid = m.pid.slice(0, 24);
+    if (pid === this.pid) return;
+    const room = this.room;
+    const g = this.guests[pid] || (this.guests[pid] = { seen: 0, lastId: -1, lastRes: null });
+    g.seen = Date.now();
+    if (m.t === 'join') {
+      const res = room.join(pid, m.name);
+      if (res.error) this.link.send('d/' + pid, { t: 'nope', error: res.error });
+      else {
+        room.setOnline(pid, true);
+        this.link.send('d/' + pid, { t: 'view', view: room.viewFor(pid) });
+      }
+      return;
+    }
+    if (!room.has(pid)) {
+      this.link.send('d/' + pid, { t: 'nope', error: 'Du bist nicht mehr in diesem Raum.' });
+      return;
+    }
+    if (m.t === 'hb' || m.t === 'sync') {
+      room.setOnline(pid, true);
+      if (m.t === 'sync' || (m.v | 0) < room.v) this.link.send('d/' + pid, { t: 'view', view: room.viewFor(pid) });
+    } else if (m.t === 'act') {
+      let res;
+      if (m.id === g.lastId && g.lastRes) res = g.lastRes;
+      else {
+        room.setOnline(pid, true);
+        res = room.handle(pid, m.m);
+        g.lastId = m.id;
+        g.lastRes = res;
+      }
+      this.link.send('d/' + pid, { t: 'ack', id: m.id, error: res.error || null });
+    } else if (m.t === 'leave') {
+      room.leave(pid);
+      delete this.guests[pid];
+    }
+  }
+
+  _tick() {
+    if (this.closed) return;
+    const now = Date.now();
+    this.link.send('all', { t: 'hb', v: this.room.v });
+    for (const p of this.room.players) {
+      if (p.pid === this.pid || !p.online) continue;
+      const g = this.guests[p.pid];
+      if (!g || now - g.seen > 13000) this.room.setOnline(p.pid, false);
+    }
+  }
+
+  send(msg) {
+    return Promise.resolve(this.room.handle(this.pid, msg));
+  }
+
+  status() {
+    return { link: this.link ? this.link.state : 'idle', hostAlive: true };
+  }
+
+  close() {
+    if (this.closed) return;
+    this.closed = true;
+    clearInterval(this.tick);
+    clearTimeout(this.flush);
+    if (this.link) {
+      this.link.send('all', { t: 'bye' });
+      const l = this.link;
+      setTimeout(() => l.close(), 200);
+    }
+    if (this.room) this.room.destroy();
+  }
+}
+
+/* Einem Raum beitreten. */
+class GuestSession {
+  /* o: { pid, name, code, onView, onState, onGone(text) } */
+  constructor(o) {
+    this.kind = 'guest';
+    this.o = o;
+    this.pid = o.pid;
+    this.code = normCode(o.code);
+    this.view = null;
+    this.acks = {};
+    this.seq = Math.floor(Math.random() * 1e6);
+    this.lastHost = 0;
+    this.hostBye = false;
+    this.closed = false;
+    this.first = null;
+  }
+
+  async start() {
+    if (this.code.length !== 5) throw new Error('Der Raumcode hat 5 Buchstaben.');
+    this.link = new Link(this.code, {
+      onMessage: (sfx, m) => this._msg(sfx, m),
+      onState: (s) => {
+        if (s === 'online' && this.view) this.link.send('up', { t: 'sync', pid: this.pid });
+        if (this.o.onState) this.o.onState(s);
+      },
+    });
+    this.link.subscribe(['d/' + this.pid, 'all']);
+    try {
+      await this.link.open(brokers()[brokerIndexFor(this.code)]);
+    } catch (e) {
+      this.link.close();
+      throw new Error('Der Relay für diesen Raum ist von deinem Netz aus nicht erreichbar. Prüfe deine Verbindung oder wechsle das Netz (WLAN oder mobile Daten).');
+    }
+    try {
+      await new Promise((resolve, reject) => {
+        this.first = { resolve, reject };
+        this.tries = 0;
+        this._joinLoop();
+      });
+    } catch (e) {
+      this.close();
+      throw e;
+    }
+    this.tick = setInterval(() => this._tick(), 5000);
+  }
+
+  _joinLoop() {
+    if (this.view || this.closed || !this.first) return;
+    if (this.tries++ >= 4) {
+      const f = this.first;
+      this.first = null;
+      f.reject(new Error('Raum nicht gefunden. Stimmt der Code, und ist der Raum noch offen?'));
+      return;
+    }
+    this.link.send('up', { t: 'join', pid: this.pid, name: this.o.name });
+    this.jt = setTimeout(() => this._joinLoop(), 1600);
+  }
+
+  _msg(sfx, m) {
+    if (this.closed || !m) return;
+    this.lastHost = Date.now();
+    if (sfx === 'all') {
+      if (m.t === 'hb') {
+        this.hostBye = false;
+        if (this.view && m.v > this.view.v) this.link.send('up', { t: 'sync', pid: this.pid });
+      } else if (m.t === 'bye') this.hostBye = true;
+      if (this.o.onState) this.o.onState(this.link.state);
+      return;
+    }
+    if (m.t === 'view' && m.view) {
+      this.hostBye = false;
+      if (!this.view || m.view.v >= this.view.v) {
+        this.view = m.view;
+        if (this.first) {
+          const f = this.first;
+          this.first = null;
+          clearTimeout(this.jt);
+          f.resolve();
+        }
+        if (this.o.onView) this.o.onView(toUI(m.view));
+      }
+    } else if (m.t === 'ack') {
+      const a = this.acks[m.id];
+      if (a) {
+        delete this.acks[m.id];
+        clearTimeout(a.timer);
+        a.resolve(m.error ? { error: m.error } : { ok: true });
+      }
+    } else if (m.t === 'nope') {
+      if (this.first) {
+        const f = this.first;
+        this.first = null;
+        clearTimeout(this.jt);
+        f.reject(new Error(m.error || 'Beitritt abgelehnt'));
+      } else if (this.o.onGone) this.o.onGone(m.error || 'Du bist nicht mehr in diesem Raum.');
+    }
+  }
+
+  _tick() {
+    if (this.closed) return;
+    this.link.send('up', { t: 'hb', pid: this.pid, v: this.view ? this.view.v : 0 });
+    if (this.o.onState) this.o.onState(this.link.state);
+  }
+
+  send(msg) {
+    return new Promise((resolve) => {
+      const id = ++this.seq;
+      let tries = 0;
+      const rec = (this.acks[id] = { resolve, timer: null });
+      const go = () => {
+        if (this.closed) return;
+        if (tries++ >= 4) {
+          delete this.acks[id];
+          resolve({ error: 'Keine Antwort vom Raum. Prüfe deine Verbindung.' });
+          return;
+        }
+        this.link.send('up', { t: 'act', pid: this.pid, id, m: msg });
+        rec.timer = setTimeout(go, 2200);
+      };
+      go();
+    });
+  }
+
+  status() {
+    const quiet = this.lastHost ? Date.now() - this.lastHost : 0;
+    return { link: this.link ? this.link.state : 'idle', hostAlive: !this.hostBye && quiet < 13000 };
+  }
+
+  close(leave) {
+    if (this.closed) return;
+    this.closed = true;
+    clearInterval(this.tick);
+    clearTimeout(this.jt);
+    for (const id of Object.keys(this.acks)) clearTimeout(this.acks[id].timer);
+    if (this.link) {
+      if (leave) this.link.send('up', { t: 'leave', pid: this.pid });
+      const l = this.link;
+      setTimeout(() => l.close(), 200);
+    }
+  }
+}
+
+module.exports = { HostSession, GuestSession, Link, brokers, setBrokers, relayName, brokerIndexFor, normCode, PREFIX, DEFAULT_BROKERS };
+
+return module.exports;})(__req);
+__m["app"]=(function(require){var module={exports:{}};var exports=module.exports;
+'use strict';
+const E = require('../shared/engine.js');
+const { GameHost } = require('../shared/host.js');
+const RM = require('../shared/room.js');
+const C = require('./cards.js');
+const Net = require('./net.js');
+
+const APP = 'Zauberstich';
+const LEVELS = [
+  { id: 'lehrling', name: 'Lehrling', hint: 'Spielt nach Gefühl und verschätzt sich öfter.' },
+  { id: 'geselle', name: 'Geselle', hint: 'Sagt überlegt an und spielt solide.' },
+  { id: 'meister', name: 'Meister', hint: 'Rechnet mögliche Kartenverteilungen durch und ist schwer zu schlagen.' },
+];
+const ICON = {
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+};
+
+const $ = (id) => document.getElementById(id);
+const QS = new URLSearchParams(location.search);
+const inClaude = () => {
+  try {
+    return !!(window.claude && window.claude.use);
+  } catch (e) {
+    return false;
+  }
+};
+const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) n.textContent = text;
+  return n;
+}
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+}
+
+/* ---------- Speicher (übersteht Neuladen; ohne Speicher läuft alles im Arbeitsspeicher) ---------- */
+const mem = {};
+const store = {
+  get(k, d) {
+    try {
+      const v = localStorage.getItem(k);
+      if (v !== null) return JSON.parse(v);
+    } catch (e) {}
+    return k in mem ? mem[k] : d;
+  },
+  set(k, v) {
+    mem[k] = v;
+    try {
+      localStorage.setItem(k, JSON.stringify(v));
+    } catch (e) {}
+  },
+  del(k) {
+    delete mem[k];
+    try {
+      localStorage.removeItem(k);
+    } catch (e) {}
+  },
+};
+
+const settings = Object.assign({ name: '', players: 4, level: 'geselle', pm1: false, oneTap: false, fast: false }, store.get('zs.set', {}));
+const saveSettings = () => store.set('zs.set', settings);
+function myPid() {
+  let p = store.get('zs.pid', '');
+  if (!p) {
+    p = Math.random().toString(36).slice(2, 12) + Date.now().toString(36).slice(-4);
+    store.set('zs.pid', p);
+  }
+  return p;
+}
+
+const S = {
+  session: null,
+  game: null,
+  prev: null,
+  room: null,
+  sel: -1,
+  pending: -1,
+  sheet: null,
+  shownRound: -1,
+  shownEnd: false,
+  panelKey: '',
+  seatKey: '',
+  mpMsg: '',
+  auto: QS.get('auto') === '1',
+};
+const DEV = {
+  rounds: parseInt(QS.get('zsr') || '0', 10) || undefined,
+  speed: QS.get('zspeed') ? parseFloat(QS.get('zspeed')) : undefined,
+};
+const handEls = new Map();
+
+/* Eigener Relay (jeder MQTT-Broker mit WebSocket): ?relay=wss://mein.server/mqtt, ?relay=aus setzt zurück */
+let customRelay = store.get('zs.relay', '');
+(() => {
+  const r = QS.get('relay');
+  if (r === 'aus' || r === 'off') customRelay = '';
+  else if (r && /^wss?:\/\/[^\s]+$/.test(r)) customRelay = r;
+  else if (r === null) return customRelay && Net.setBrokers([customRelay]);
+  if (customRelay) store.set('zs.relay', customRelay);
+  else store.del('zs.relay');
+  Net.setBrokers(customRelay ? [customRelay] : null);
+})();
+
+/* ---------- Bildschirme ---------- */
+function show(name) {
+  for (const id of ['home', 'solo', 'mp', 'game']) $(id).hidden = id !== name;
+  S.screen = name;
+}
+
+function toast(text) {
+  const t = $('toast');
+  t.textContent = text;
+  t.hidden = false;
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => (t.hidden = true), 2600);
+}
+
+let wakeLock = null;
+async function keepAwake() {
+  try {
+    if ('wakeLock' in navigator && document.visibilityState === 'visible' && !wakeLock) {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => (wakeLock = null));
+    }
+  } catch (e) {}
+}
+
+/* ---------- Solo ---------- */
+class SoloSession {
+  constructor(o) {
+    this.kind = 'solo';
+    const hooks = { onChange: () => this._emit() };
+    this.fresh = !o.snap;
+    this.host = o.snap ? GameHost.restore(o.snap, hooks) : new GameHost(o.cfg, hooks);
+  }
+  start() {
+    if (this.fresh) this.host.start();
+    else {
+      this.host.resume();
+      this._emit();
+    }
+  }
+  _emit() {
+    store.set('zs.solo', this.host.snapshot());
+    onView({ room: null, game: this.host.view(0) });
+  }
+  send(msg) {
+    return Promise.resolve(this.host.act(0, msg));
+  }
+  status() {
+    return { link: 'online', hostAlive: true };
+  }
+  close() {
+    this.host.destroy();
+  }
+}
+
+function shuffled(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = a[i];
+    a[i] = a[j];
+    a[j] = t;
+  }
+  return a;
+}
+
+function startSolo() {
+  leaveSession();
+  const names = shuffled(RM.BOT_NAMES).slice(0, settings.players - 1);
+  const seats = [{ name: settings.name || 'Du', kind: 'human' }].concat(names.map((nm) => ({ name: nm, kind: 'bot', level: settings.level })));
+  const cfg = { seats, pm1: settings.pm1, speed: DEV.speed !== undefined ? DEV.speed : settings.fast ? 0.55 : 1, rounds: DEV.rounds };
+  S.session = new SoloSession({ cfg });
+  S.session.start();
+  keepAwake();
+}
+
+function resumeSolo() {
+  const snap = store.get('zs.solo', null);
+  if (!snap) return;
+  leaveSession();
+  try {
+    S.session = new SoloSession({ snap });
+    S.session.start();
+    keepAwake();
+  } catch (e) {
+    store.del('zs.solo');
+    S.session = null;
+    goHome();
+  }
+}
+
+function leaveSession(leaveRoom) {
+  if (S.session) {
+    try {
+      S.session.close(leaveRoom);
+    } catch (e) {}
+  }
+  S.session = null;
+  S.game = null;
+  S.prev = null;
+  S.room = null;
+  S.sel = -1;
+  S.pending = -1;
+  S.shownRound = -1;
+  S.shownEnd = false;
+  S.panelKey = '';
+  S.seatKey = '';
+  handEls.clear();
+  $('hand').innerHTML = '';
+  $('trick').innerHTML = '';
+  $('seats').innerHTML = '';
+  $('panel').hidden = true;
+  $('gNet').hidden = true;
+  closeSheet();
+}
+
+function goHome() {
+  leaveSession();
+  renderHome();
+  show('home');
+}
+
+/* ---------- eingehende Sichten ---------- */
+function onView(v) {
+  S.prev = S.game;
+  S.game = v.game;
+  S.room = v.room;
+  if (S.room && S.session && S.session.kind === 'guest') {
+    const m = store.get('zs.mp', null);
+    if (m && Date.now() - m.at > 20000) {
+      m.at = Date.now();
+      store.set('zs.mp', m);
+    }
+  }
+  S.pending = -1;
+  if (S.game) {
+    if (S.screen !== 'game') {
+      show('game');
+      S.prev = null;
+    }
+    renderGame();
+    autopilot();
+  } else if (S.room) {
+    if (S.screen === 'game') {
+      closeSheet();
+      handEls.clear();
+      $('hand').innerHTML = '';
+      $('trick').innerHTML = '';
+      S.shownRound = -1;
+      S.shownEnd = false;
+    }
+    show('mp');
+    renderLobby();
+  }
+}
+
+function netState() {
+  if (!S.session || S.session.kind === 'solo') return;
+  const st = S.session.status();
+  let text = '';
+  if (st.link !== 'online') text = 'Verbindung unterbrochen. Verbinde neu …';
+  else if (!st.hostAlive) text = 'Der Raum-Eröffner ist gerade nicht erreichbar. Die Partie geht weiter, sobald er zurück ist.';
+  const g = $('gNet');
+  g.hidden = !text;
+  g.textContent = text;
+  const b = $('mNet');
+  if (b) {
+    b.hidden = !text;
+    b.textContent = text;
+  }
+}
+
+/* ---------- Start ---------- */
+function renderHome() {
+  const fan = $('fan');
+  if (!fan.firstChild) {
+    const ids = [E.cardId(2, 7), E.cardId(1, 10), 52, E.cardId(0, 13), E.cardId(3, 5)];
+    ids.forEach((id, i) => {
+      const c = el('div', 'card');
+      c.innerHTML = C.cardSVG(id);
+      c.style.transform = `rotate(${(i - 2) * 15}deg)`;
+      c.style.animationDelay = i * 70 + 'ms';
+      fan.appendChild(c);
+    });
+  }
+  const btn = $('hResume');
+  const mp = store.get('zs.mp', null);
+  const solo = store.get('zs.solo', null);
+  btn.hidden = true;
+  if (mp && Date.now() - mp.at < 3 * 3600e3 && !inClaude()) {
+    btn.hidden = false;
+    btn.textContent = 'Zurück in Raum ' + mp.code;
+    btn.onclick = () => resumeRoom(mp);
+  } else if (solo && solo.G && solo.G.phase !== 'gameEnd' && solo.G.phase !== 'init') {
+    btn.hidden = false;
+    btn.textContent = `Weiterspielen (Runde ${solo.G.round} von ${solo.G.rounds})`;
+    btn.onclick = resumeSolo;
+  }
+  $('hSolo').className = btn.hidden ? 'btn primary' : 'btn';
+}
+
+function seg(box, items, value, onPick) {
+  box.innerHTML = '';
+  for (const it of items) {
+    const b = el('button', '', it.label);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', String(it.value === value));
+    b.onclick = () => onPick(it.value);
+    box.appendChild(b);
+  }
+}
+
+function renderSolo() {
+  seg(
+    $('sPlayers'),
+    [3, 4, 5, 6].map((n) => ({ value: n, label: String(n) })),
+    settings.players,
+    (v) => {
+      settings.players = v;
+      saveSettings();
+      renderSolo();
+    }
+  );
+  $('sRounds').textContent = `${60 / settings.players} Runden, du und ${settings.players - 1} Computergegner.`;
+  seg(
+    $('sLevel'),
+    LEVELS.map((l) => ({ value: l.id, label: l.name })),
+    settings.level,
+    (v) => {
+      settings.level = v;
+      saveSettings();
+      renderSolo();
+    }
+  );
+  $('sLevelHint').textContent = LEVELS.find((l) => l.id === settings.level).hint;
+  $('sPm1').setAttribute('aria-checked', String(settings.pm1));
+}
+
+/* ---------- Mehrspieler: Eingang und Warteraum ---------- */
+function nameField(parent) {
+  const f = el('div', 'field');
+  const lab = el('label', '', 'Dein Name');
+  lab.htmlFor = 'mName';
+  const inp = el('input');
+  inp.id = 'mName';
+  inp.maxLength = 14;
+  inp.autocomplete = 'nickname';
+  inp.autocapitalize = 'words';
+  inp.spellcheck = false;
+  inp.enterKeyHint = 'done';
+  inp.value = settings.name;
+  inp.oninput = () => {
+    settings.name = inp.value.trim().slice(0, 14);
+    saveSettings();
+  };
+  f.append(lab, inp);
+  parent.appendChild(f);
+  return inp;
+}
+
+function renderMpEnter(msg) {
+  show('mp');
+  $('mTitle').textContent = 'Mit Freunden';
+  const body = $('mBody');
+  body.innerHTML = '';
+  if (inClaude()) {
+    body.appendChild(el('p', 'banner', 'In dieser Vorschau gibt es keinen Mehrspieler. Er läuft in der Version, die du selbst hochlädst.'));
+    return;
+  }
+  if (msg) body.appendChild(el('p', 'banner', msg));
+  const inp = nameField(body);
+  const needName = () => {
+    if (settings.name) return true;
+    toast('Gib zuerst deinen Namen ein.');
+    inp.focus();
+    return false;
+  };
+  const open = el('button', 'btn primary', 'Raum eröffnen');
+  open.onclick = () => needName() && hostRoom();
+  const st1 = el('div', 'stack');
+  st1.append(open, el('p', 'hint', 'Du bekommst einen Code und einen Link für deine Freunde. Dein Handy leitet die Partie, lass die Seite also offen.'));
+  body.appendChild(st1);
+
+  const f = el('div', 'field codein');
+  const lab = el('label', '', 'Raumcode');
+  lab.htmlFor = 'mCode';
+  const code = el('input');
+  code.id = 'mCode';
+  code.maxLength = 5;
+  code.autocapitalize = 'characters';
+  code.autocomplete = 'off';
+  code.spellcheck = false;
+  code.placeholder = 'ABCDE';
+  code.value = Net.normCode(QS.get('r') || '');
+  code.oninput = () => (code.value = Net.normCode(code.value));
+  const join = el('button', 'btn', 'Raum beitreten');
+  join.onclick = () => {
+    if (!needName()) return;
+    if (Net.normCode(code.value).length !== 5) {
+      toast('Der Raumcode hat 5 Buchstaben.');
+      code.focus();
+      return;
+    }
+    joinRoom(code.value);
+  };
+  f.append(lab, code);
+  const st2 = el('div', 'stack');
+  st2.append(f, join);
+  body.appendChild(st2);
+}
+
+function mpBusy(text) {
+  show('mp');
+  const body = $('mBody');
+  body.innerHTML = '';
+  body.appendChild(el('p', 'lede', text));
+}
+
+function sessionCallbacks() {
+  return {
+    onView,
+    onState: netState,
+    onGone: (text) => {
+      store.del('zs.mp');
+      leaveSession();
+      renderMpEnter(text);
+    },
+  };
+}
+
+async function hostRoom(snapRec) {
+  leaveSession();
+  mpBusy(snapRec ? 'Raum wird wieder geöffnet …' : 'Raum wird eröffnet …');
+  const name = snapRec ? snapRec.name : settings.name;
+  const hooks = {};
+  const sess = new Net.HostSession(
+    Object.assign(sessionCallbacks(), {
+      pid: myPid(),
+      name,
+      snap: snapRec ? snapRec.snap : null,
+      hooks,
+      onSnapshot: (snap) => store.set('zs.mp', { role: 'host', code: snap.code, name, at: Date.now(), snap }),
+    })
+  );
+  S.session = sess;
+  try {
+    await sess.start();
+    if (DEV.rounds || DEV.speed !== undefined) sess.room.testCfg = { rounds: DEV.rounds, speed: DEV.speed };
+    keepAwake();
+  } catch (e) {
+    if (S.session === sess) {
+      leaveSession();
+      renderMpEnter(e.message || 'Der Raum konnte nicht eröffnet werden.');
+    }
+  }
+}
+
+async function joinRoom(code, quiet) {
+  leaveSession();
+  code = Net.normCode(code);
+  mpBusy('Verbinde mit Raum ' + code + ' …');
+  const sess = new Net.GuestSession(Object.assign(sessionCallbacks(), { pid: myPid(), name: settings.name || 'Gast', code }));
+  S.session = sess;
+  try {
+    await sess.start();
+    store.set('zs.mp', { role: 'guest', code, name: settings.name, at: Date.now() });
+    keepAwake();
+  } catch (e) {
+    if (S.session === sess) {
+      leaveSession();
+      if (quiet) store.del('zs.mp');
+      renderMpEnter(e.message || 'Beitritt nicht möglich.');
+    }
+  }
+}
+
+function resumeRoom(m) {
+  if (m.role === 'host' && m.snap) hostRoom(m);
+  else joinRoom(m.code, true);
+}
+
+function shareUrl(code) {
+  return location.origin + location.pathname + '?r=' + code + (customRelay ? '&relay=' + encodeURIComponent(customRelay) : '');
+}
+
+async function shareRoom(code) {
+  const url = shareUrl(code);
+  const text = `Spiel mit mir ${APP}. Raumcode: ${code}`;
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: APP, text, url });
+      return;
+    }
+  } catch (e) {
+    if (e && e.name === 'AbortError') return;
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    toast('Link kopiert.');
+  } catch (e) {
+    toast(url);
+  }
+}
+
+function renderLobby() {
+  const r = S.room;
+  if (!r) return;
+  $('mTitle').textContent = 'Warteraum';
+  const body = $('mBody');
+  body.innerHTML = '';
+  const net = el('p', 'banner');
+  net.id = 'mNet';
+  net.hidden = true;
+  body.appendChild(net);
+
+  const head = el('div', 'stack');
+  head.append(el('span', 'label', 'Raumcode'), el('div', 'code', r.code));
+  const share = el('button', 'btn', 'Link an Freunde schicken');
+  share.onclick = () => shareRoom(r.code);
+  head.appendChild(share);
+  body.appendChild(head);
+
+  const list = el('ul', 'people');
+  r.players.forEach((p) => {
+    const li = el('li', p.online ? '' : 'off');
+    li.appendChild(el('b', '', p.name));
+    const tags = [];
+    if (p.you) tags.push('du');
+    if (p.owner) tags.push('hat eröffnet');
+    if (!p.online) tags.push('nicht verbunden');
+    li.appendChild(el('span', 'tag', tags.join(', ')));
+    list.appendChild(li);
+  });
+  const lvl = LEVELS.find((l) => l.id === r.cfg.level) || LEVELS[1];
+  for (let i = r.players.length; i < r.cfg.size; i++) {
+    const li = el('li', 'bot');
+    li.appendChild(el('b', '', 'Computer'));
+    li.appendChild(el('span', 'tag', lvl.name));
+    list.appendChild(li);
+  }
+  const who = el('div', 'stack');
+  who.append(el('span', 'label', `Am Tisch: ${r.cfg.size} Plätze`), list);
+  body.appendChild(who);
+
+  const relay = el('p', 'hint', 'Verbunden über ' + Net.relayName(r.code) + '.');
+  if (r.owner) {
+    const start = el('button', 'btn primary', `Partie starten (${60 / r.cfg.size} Runden)`);
+    start.onclick = async () => {
+      start.disabled = true;
+      const res = await S.session.send({ t: 'start' });
+      if (res.error) {
+        toast(res.error);
+        start.disabled = false;
+      }
+    };
+    body.appendChild(start);
+    const f1 = el('div', 'field');
+    f1.appendChild(el('span', 'label', 'Plätze am Tisch'));
+    const s1 = el('div', 'seg');
+    seg(
+      s1,
+      [3, 4, 5, 6].filter((n) => n >= r.players.length).map((n) => ({ value: n, label: String(n) })),
+      r.cfg.size,
+      (v) => S.session.send({ t: 'cfg', size: v })
+    );
+    f1.append(s1, el('span', 'hint', 'Freie Plätze übernimmt der Computer.'));
+    body.appendChild(f1);
+    if (r.cfg.size > r.players.length) {
+      const f2 = el('div', 'field');
+      f2.appendChild(el('span', 'label', 'Stärke der Computergegner'));
+      const s2 = el('div', 'seg');
+      seg(
+        s2,
+        LEVELS.map((l) => ({ value: l.id, label: l.name })),
+        r.cfg.level,
+        (v) => S.session.send({ t: 'cfg', level: v })
+      );
+      f2.appendChild(s2);
+      body.appendChild(f2);
+    }
+    const sw = el('button', 'switch');
+    sw.setAttribute('role', 'switch');
+    sw.setAttribute('aria-checked', String(r.cfg.pm1));
+    sw.innerHTML = '<span><b>Variante Plus/Minus 1</b><span>Die Ansagen dürfen zusammen nicht genau aufgehen.</span></span><span class="knob"></span>';
+    sw.onclick = () => S.session.send({ t: 'cfg', pm1: !r.cfg.pm1 });
+    body.appendChild(sw);
+    body.appendChild(el('p', 'hint', 'Dein Handy leitet die Partie. Lass diese Seite offen, bis ihr fertig seid.'));
+    body.appendChild(relay);
+  } else {
+    const ow = r.players.find((p) => p.owner);
+    body.appendChild(el('p', 'lede', `Warte, bis ${ow ? ow.name : 'der Eröffner'} die Partie startet.`));
+    body.appendChild(el('p', 'hint', `${r.cfg.size} Plätze, ${60 / r.cfg.size} Runden${r.cfg.pm1 ? ', Variante Plus/Minus 1' : ''}.`));
+    body.appendChild(relay);
+  }
+  netState();
+}
+
+/* ---------- Spieltisch ---------- */
+let L = { W: 390, cw: 66, ch: 94, sw: 86 };
+function computeLayout() {
+  const W = $('hand').clientWidth || $('app').clientWidth || 390;
+  const cw = Math.max(46, Math.min(88, Math.floor((W - 22) / 5.55)));
+  const sw = Math.round(Math.max(62, Math.min(92, W * 0.222)));
+  L = { W, cw, ch: Math.round(cw * 1.42), sw };
+  const st = $('game').style;
+  st.setProperty('--cw', cw + 'px');
+  st.setProperty('--sw', sw + 'px');
+}
+
+function sortHand(hand, trump) {
+  const key = (c) => {
+    if (c >= 56) return 9000 + c;
+    if (c >= 52) return c - 100;
+    const s = (c / 13) | 0;
+    const r = c % 13;
+    const order = s === trump ? 0 : s + 1;
+    return order * 100 + (12 - r);
+  };
+  return hand.slice().sort((a, b) => key(a) - key(b));
+}
+
+function handLayout(n) {
+  const rows = n > 10 ? 2 : 1;
+  const per = rows === 1 ? n : Math.ceil(n / 2);
+  const avail = L.W - 20;
+  const rowGap = Math.round(L.ch * 0.58);
+  const top = 20;
+  const pos = [];
+  for (let r = 0; r < rows; r++) {
+    const cnt = r === 0 ? per : n - per;
+    const step = cnt > 1 ? Math.min(L.cw + 6, (avail - L.cw) / (cnt - 1)) : 0;
+    const x0 = (L.W - (L.cw + (cnt - 1) * step)) / 2;
+    for (let i = 0; i < cnt; i++) pos.push({ x: Math.round(x0 + i * step), y: top + r * rowGap, z: 10 + r * 30 + i });
+  }
+  return { pos, height: top + L.ch + (rows - 1) * rowGap + 10 };
+}
+
+const KINDS = { 2: ['t', 't'], 3: ['l', 't', 'r'], 4: ['l', 't', 't', 'r'], 5: ['l', 't', 't', 't', 'r'] };
+function geometry(g) {
+  const tb = $('table');
+  const W = tb.clientWidth;
+  const H = tb.clientHeight;
+  const n = g.n;
+  const me = g.me < 0 ? 0 : g.me;
+  const kinds = KINDS[n - 1];
+  const tw = L.cw;
+  const th = L.ch;
+  const s = tw + 2;
+  const sh = 60;
+  const top = [];
+  let left = -1;
+  let right = -1;
+  for (let k = 1; k < n; k++) {
+    const seat = (me + k) % n;
+    const kd = kinds[k - 1];
+    if (kd === 't') top.push(seat);
+    else if (kd === 'l') left = seat;
+    else right = seat;
+  }
+  const yTop = 10 + sh / 2;
+  const bandTop = yTop + sh / 2 + 14;
+  const bandBot = H - 8;
+  let y1;
+  let y2;
+  if (bandBot - bandTop >= 2 * th + 8) {
+    const mid = (bandTop + bandBot) / 2;
+    y1 = mid - th / 2 - 4;
+    y2 = mid + th / 2 + 4;
+  } else {
+    y1 = bandTop + th / 2;
+    y2 = Math.max(y1 + th * 0.35, bandBot - th / 2);
+  }
+  const cx = W / 2;
+  const seats = {};
+  const slots = {};
+  const m = top.length;
+  top.forEach((seat, j) => {
+    seats[seat] = { x: (W * (j + 1)) / (m + 1), y: yTop };
+    slots[seat] = { x: cx + (j - (m - 1) / 2) * s, y: y1, z: 1 + j };
+  });
+  const ySide = Math.min(H - sh / 2 - 6, Math.max(yTop + sh + 12, (y1 + y2) / 2 - 14));
+  if (left >= 0) {
+    seats[left] = { x: 6 + L.sw / 2, y: ySide };
+    slots[left] = { x: cx - s, y: y2, z: 10 };
+  }
+  if (right >= 0) {
+    seats[right] = { x: W - 6 - L.sw / 2, y: ySide };
+    slots[right] = { x: cx + s, y: y2, z: 12 };
+  }
+  seats[me] = { x: cx, y: H + 70 };
+  slots[me] = { x: cx, y: y2, z: 11 };
+  return { W, H, seats, slots, tw, th };
+}
+
+function makeCard(id) {
+  const b = el('button', 'card');
+  b.type = 'button';
+  b.dataset.c = id;
+  b.innerHTML = C.cardSVG(id);
+  b.setAttribute('aria-label', C.cardName(id));
+  return b;
+}
+
+function tallyHTML(bid, tricks, thinking, maxDots) {
+  if (bid === null || bid === undefined) return thinking ? '<span class="wait">überlegt</span>' : '';
+  if (Math.max(bid, tricks) > (maxDots || 4)) return `<span>${tricks}/${bid}</span>`;
+  if (bid === 0 && tricks === 0) return '<span class="zero">0</span>';
+  let s = '';
+  const m = Math.max(bid, tricks);
+  for (let i = 0; i < m; i++) s += `<i class="dot${i < bid ? (i < tricks ? ' won' : '') : ' over'}"></i>`;
+  return s;
+}
+
+const nameOf = (g, i) => (i === g.me ? 'Du' : g.seats[i].name);
+
+function statusText(g) {
+  const me = g.me;
+  if (g.phase === 'trump') return g.turn === me ? 'Wähle die Trumpffarbe' : `${nameOf(g, g.dealer)} wählt die Trumpffarbe`;
+  if (g.phase === 'bid') return g.turn === me ? 'Deine Ansage' : `${nameOf(g, g.turn)} sagt an`;
+  if (g.phase === 'play') {
+    if (g.turn !== me) return `${nameOf(g, g.turn)} ist dran`;
+    const cards = g.trick.plays.map((p) => p.card);
+    if (!cards.length) return 'Du spielst aus';
+    const ls = E.leadSuit(cards);
+    if (ls >= 0 && g.hand.some((c) => E.suitOf(c) === ls)) return `Du bist dran: ${C.SUITS[ls].name} bedienen`;
+    return 'Du bist dran';
+  }
+  if (g.phase === 'trickEnd') return g.trick.winner === me ? 'Der Stich geht an dich' : `Der Stich geht an ${nameOf(g, g.trick.winner)}`;
+  if (g.phase === 'roundEnd') return 'Runde beendet';
+  if (g.phase === 'gameEnd') return 'Partie beendet';
+  return '';
+}
+
+function renderGame() {
+  const g = S.game;
+  if (!g) return;
+  const p = S.prev && S.prev.n === g.n ? S.prev : null;
+  computeLayout();
+  const hand = sortHand(g.hand, g.trumpSuit);
+  const hl = handLayout(hand.length);
+  const hBox = $('hand');
+  const newH = hl.height + 'px';
+  if (hBox.style.height !== newH) hBox.style.height = newH;
+
+  $('gRound').textContent = `Runde ${g.round} von ${g.rounds}`;
+  const bids = g.seats.map((s) => s.bid).filter((b) => b !== null);
+  const sum = bids.reduce((a, b) => a + b, 0);
+  $('gSub').textContent = bids.length === 0 ? `${g.round} ${g.round === 1 ? 'Stich' : 'Stiche'} zu vergeben` : `${bids.length < g.n ? 'Bisher angesagt' : 'Angesagt'}: ${sum} von ${g.round}`;
+  renderTrump(g);
+
+  const G = geometry(g);
+  renderSeats(g, p, G);
+  renderTrick(g, p, G);
+  renderHand(g, p, hand, hl);
+  renderMeBar(g);
+  renderPanel(g);
+  renderSheets(g);
+  netState();
+}
+
+function renderTrump(g) {
+  const b = $('gTrump');
+  let html;
+  if (g.phase === 'trump') html = '<span class="sw"></span><span><small>Trumpf</small>wird gewählt</span>';
+  else if (g.trumpSuit >= 0) {
+    const su = C.SUITS[g.trumpSuit];
+    html = `<span class="sw" style="background:${su.bg};color:${su.fg}">${C.glyphSVG(g.trumpSuit)}</span><span><small>Trumpf</small>${su.name}</span>`;
+  } else html = '<span class="sw"></span><span><small>Trumpf</small>keiner</span>';
+  if (b._k !== html) {
+    b.innerHTML = html;
+    b._k = html;
+  }
+}
+
+function renderSeats(g, p, G) {
+  const box = $('seats');
+  const key = g.n + ':' + g.me;
+  if (S.seatKey !== key) {
+    box.innerHTML = '';
+    S.seatKey = key;
+    for (let k = 1; k < g.n; k++) {
+      const i = (g.me + k) % g.n;
+      const s = el('div', 'seat');
+      s.dataset.seat = i;
+      s.innerHTML = '<div class="nm"></div><div class="row"><span class="tally"></span><span class="pts"></span></div>';
+      box.appendChild(s);
+    }
+  }
+  for (const s of box.children) {
+    const i = +s.dataset.seat;
+    const d = g.seats[i];
+    const pos = G.seats[i];
+    s.style.left = pos.x + 'px';
+    s.style.top = pos.y + 'px';
+    const away = d.kind === 'human' && (d.online === false || d.away);
+    s.classList.toggle('turn', g.turn === i);
+    s.classList.toggle('away', away && !d.auto);
+    s.querySelector('.nm').textContent = d.name + (d.kind === 'human' && d.auto ? ' (Computer)' : '');
+    const th = tallyHTML(d.bid, d.tricks, g.phase === 'bid' && g.turn === i);
+    const t = s.querySelector('.tally');
+    if (t._k !== th) {
+      t.innerHTML = th;
+      t._k = th;
+    }
+    s.querySelector('.pts').textContent = d.score;
+    let badge = s.querySelector('.badge');
+    if (g.dealer === i && !badge) {
+      badge = el('span', 'badge', 'G');
+      badge.title = 'Geber';
+      s.appendChild(badge);
+    } else if (g.dealer !== i && badge) badge.remove();
+    if (p && p.round === g.round && p.seats[i].bid === null && d.bid !== null) {
+      const old = s.querySelector('.bubble');
+      if (old) old.remove();
+      const bub = el('span', 'bubble', 'sagt ' + d.bid);
+      s.appendChild(bub);
+      setTimeout(() => bub.remove(), 2200);
+    }
+  }
+}
+
+function centerOf(r) {
+  return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+}
+
+function renderTrick(g, p, G) {
+  const box = $('trick');
+  const plays = g.trick.plays;
+  const want = new Set(plays.map((pl) => pl.card));
+  const anim = !REDUCED && document.visibilityState === 'visible';
+  const tb = $('table').getBoundingClientRect();
+
+  /* Karten des vorigen Stichs wandern zum Gewinner */
+  const stale = Array.from(box.children).filter((c) => !c._leaving && !want.has(+c.dataset.c));
+  if (stale.length) {
+    let w = -1;
+    if (p && p.trick && p.trick.winner >= 0) w = p.trick.winner;
+    else if (g.lastTrick) w = g.lastTrick.winner;
+    const target = w >= 0 ? G.seats[w] : null;
+    for (const c of stale) {
+      c._leaving = true;
+      if (!anim || !target) {
+        c.remove();
+        continue;
+      }
+      const from = centerOf(c.getBoundingClientRect());
+      const dx = tb.left + target.x - from.x;
+      const dy = tb.top + Math.min(target.y, G.H + 40) - from.y;
+      const a = c.animate([{ transform: c.style.transform, opacity: 1 }, { transform: `translate(${dx}px, ${dy}px) ${c.style.transform} scale(0.35)`, opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.5,0,.8,.4)', fill: 'forwards' });
+      a.onfinish = () => c.remove();
+      setTimeout(() => c.remove(), 600);
+    }
+  }
+
+  plays.forEach((pl) => {
+    let c = null;
+    for (const x of box.children) if (!x._leaving && +x.dataset.c === pl.card) c = x;
+    const slot = G.slots[pl.seat];
+    const rot = ((pl.card * 37) % 5) - 2;
+    const tf = `translate(${Math.round(slot.x - G.tw / 2)}px, ${Math.round(slot.y - G.th / 2)}px) rotate(${rot}deg)`;
+    if (!c) {
+      let from = null;
+      let scale = 0.4;
+      const hEl = pl.seat === g.me ? handEls.get(pl.card) : null;
+      if (hEl) {
+        from = centerOf(hEl.getBoundingClientRect());
+        scale = 1;
+        hEl.remove();
+        handEls.delete(pl.card);
+      } else if (pl.seat !== g.me && G.seats[pl.seat]) {
+        from = { x: tb.left + G.seats[pl.seat].x, y: tb.top + G.seats[pl.seat].y };
+      }
+      c = makeCard(pl.card);
+      c.tabIndex = -1;
+      c.style.transform = tf;
+      box.appendChild(c);
+      if (anim && from) {
+        const to = centerOf(c.getBoundingClientRect());
+        c.animate([{ transform: `translate(${from.x - to.x}px, ${from.y - to.y}px) ${tf} scale(${scale})`, opacity: scale === 1 ? 1 : 0.3 }, { transform: tf, opacity: 1 }], { duration: 300, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      }
+    } else if (c.style.transform !== tf) c.style.transform = tf;
+    c.style.zIndex = slot.z;
+    const ended = g.phase === 'trickEnd';
+    c.classList.toggle('win', ended && g.trick.winner === pl.seat);
+    c.classList.toggle('dim', ended && g.trick.winner !== pl.seat);
+  });
+}
+
+function renderHand(g, p, hand, hl) {
+  const box = $('hand');
+  const want = new Set(hand);
+  for (const [c, node] of handEls) {
+    if (!want.has(c)) {
+      node.remove();
+      handEls.delete(c);
+    }
+  }
+  if (S.sel >= 0 && !want.has(S.sel)) S.sel = -1;
+  const dealt = !p || p.round !== g.round;
+  const anim = !REDUCED && document.visibilityState === 'visible';
+  const myTurn = g.phase === 'play' && g.turn === g.me;
+  const legal = new Set(g.legal);
+  hand.forEach((c, i) => {
+    const pos = hl.pos[i];
+    let node = handEls.get(c);
+    const lift = S.sel === c ? -16 : 0;
+    const tf = `translate(${pos.x}px, ${pos.y + lift}px)`;
+    if (!node) {
+      node = makeCard(c);
+      handEls.set(c, node);
+      node.style.transform = tf;
+      box.appendChild(node);
+      if (dealt && anim) node.animate([{ transform: `translate(${pos.x}px, ${pos.y + 46}px)`, opacity: 0 }, { transform: tf, opacity: 1 }], { duration: 340, delay: i * 38, fill: 'backwards', easing: 'cubic-bezier(.2,.8,.2,1)' });
+    } else if (node.style.transform !== tf) node.style.transform = tf;
+    node.style.zIndex = pos.z;
+    node.classList.toggle('off', myTurn && !legal.has(c));
+    node.classList.toggle('sel', S.sel === c);
+    node.classList.toggle('pending', S.pending === c);
+  });
+}
+
+function renderMeBar(g) {
+  const bar = $('mebar');
+  const me = g.seats[g.me] || g.seats[0];
+  const mine = g.turn === g.me && (g.phase === 'play' || g.phase === 'bid' || g.phase === 'trump');
+  bar.classList.toggle('turn', mine);
+  const html =
+    `<span class="st">${esc(statusText(g))}</span>` +
+    (g.dealer === g.me ? '<span class="badge gb" title="Geber">G</span>' : '') +
+    `<span class="tally">${tallyHTML(me.bid, me.tricks, false, 7)}</span>` +
+    `<span class="pts">${me.score}</span>`;
+  if (bar._k !== html) {
+    bar.innerHTML = html;
+    bar._k = html;
+  }
+}
+
+function renderPanel(g) {
+  const panel = $('panel');
+  const mine = g.turn === g.me;
+  const key = mine && (g.phase === 'bid' || g.phase === 'trump') ? g.round + ':' + g.phase : '';
+  if (key === S.panelKey) return;
+  S.panelKey = key;
+  panel.innerHTML = '';
+  panel.hidden = !key;
+  if (!key) return;
+  if (g.phase === 'trump') {
+    panel.appendChild(el('h2', '', 'Du wählst den Trumpf'));
+    panel.appendChild(el('p', 'hint', 'Ein Zauberer wurde aufgedeckt. Als Geber bestimmst du die Trumpffarbe.'));
+    const grid = el('div', 'suitpick');
+    C.SUITS.forEach((su, s) => {
+      const b = el('button');
+      b.type = 'button';
+      b.style.background = su.bg;
+      b.style.color = su.fg;
+      b.innerHTML = C.glyphSVG(s) + `<span>${su.name}</span>`;
+      b.onclick = () => act({ t: 'trump', s });
+      grid.appendChild(b);
+    });
+    panel.appendChild(grid);
+    return;
+  }
+  const r = g.round;
+  const bids = g.seats.map((s) => s.bid).filter((b) => b !== null);
+  const sum = bids.reduce((a, b) => a + b, 0);
+  panel.appendChild(el('h2', '', 'Wie viele Stiche machst du?'));
+  let hint = bids.length ? `Bisher angesagt: ${sum} von ${r}.` : `Du sagst als Erster an. Es gibt ${r} ${r === 1 ? 'Stich' : 'Stiche'}.`;
+  if (g.noBid >= 0) hint += ` Die ${g.noBid} ist für dich gesperrt (Plus/Minus 1).`;
+  panel.appendChild(el('p', 'hint', hint));
+  const chips = el('div', 'chips');
+  const go = el('button', 'btn primary', 'Ansage wählen');
+  go.disabled = true;
+  let pick = -1;
+  for (let n = 0; n <= r; n++) {
+    const b = el('button', 'chip', String(n));
+    b.type = 'button';
+    b.disabled = n === g.noBid;
+    b.setAttribute('aria-pressed', 'false');
+    b.onclick = () => {
+      pick = n;
+      for (const x of chips.children) x.setAttribute('aria-pressed', String(x === b));
+      go.disabled = false;
+      go.textContent = n === 1 ? '1 Stich ansagen' : `${n} Stiche ansagen`;
+    };
+    chips.appendChild(b);
+  }
+  go.onclick = () => {
+    if (pick < 0) return;
+    go.disabled = true;
+    act({ t: 'bid', n: pick });
+  };
+  panel.append(chips, go);
+}
+
+async function act(msg) {
+  if (!S.session) return;
+  const res = await S.session.send(msg);
+  if (res && res.error) {
+    toast(res.error);
+    S.pending = -1;
+    S.panelKey = '';
+    if (S.game) renderGame();
+  }
+}
+
+function onHandTap(ev) {
+  const node = ev.target.closest('.card');
+  const g = S.game;
+  if (!node || !g) return;
+  const c = +node.dataset.c;
+  const myTurn = g.phase === 'play' && g.turn === g.me;
+  if (!myTurn) {
+    S.sel = S.sel === c ? -1 : c;
+    renderGame();
+    return;
+  }
+  if (S.pending >= 0) return;
+  if (g.legal.indexOf(c) < 0) {
+    const ls = E.leadSuit(g.trick.plays.map((p) => p.card));
+    toast(ls >= 0 ? `Du musst ${C.SUITS[ls].name} bedienen.` : 'Diese Karte geht gerade nicht.');
+    node.classList.remove('nope');
+    void node.offsetWidth;
+    node.classList.add('nope');
+    return;
+  }
+  if (settings.oneTap || S.sel === c) {
+    S.sel = -1;
+    S.pending = c;
+    act({ t: 'play', c });
+    if (S.game === g) renderGame();
+  } else {
+    S.sel = c;
+    renderGame();
+  }
+}
+
+/* ---------- Blätter ---------- */
+function openSheet(type, title, content, opts) {
+  opts = opts || {};
+  const sh = $('sheet');
+  sh.innerHTML = '';
+  const body = el('div', 'sheetbody');
+  const head = el('div', 'sheethead');
+  head.appendChild(el('h2', '', title));
+  if (!opts.sticky) {
+    const x = el('button', 'iconbtn');
+    x.innerHTML = ICON.close;
+    x.setAttribute('aria-label', 'Schließen');
+    x.onclick = () => (opts.back ? opts.back() : closeSheet());
+    head.appendChild(x);
+  }
+  const sc = el('div', 'scroll');
+  sc.style.minHeight = '0';
+  sc.appendChild(content);
+  body.append(head, sc);
+  if (opts.footer) body.appendChild(opts.footer);
+  sh.appendChild(body);
+  sh.hidden = false;
+  sh.onclick = (ev) => {
+    if (ev.target === sh && !opts.sticky) (opts.back || closeSheet)();
+  };
+  S.sheet = { type };
+}
+
+function closeSheet() {
+  $('sheet').hidden = true;
+  $('sheet').innerHTML = '';
+  S.sheet = null;
+}
+
+function resultsList(g, h) {
+  const order = g.seats.map((_, i) => i).sort((a, b) => h.totals[b] - h.totals[a]);
+  const ul = el('ul', 'results');
+  for (const i of order) {
+    const li = el('li', i === g.me ? 'me' : '');
+    li.appendChild(el('span', 'nm', nameOf(g, i)));
+    const d = h.deltas[i];
+    li.appendChild(el('span', 'dl ' + (d > 0 ? 'good' : 'bad'), (d > 0 ? '+' : '−') + Math.abs(d)));
+    li.appendChild(el('span', 'tt', String(h.totals[i])));
+    li.appendChild(el('span', 'sub', `${h.bids[i]} angesagt, ${h.tricks[i]} gemacht`));
+    ul.appendChild(li);
+  }
+  return ul;
+}
+
+function roundFooter(g) {
+  const foot = el('div', 'stack');
+  const me = g.seats[g.me];
+  const last = g.round >= g.rounds;
+  const waiting = g.seats.filter((s, i) => s.kind === 'human' && i !== g.me && !s.ready && !s.auto && s.online !== false && !s.away).map((s) => s.name);
+  const b = el('button', 'btn primary', me && me.ready ? (waiting.length ? 'Warte auf ' + waiting.join(', ') : 'Gleich geht es weiter') : last ? 'Endstand ansehen' : 'Nächste Runde');
+  b.disabled = !!(me && me.ready);
+  b.onclick = () => {
+    b.disabled = true;
+    act({ t: 'ready' });
+  };
+  const blk = el('button', 'btn plain', 'Block ansehen');
+  blk.onclick = () => openBlock(() => openRoundEnd(S.game));
+  foot.append(b, blk);
+  return foot;
+}
+
+function openRoundEnd(g) {
+  if (!g || g.phase !== 'roundEnd') {
+    closeSheet();
+    return;
+  }
+  const h = g.history[g.history.length - 1];
+  openSheet('round', `Runde ${h.round} gewertet`, resultsList(g, h), { sticky: true, footer: roundFooter(g) });
+}
+
+function openGameEnd(g) {
+  const h = g.history[g.history.length - 1];
+  const wn = g.winners.map((i) => nameOf(g, i));
+  const iWon = g.winners.indexOf(g.me) >= 0;
+  const title = iWon ? (wn.length > 1 ? 'Geteilter Sieg für dich' : 'Du gewinnst die Partie') : wn.length > 1 ? `${wn.join(' und ')} teilen sich den Sieg` : `${wn[0]} gewinnt die Partie`;
+  const order = g.seats.map((_, i) => i).sort((a, b) => g.seats[b].score - g.seats[a].score);
+  const ul = el('ul', 'results');
+  order.forEach((i) => {
+    const li = el('li', i === g.me ? 'me' : '');
+    li.appendChild(el('span', 'nm', nameOf(g, i)));
+    li.appendChild(el('span', 'dl', ''));
+    li.appendChild(el('span', 'tt', String(g.seats[i].score)));
+    const hits = g.history.filter((x) => x.bids[i] === x.tricks[i]).length;
+    li.appendChild(el('span', 'sub', `${hits} von ${g.history.length} Ansagen getroffen`));
+    ul.appendChild(li);
+  });
+  const foot = el('div', 'stack');
+  const solo = S.session && S.session.kind === 'solo';
+  if (solo) {
+    store.del('zs.solo');
+    const again = el('button', 'btn primary', 'Neue Partie');
+    again.onclick = startSolo;
+    foot.appendChild(again);
+  } else if (S.room && S.room.owner) {
+    const again = el('button', 'btn primary', 'Zurück in den Warteraum');
+    again.onclick = () => act({ t: 'again' });
+    foot.appendChild(again);
+  } else {
+    foot.appendChild(el('p', 'hint', 'Wer den Raum eröffnet hat, kann eine neue Partie starten.'));
+  }
+  const blk = el('button', 'btn plain', 'Block ansehen');
+  blk.onclick = () => openBlock(() => openGameEnd(S.game));
+  const home = el('button', 'btn plain', solo ? 'Zum Start' : 'Raum verlassen');
+  home.onclick = () => {
+    if (!solo) store.del('zs.mp');
+    leaveSession(true);
+    goHome();
+  };
+  foot.append(blk, home);
+  void h;
+  openSheet('end', title, ul, { sticky: true, footer: foot });
+}
+
+function renderSheets(g) {
+  if (g.phase === 'roundEnd') {
+    if (S.shownRound !== g.round) {
+      S.shownRound = g.round;
+      openRoundEnd(g);
+    } else if (S.sheet && S.sheet.type === 'round') openRoundEnd(g);
+  } else if (S.sheet && S.sheet.type === 'round') closeSheet();
+  if (g.phase === 'gameEnd') {
+    if (!S.shownEnd) {
+      S.shownEnd = true;
+      openGameEnd(g);
+    }
+  } else {
+    if (S.sheet && S.sheet.type === 'end') closeSheet();
+    S.shownEnd = false;
+  }
+}
+
+function openBlock(back) {
+  const g = S.game;
+  if (!g) return;
+  const wrap = el('div');
+  const tbl = el('table', 'block');
+  const thead = el('tr');
+  thead.appendChild(el('th', '', ''));
+  g.seats.forEach((s, i) => thead.appendChild(el('th', '', nameOf(g, i))));
+  tbl.appendChild(thead);
+  for (const h of g.history) {
+    const tr = el('tr');
+    const td0 = el('td');
+    const rs = el('span', 'rs', String(h.round));
+    if (h.trumpSuit >= 0) {
+      rs.style.background = C.SUITS[h.trumpSuit].bg;
+      rs.style.color = C.SUITS[h.trumpSuit].fg;
+    }
+    td0.appendChild(rs);
+    tr.appendChild(td0);
+    g.seats.forEach((s, i) => {
+      const td = el('td', h.bids[i] === h.tricks[i] ? 'hit' : '');
+      td.appendChild(el('b', '', String(h.totals[i])));
+      td.appendChild(el('small', '', `${h.tricks[i]} von ${h.bids[i]}`));
+      tr.appendChild(td);
+    });
+    tbl.appendChild(tr);
+  }
+  wrap.appendChild(tbl);
+  wrap.appendChild(el('p', 'hint', g.history.length ? 'Fett: Punktestand nach der Runde. Darunter: gemachte Stiche von angesagten, grün bei Treffer. Die Farbe an der Rundennummer ist der Trumpf.' : 'Noch keine Runde gewertet.'));
+  wrap.lastChild.style.marginTop = '10px';
+  openSheet('block', 'Block', wrap, { back });
+}
+
+function openRules(back) {
+  const node = $('rulesTpl').content.cloneNode(true);
+  const leg = node.querySelector('#legend');
+  const items = [
+    [E.cardId(0, 13), 'Glut', 'rot, Feuer'],
+    [E.cardId(1, 8), 'Flut', 'blau, Wellen'],
+    [E.cardId(2, 5), 'Laub', 'grün, Blätter'],
+    [E.cardId(3, 2), 'Licht', 'gelb, Strahlen'],
+    [52, 'Zauberer', 'gewinnt immer'],
+    [56, 'Narr', 'gewinnt nie'],
+    [-1, 'Rückseite', ''],
+  ];
+  for (const [id, name, sub] of items) {
+    const f = el('figure');
+    const c = el('div', 'card');
+    c.innerHTML = id >= 0 ? C.cardSVG(id) : C.backSVG();
+    const cap = el('figcaption');
+    cap.appendChild(el('b', '', name));
+    cap.appendChild(document.createTextNode(sub));
+    f.append(c, cap);
+    leg.appendChild(f);
+  }
+  const wrap = el('div');
+  wrap.appendChild(node);
+  openSheet('rules', 'Regeln und Karten', wrap, { back });
+}
+
+function openTrumpInfo() {
+  const g = S.game;
+  if (!g) return;
+  const wrap = el('div', 'stack');
+  let text;
+  if (g.trumpCard < 0) text = 'In der letzten Runde sind alle Karten verteilt. Es gibt keinen Trumpf.';
+  else if (E.isJester(g.trumpCard)) text = 'Ein Narr wurde aufgedeckt. In dieser Runde gibt es keinen Trumpf.';
+  else if (E.isWizard(g.trumpCard)) text = g.phase === 'trump' ? `Ein Zauberer wurde aufgedeckt. ${nameOf(g, g.dealer)} wählt als Geber die Trumpffarbe.` : `Ein Zauberer wurde aufgedeckt. ${nameOf(g, g.dealer)} hat ${C.SUITS[g.trumpSuit].name} als Trumpf gewählt.`;
+  else text = `Aufgedeckt wurde ${C.cardName(g.trumpCard)}. ${C.SUITS[g.trumpSuit].name} ist Trumpf und sticht jede andere Farbe.`;
+  if (g.trumpCard >= 0) {
+    const row = el('div', 'minirow');
+    const c = el('div', 'card');
+    c.style.setProperty('--cw', '96px');
+    c.innerHTML = C.cardSVG(g.trumpCard);
+    row.appendChild(c);
+    wrap.appendChild(row);
+  }
+  wrap.appendChild(el('p', '', text));
+  openSheet('trump', 'Trumpf', wrap);
+}
+
+function openLastTrick() {
+  const g = S.game;
+  const wrap = el('div', 'stack');
+  if (!g || !g.lastTrick) wrap.appendChild(el('p', 'hint', 'In dieser Runde wurde noch kein Stich gemacht.'));
+  else {
+    const row = el('div', 'minirow');
+    g.lastTrick.plays.forEach((pl) => {
+      const f = el('figure');
+      f.style.margin = '0';
+      const c = el('div', 'card');
+      c.innerHTML = C.cardSVG(pl.card);
+      const cap = el('figcaption', 'hint', nameOf(g, pl.seat));
+      if (pl.seat === g.lastTrick.winner) cap.style.fontWeight = '700';
+      f.append(c, cap);
+      row.appendChild(f);
+    });
+    wrap.appendChild(row);
+    wrap.appendChild(el('p', '', `Der Stich ging an ${g.lastTrick.winner === g.me ? 'dich' : nameOf(g, g.lastTrick.winner)}.`));
+  }
+  openSheet('last', 'Letzter Stich', wrap, { back: openMenu });
+}
+
+function switchRow(title, sub, on, onToggle) {
+  const sw = el('button', 'switch');
+  sw.setAttribute('role', 'switch');
+  sw.setAttribute('aria-checked', String(on));
+  sw.innerHTML = `<span><b>${esc(title)}</b><span>${esc(sub)}</span></span><span class="knob"></span>`;
+  sw.onclick = () => {
+    on = !on;
+    sw.setAttribute('aria-checked', String(on));
+    onToggle(on);
+  };
+  return sw;
+}
+
+function openMenu() {
+  const g = S.game;
+  const menu = el('div', 'menu');
+  const add = (label, fn, cls) => {
+    const b = el('button', 'btn ' + (cls || 'plain'), label);
+    b.onclick = fn;
+    menu.appendChild(b);
+    return b;
+  };
+  add('Block ansehen', () => openBlock(openMenu));
+  add('Letzter Stich', openLastTrick);
+  add('Regeln und Karten', () => openRules(openMenu));
+  menu.appendChild(
+    switchRow('Karte mit einem Tipp spielen', 'Sonst hebst du die Karte erst an und tippst noch einmal.', settings.oneTap, (v) => {
+      settings.oneTap = v;
+      saveSettings();
+    })
+  );
+  const solo = S.session && S.session.kind === 'solo';
+  if (solo) {
+    menu.appendChild(
+      switchRow('Schnelles Tempo', 'Die Computergegner spielen zügiger.', settings.fast, (v) => {
+        settings.fast = v;
+        saveSettings();
+        S.session.host.setSpeed(v ? 0.55 : 1);
+      })
+    );
+  } else if (S.room && S.room.owner && g) {
+    g.seats.forEach((s, i) => {
+      if (s.kind !== 'human' || i === g.me) return;
+      if (s.online === false || s.auto) {
+        add(s.auto ? `${s.name} spielt wieder selbst` : `Computer spielt für ${s.name}`, () => {
+          act({ t: 'auto', seat: i, on: !s.auto });
+          closeSheet();
+        });
+      }
+    });
+    add('Partie abbrechen, zurück in den Warteraum', () => {
+      closeSheet();
+      act({ t: 'end' });
+    });
+  }
+  if (S.room) menu.appendChild(el('p', 'hint', `Raumcode ${S.room.code}`));
+  add(solo ? 'Zum Start (Partie bleibt gespeichert)' : 'Raum verlassen', () => {
+    if (!solo) store.del('zs.mp');
+    leaveSession(true);
+    goHome();
+  });
+  openSheet('menu', 'Menü', menu);
+}
+
+/* ---------- Testhilfe: spielt die eigenen Züge automatisch (?auto=1) ---------- */
+function autopilot() {
+  if (!S.auto) return;
+  clearTimeout(autopilot.t);
+  autopilot.t = setTimeout(() => {
+    const g = S.game;
+    if (!g || !S.session || !S.auto) return;
+    const me = g.me;
+    if (g.phase === 'trump' && g.turn === me) S.session.send({ t: 'trump', s: 1 });
+    else if (g.phase === 'bid' && g.turn === me) {
+      let b = Math.min(g.round, Math.round(g.hand.length / g.n));
+      if (b === g.noBid) b = b ? b - 1 : 1;
+      S.session.send({ t: 'bid', n: b });
+    } else if (g.phase === 'play' && g.turn === me && g.legal.length) S.session.send({ t: 'play', c: g.legal[0] });
+    else if (g.phase === 'roundEnd' && !g.seats[me].ready && !S.autoHold) S.session.send({ t: 'ready' });
+  }, 60);
+}
+
+/* ---------- Start der App ---------- */
+function init() {
+  for (const b of document.querySelectorAll('[data-back]')) {
+    b.innerHTML = ICON.back;
+    b.onclick = goHome;
+  }
+  $('mBack').innerHTML = ICON.back;
+  $('mBack').onclick = () => {
+    if (S.session && S.session.kind !== 'solo') {
+      store.del('zs.mp');
+      leaveSession(true);
+    }
+    goHome();
+  };
+  $('gMenu').innerHTML = ICON.menu;
+  $('gMenu').onclick = openMenu;
+  $('gTrump').onclick = openTrumpInfo;
+  $('hSolo').onclick = () => {
+    renderSolo();
+    show('solo');
+  };
+  $('hFriends').onclick = () => renderMpEnter(S.mpMsg);
+  $('hRules').onclick = () => openRules();
+  $('sPm1').onclick = () => {
+    settings.pm1 = !settings.pm1;
+    saveSettings();
+    renderSolo();
+  };
+  $('sStart').onclick = startSolo;
+  $('hand').addEventListener('click', onHandTap);
+  window.addEventListener('resize', () => {
+    if (S.game && S.screen === 'game') {
+      S.prev = S.game;
+      renderGame();
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    if (S.session && S.session.link) S.session.link.kick();
+    if (S.game) {
+      keepAwake();
+      S.prev = S.game;
+      renderGame();
+    }
+  });
+  document.addEventListener('gesturestart', (e) => e.preventDefault());
+  setInterval(netState, 3000);
+  if ('serviceWorker' in navigator && location.protocol === 'https:' && !inClaude()) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+
+  renderHome();
+  show('home');
+  const mp = store.get('zs.mp', null);
+  const code = Net.normCode(QS.get('r') || '');
+  if (!inClaude() && mp && Date.now() - mp.at < 30 * 60e3 && (!code || code === mp.code)) resumeRoom(mp);
+  else if (code.length === 5 && !inClaude()) renderMpEnter('');
+  else if (QS.get('solo') === '1') startSolo();
+  window.__zs = { S, settings, store, poke: autopilot };
+}
+
+init();
+
+return module.exports;})(__req);
+})();
+</script>
+</body>
+</html>
