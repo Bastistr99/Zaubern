@@ -230,7 +230,9 @@ p {
   gap: 6px;
 }
 .seg button {
+  min-width: 0;
   min-height: 46px;
+  padding: 0 4px;
   border-radius: 12px;
   border: 1.5px solid var(--line);
   background: var(--surface);
@@ -574,11 +576,11 @@ p {
   color: var(--table);
   font: 800 13px/20px var(--display);
 }
+/* Ansagen und Reaktionen erscheinen kurz unten auf dem Platz selbst: Der Name bleibt lesbar, kein Nachbar wird verdeckt */
 .bubble {
   position: absolute;
   left: 50%;
-  top: 100%;
-  margin-top: 7px;
+  bottom: -4px;
   transform: translateX(-50%);
   padding: 7px 11px;
   border-radius: 11px;
@@ -1059,9 +1061,7 @@ p {
   animation-duration: 2.8s;
 }
 .bubble.self {
-  top: auto;
   bottom: 10px;
-  margin-top: 0;
   z-index: 44;
 }
 .coderow {
@@ -1347,6 +1347,86 @@ button.qr {
   display: none;
 }
 
+/* ---------- 1.4: Platz übernehmen ---------- */
+.tround {
+  margin-top: auto;
+  color: var(--ink2);
+  font-size: 12px;
+  font-weight: 600;
+}
+.tround + .tfoot {
+  margin-top: 0;
+}
+.seatpick {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pick {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: var(--raised);
+  color: var(--ink);
+  text-align: left;
+}
+.pick:active {
+  transform: translateY(1px);
+}
+.pick .who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font: 800 22px/1.1 var(--display);
+}
+.pick .who b {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.pick .pts {
+  grid-row: span 2;
+  font: 800 30px/1 var(--display);
+}
+.pick .sub {
+  padding-left: 30px;
+  color: var(--ink2);
+  font-size: 13px;
+}
+.trump .sw.none {
+  background: transparent;
+  border: 1.5px dashed var(--line);
+  color: var(--ink2);
+  font: 800 16px/1 var(--display);
+}
+/* Niedrige Bildschirme: Ansagefeld kompakter, damit die Plätze oben frei bleiben */
+@media (max-height: 720px) {
+  .panel {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .panel h2 {
+    font-size: 21px;
+  }
+  .chip {
+    height: 38px;
+    font-size: 20px;
+  }
+}
+
+/* Vier Stärken: auf schmalen Handys zwei mal zwei statt einer zu engen Reihe */
+@media (max-width: 370px) {
+  .seg.levels {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1378,7 +1458,7 @@ button.qr {
     </div>
     <div class="field">
       <span class="label" id="sLevelL">Stärke der Computergegner</span>
-      <div class="seg" id="sLevel" role="group" aria-labelledby="sLevelL"></div>
+      <div class="seg levels" id="sLevel" role="group" aria-labelledby="sLevelL"></div>
       <span class="hint" id="sLevelHint"></span>
     </div>
     <div class="field">
@@ -1912,6 +1992,12 @@ const LEVELS = {
   lehrling: { bid: 'heur', play: 'heur', bidNoise: 0.35, slip: 0.1 },
   geselle: { bid: 'mc', play: 'heur', minWorlds: 8, maxWorlds: 28, budgetMs: 20 },
   meister: { bid: 'mc', play: 'mc', minWorlds: 8, maxWorlds: 60, budgetMs: 45 },
+  /*
+   * Großmeister: rechnet länger und gewichtet die ausgedachten Kartenverteilungen danach, wie gut sie zu den
+   * Ansagen der anderen passen (infer = Strenge des Vergleichs; 1 war im Turnier zu streng, 2 passt).
+   * Turnier mit 400 Partien zu viert, 200 gegen 60 Welten: 14 Punkte pro Partie mehr als der Meister (Standardfehler 5).
+   */
+  grossmeister: { bid: 'mc', play: 'mc', minWorlds: 24, maxWorlds: 400, budgetMs: 220, infer: 2, oppW: 0.12 },
 };
 
 const now = typeof performance !== 'undefined' && performance.now ? () => performance.now() : () => Date.now();
@@ -2414,7 +2500,8 @@ function makeWorld(info, hands, bids) {
   };
 }
 
-function quickBid(info, hands, p) {
+/* Geschätzte Stiche für Sitz p mit der ausgedachten Hand (aus dessen Sicht). */
+function estFor(info, hands, p) {
   const sub = {
     n: info.n,
     seat: p,
@@ -2426,8 +2513,30 @@ function quickBid(info, hands, p) {
     trick: info.trick,
     leader: info.leader,
   };
-  const est = estimateTricks(sub, makeCtx(sub));
-  return Math.max(0, Math.min(hands[p].length, Math.round(est)));
+  return estimateTricks(sub, makeCtx(sub));
+}
+
+function quickBid(info, hands, p) {
+  return Math.max(0, Math.min(hands[p].length, Math.round(estFor(info, hands, p))));
+}
+
+/*
+ * Wie gut passt eine ausgedachte Verteilung zu den Ansagen der anderen?
+ * Wer noch k Stiche braucht, hält vermutlich eine Hand, die etwa k Stiche wert ist.
+ * Liefert ein Gewicht zwischen 0 und 1; sigma steuert, wie streng verglichen wird.
+ */
+function bidWeight(info, hands, sigma) {
+  let logw = 0;
+  for (let p = 0; p < info.n; p++) {
+    if (p === info.seat) continue;
+    const bid = info.bids[p];
+    if (bid === null || bid === undefined) continue;
+    const need = bid - info.tricks[p];
+    if (need < 0 || !hands[p].length) continue;
+    const d = estFor(info, hands, p) - Math.min(need, hands[p].length);
+    logw -= (d * d) / (2 * sigma * sigma);
+  }
+  return Math.exp(logw);
 }
 
 function heuristicBid(info) {
@@ -2459,7 +2568,7 @@ function mcBid(info, cfg, rnd) {
       const bids = worlds[k].bids.slice();
       bids[seat] = b;
       const tricks = rollout(makeWorld(info, worlds[k].hands, bids));
-      t += E.scoreFor(b, tricks[seat]);
+      t += worlds[k].w * E.scoreFor(b, tricks[seat]);
     }
     totals.set(b, t);
   };
@@ -2471,7 +2580,7 @@ function mcBid(info, cfg, rnd) {
     const hands = sampleWorld(info, ctx, rnd);
     const bids = info.bids.slice();
     for (let p = 0; p < info.n; p++) if (p !== seat && bids[p] === null) bids[p] = quickBid(info, hands, p);
-    worlds.push({ hands, bids });
+    worlds.push({ hands, bids, w: cfg.infer ? bidWeight(info, hands, cfg.infer) : 1 });
     const from = worlds.length - 1;
     for (let i = 0; i < cands.length; i++) evalBid(cands[i], from);
     /* liegt das Beste am Rand des Fensters, wird das Fenster dorthin erweitert */
@@ -2529,8 +2638,10 @@ function mcPlay(info, cfg, rnd) {
   const totals = new Float64Array(legal.length);
   const t0 = now();
   let worlds = 0;
+  const oppW = cfg.oppW === undefined ? 0.12 : cfg.oppW;
   while (worlds < cfg.maxWorlds && (worlds < cfg.minWorlds || now() - t0 < cfg.budgetMs)) {
     const hands = sampleWorld(info, ctx, rnd);
+    const wt = cfg.infer ? bidWeight(info, hands, cfg.infer) : 1;
     for (let i = 0; i < legal.length; i++) {
       const W = makeWorld(info, hands, info.bids);
       removeCard(W.hands[seat], legal[i]);
@@ -2539,8 +2650,8 @@ function mcPlay(info, cfg, rnd) {
       let u = E.scoreFor(bid, tricks[seat]);
       let opp = 0;
       for (let p = 0; p < info.n; p++) if (p !== seat) opp += E.scoreFor(info.bids[p], tricks[p]);
-      u -= (0.12 * opp) / (info.n - 1);
-      totals[i] += u;
+      u -= (oppW * opp) / (info.n - 1);
+      totals[i] += wt * u;
     }
     worlds++;
   }
@@ -3009,7 +3120,8 @@ class Room {
     return !o || !o.online || !!o.left;
   }
 
-  join(pid, name) {
+  /* seat: nur während einer Partie, der Platz, den ein Neuer übernehmen will */
+  join(pid, name, seat) {
     const known = this._player(pid);
     if (known) {
       if (name && this.phase === 'lobby') known.name = this._uniqueName(cleanName(name), pid);
@@ -3017,13 +3129,68 @@ class Room {
       this._changed();
       return { ok: true };
     }
-    if (this.phase !== 'lobby') return { error: 'Die Partie läuft schon. Warte auf die nächste.' };
+    if (this.phase !== 'lobby') {
+      const free = this.takeable();
+      if (!free.length) return { error: 'Die Partie läuft schon, und alle Plätze sind besetzt. Warte auf die nächste.' };
+      if (!Number.isInteger(seat) || free.indexOf(seat) < 0) return { error: 'Die Partie läuft schon. Such dir einen freien Platz aus.', seats: free.map((i) => this._seatInfo(i)) };
+      return this._takeSeat(pid, name, seat);
+    }
     if (this.players.length >= MAX_PLAYERS) return { error: 'Der Raum ist voll (6 Spieler).' };
     this.players.push({ pid, name: this._uniqueName(cleanName(name), pid), online: true });
     if (!this.owner) this.owner = pid;
     if (this.cfg.size < this.players.length) this.cfg.size = this.players.length;
     this._changed();
     return { ok: true };
+  }
+
+  /* Wer sitzt auf diesem Platz? */
+  _pidAt(seat) {
+    for (const k of Object.keys(this.seatOf)) if (this.seatOf[k] === seat) return k;
+    return null;
+  }
+
+  /*
+   * Plätze, die jemand mitten in der Partie übernehmen kann: Computerplätze und Plätze von Spielern,
+   * die den Raum verlassen haben. Wer nur kurz offline ist, behält seinen Platz.
+   */
+  takeable() {
+    if (this.phase !== 'game' || !this.host || this.host.G.phase === 'gameEnd') return [];
+    const out = [];
+    this.host.cfg.seats.forEach((s, i) => {
+      if (s.kind !== 'human') out.push(i);
+      else {
+        const p = this._player(this._pidAt(i));
+        if (!p || p.left) out.push(i);
+      }
+    });
+    return out;
+  }
+
+  _seatInfo(i) {
+    const s = this.host.cfg.seats[i];
+    return { seat: i, name: s.name, bot: s.kind !== 'human', score: this.host.G.scores[i] };
+  }
+
+  /* Ein Neuer setzt sich auf einen Platz und spielt mit dessen Karten und Punkten weiter. */
+  _takeSeat(pid, name, seat) {
+    if (this.players.length >= MAX_PLAYERS) return { error: 'Der Raum ist voll (6 Spieler).' };
+    const old = this._pidAt(seat);
+    if (old) {
+      delete this.seatOf[old];
+      this.players = this.players.filter((p) => p.pid !== old);
+    }
+    const p = { pid, name: this._uniqueName(cleanName(name), pid), online: true };
+    this.players.push(p);
+    this.seatOf[pid] = seat;
+    const host = this.host;
+    host.cfg.seats[seat] = Object.assign({}, host.cfg.seats[seat], { name: p.name, kind: 'human' });
+    host.away[seat] = false;
+    host.auto[seat] = false;
+    if (host.ready) host.ready[seat] = false;
+    if (!this._player(this.owner)) this.owner = pid;
+    /* neu planen: Ein Bot, der auf diesem Platz gerade überlegt, hört auf */
+    host._changed();
+    return { ok: true, seat };
   }
 
   _uniqueName(name, pid) {
@@ -3211,6 +3378,7 @@ class Room {
     const G = this.host.G;
     return Object.assign(base, {
       phase: 'game',
+      take: this.takeable(),
       names: this.host.cfg.seats.map((s) => s.name),
       bots: this.host.cfg.seats.map((s) => s.kind !== 'human'),
       size: this.host.cfg.seats.length,
@@ -6390,6 +6558,7 @@ class TableWatch {
         phase: t.phase,
         names: t.names.map((x) => x.slice(0, 16)),
         bots: game && Array.isArray(t.bots) ? t.names.map((_, i) => !!t.bots[i]) : t.names.map(() => false),
+        take: game && Array.isArray(t.take) ? t.take.filter((i) => Number.isInteger(i) && i >= 0 && i < t.size) : [],
         size: t.size,
         open: !game && t.names.length < t.size,
         round: game && Number.isInteger(t.round) ? t.round : 0,
@@ -6407,7 +6576,7 @@ class TableWatch {
   list() {
     const now = Date.now();
     /* Tische mit freien Plätzen zuerst, dann wartende, dann laufende; jeweils die neuesten oben */
-    const rank = (t) => (t.open ? 0 : t.phase === 'lobby' ? 1 : 2);
+    const rank = (t) => (t.open ? 0 : t.take.length ? 1 : t.phase === 'lobby' ? 2 : 3);
     return Object.values(this.tables)
       .filter((t) => now - t.at < T.stale && t.at - now < T.stale)
       .sort((a, b) => rank(a) - rank(b) || a.code.localeCompare(b.code));
@@ -6416,7 +6585,7 @@ class TableWatch {
   _emit() {
     if (this.closed) return;
     const list = this.list();
-    const sig = JSON.stringify(list.map((t) => [t.code, t.phase, t.names, t.size, t.round, t.over, t.short, t.hiddenBids, t.level]));
+    const sig = JSON.stringify(list.map((t) => [t.code, t.phase, t.names, t.take, t.size, t.round, t.over, t.short, t.hiddenBids, t.level]));
     if (sig === this.last) return;
     this.last = sig;
     this.onList(list);
@@ -6611,7 +6780,9 @@ class Session {
     this._becomeHost(room, 1);
   }
 
-  async join(code) {
+  /* seat: Platz, den ich in einer laufenden Partie übernehmen will */
+  async join(code, seat) {
+    this.wantSeat = Number.isInteger(seat) ? seat : undefined;
     code = normCode(code);
     if (code.length !== 5) throw new Error('Der Raumcode hat 5 Buchstaben.');
     this.role = 'probe';
@@ -6693,7 +6864,11 @@ class Session {
     try {
       for (;;) {
         if (this.closed) return false;
-        if (ask.nope) throw new Error(ask.nope);
+        if (ask.nope) {
+          const err = new Error(ask.nope.error || 'Beitritt abgelehnt');
+          if (ask.nope.seats) err.seats = ask.nope.seats;
+          throw err;
+        }
         if (this.role === 'host') return false;
         if (this.role === 'guest' && this.viewN > n0) return true;
         const now = Date.now();
@@ -6701,7 +6876,7 @@ class Session {
           if (!t0) t0 = now;
           if (now - last >= T.ask) {
             last = now;
-            this.link.send('up', { t: 'join', pid: this.pid, name: this.name });
+            this.link.send('up', { t: 'join', pid: this.pid, name: this.name, seat: this.wantSeat });
           }
           /* Bewirbt sich gerade jemand um die Leitung, warte ich das Ergebnis ab. */
           const until = Math.max(t0 + ms, this.claimSeen ? this.claimSeen + T.claim + 900 * K : 0, this.role === 'guest' ? this.lastHost + 4000 * K : 0);
@@ -6952,8 +7127,8 @@ class Session {
     const g = this.guests[pid] || (this.guests[pid] = { seen: 0, lastId: -1, lastRes: null });
     g.seen = Date.now();
     if (m.t === 'join') {
-      const res = room.join(pid, m.name);
-      if (res.error) this.link.send('d/' + pid, { t: 'nope', ep: this.ep, host: this.pid, error: res.error });
+      const res = room.join(pid, m.name, Number.isInteger(m.seat) ? m.seat : undefined);
+      if (res.error) this.link.send('d/' + pid, { t: 'nope', ep: this.ep, host: this.pid, error: res.error, seats: res.seats || null });
       else {
         room.setOnline(pid, true);
         this._sendView(pid);
@@ -7097,7 +7272,7 @@ class Session {
         a.resolve(m.error ? (a.ep0 !== m.ep ? { ok: true, late: m.error } : { error: m.error }) : { ok: true });
       }
     } else if (m.t === 'nope') {
-      if (this.asking) this.asking.nope = m.error || 'Beitritt abgelehnt';
+      if (this.asking) this.asking.nope = { error: m.error, seats: Array.isArray(m.seats) ? m.seats : null };
       else if (this.o.onGone) this.o.onGone(m.error || 'Du bist nicht mehr in diesem Raum.');
     }
   }
@@ -7241,7 +7416,7 @@ const Net = require('./net.js');
 const QR = require('../vendor/qrcode.js');
 
 const APP = 'Zauberstich';
-const VERSION = '1.3';
+const VERSION = '1.4';
 const REACTIONS = ['😂', '👏', '😱', '🙈', '😤', '🔥', 'Autsch', 'Danke'];
 /* Angaben für Impressum und Datenschutz, beim Bauen aus legal.json eingesetzt */
 const LEGAL = {"name":"Sebastian Straub","street":"Enzianweg 1","city":"89269 Vöhringen","email":"seba.straub99@gmail.com","phone":""};
@@ -7249,6 +7424,7 @@ const LEVELS = [
   { id: 'lehrling', name: 'Lehrling', hint: 'Spielt nach Gefühl und verschätzt sich öfter.' },
   { id: 'geselle', name: 'Geselle', hint: 'Sagt überlegt an und spielt solide.' },
   { id: 'meister', name: 'Meister', hint: 'Rechnet mögliche Kartenverteilungen durch und ist schwer zu schlagen.' },
+  { id: 'grossmeister', name: 'Großmeister', hint: 'Rechnet länger und liest aus euren Ansagen, wer welche Karten haben dürfte. Holt im Schnitt mehr Punkte als der Meister.' },
 ];
 const ICON = {
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
@@ -7500,6 +7676,13 @@ function goHome() {
 
 /* ---------- eingehende Sichten ---------- */
 function onView(v) {
+  const before = S.game;
+  if (before && v.game && before.round === v.game.round && before.seats.length === v.game.seats.length) {
+    v.game.seats.forEach((s, i) => {
+      const o = before.seats[i];
+      if (i !== v.game.me && o.name !== s.name && s.kind === 'human') toast(`${s.name} übernimmt den Platz von ${o.name}.`);
+    });
+  }
   S.prev = S.game;
   S.game = v.game;
   S.room = v.room;
@@ -7683,7 +7866,9 @@ function fmtNum(n) {
 
 /* Eine Kachel pro Tisch: oben Länge und Varianten, darunter die Plätze, unten was man tun kann. */
 function tableTile(t, onJoin) {
-  const b = el('button', 'ttile' + (t.open ? ' open' : ' busy'));
+  const take = t.take || [];
+  const joinable = t.open || (take.length > 0 && !t.over);
+  const b = el('button', 'ttile' + (joinable ? ' open' : ' busy') + (t.phase === 'game' ? ' running' : ''));
   b.type = 'button';
   const head = el('div', 'thead');
   const rounds = t.phase === 'game' ? t.rounds : t.short ? 8 : 60 / t.size;
@@ -7694,7 +7879,7 @@ function tableTile(t, onJoin) {
   for (let i = 0; i < t.size; i++) {
     const nm = t.names[i];
     const bot = !!(t.bots && t.bots[i]);
-    const li = el('li', nm ? (bot ? 'bot' : '') : 'free');
+    const li = el('li', nm ? (bot || take.indexOf(i) >= 0 ? 'bot' : '') : 'free');
     li.appendChild(avatar(nm, bot));
     li.appendChild(el('span', 'nm', nm || 'frei'));
     ul.appendChild(li);
@@ -7706,9 +7891,13 @@ function tableTile(t, onJoin) {
   else if (t.phase === 'lobby') foot = 'Voll, startet gleich';
   else if (t.over) foot = 'Partie vorbei';
   else foot = `Runde ${t.round} von ${t.rounds}`;
-  b.appendChild(el('span', 'tfoot', foot));
+  if (t.phase === 'game' && joinable) b.appendChild(el('span', 'tround', foot));
+  b.appendChild(el('span', 'tfoot', t.phase === 'game' && joinable ? 'Platz übernehmen' : foot));
   if (t.open) {
     b.setAttribute('aria-label', `Tisch von ${t.names[0]}, ${free === 1 ? 'ein Platz' : free + ' Plätze'} frei. Beitreten`);
+    b.onclick = () => onJoin(t.code);
+  } else if (joinable) {
+    b.setAttribute('aria-label', `Laufende Partie, ${foot}. ${take.length === 1 ? 'Ein Platz' : take.length + ' Plätze'} zu übernehmen`);
     b.onclick = () => onJoin(t.code);
   } else {
     b.disabled = true;
@@ -7853,7 +8042,7 @@ function sessionOptions(name) {
   };
 }
 
-async function enterRoom(busyText, name, go, failText, keepRecord) {
+async function enterRoom(busyText, name, go, failText, keepRecord, onSeats) {
   leaveSession();
   mpBusy(busyText);
   const sess = new Net.Session(sessionOptions(name));
@@ -7864,6 +8053,10 @@ async function enterRoom(busyText, name, go, failText, keepRecord) {
   } catch (e) {
     if (S.session !== sess) return;
     leaveSession();
+    if (e && e.seats && onSeats) {
+      onSeats(e.seats);
+      return;
+    }
     /* Ohne Netz bleibt die Sicherung liegen: Der Raum lässt sich später wieder öffnen. */
     if (!(keepRecord && e && e.net)) store.del('zs.mp');
     renderMpEnter((e && e.message) || failText);
@@ -7874,9 +8067,42 @@ function hostRoom() {
   return enterRoom('Raum wird eröffnet …', settings.name, (sess) => sess.openRoom(), 'Der Raum konnte nicht eröffnet werden.');
 }
 
-function joinRoom(code) {
+function joinRoom(code, seat) {
   code = Net.normCode(code);
-  return enterRoom('Verbinde mit Raum ' + code + ' …', settings.name || 'Gast', (sess) => sess.join(code), 'Beitritt nicht möglich.');
+  return enterRoom(
+    Number.isInteger(seat) ? 'Du setzt dich …' : 'Verbinde mit Raum ' + code + ' …',
+    settings.name || 'Gast',
+    (sess) => sess.join(code, seat),
+    'Beitritt nicht möglich.',
+    false,
+    (seats) => renderSeatPick(code, seats)
+  );
+}
+
+/* Die Partie läuft schon: freien Platz aussuchen, mit dessen Karten und Punkten weiterspielen. */
+function renderSeatPick(code, seats) {
+  show('mp');
+  $('mTitle').textContent = 'Platz übernehmen';
+  const body = $('mBody');
+  body.innerHTML = '';
+  body.appendChild(el('p', 'lede', 'Die Partie läuft schon. Setz dich auf einen dieser Plätze und spiel mit seinen Karten und Punkten weiter.'));
+  const list = el('div', 'seatpick');
+  for (const s of seats) {
+    const b = el('button', 'pick');
+    b.type = 'button';
+    const who = el('span', 'who');
+    who.append(avatar(s.name, s.bot), el('b', '', s.name));
+    const pts = el('span', 'pts', String(s.score));
+    const sub = el('span', 'sub', s.bot ? 'Computer' : 'hat den Tisch verlassen');
+    b.append(who, pts, sub);
+    b.setAttribute('aria-label', `Platz von ${s.name} übernehmen, ${s.score} Punkte`);
+    b.onclick = () => joinRoom(code, s.seat);
+    list.appendChild(b);
+  }
+  body.appendChild(list);
+  const back = el('button', 'btn', 'Zurück zu den Tischen');
+  back.onclick = () => renderMpEnter('');
+  body.appendChild(back);
 }
 
 function resumeRoom(m) {
@@ -8015,7 +8241,7 @@ function renderLobby() {
     if (r.cfg.size > r.players.length) {
       const f2 = el('div', 'field');
       f2.appendChild(el('span', 'label', 'Stärke der Computergegner'));
-      const s2 = el('div', 'seg');
+      const s2 = el('div', 'seg levels');
       seg(
         s2,
         LEVELS.map((l) => ({ value: l.id, label: l.name })),
@@ -8105,60 +8331,64 @@ function handLayout(n) {
   return { pos, height: top + L.ch + (rows - 1) * rowGap + 10 };
 }
 
-const KINDS = { 2: ['t', 't'], 3: ['l', 't', 'r'], 4: ['l', 't', 't', 'r'], 5: ['l', 't', 't', 't', 'r'] };
+/*
+ * Der Tisch von oben: Die Gegner sitzen in Spielreihenfolge von links nach rechts.
+ * Passen alle in eine Reihe, stehen sie oben nebeneinander. Sonst sitzen die mittleren oben
+ * und die beiden äußeren eine Reihe tiefer an den Rändern.
+ * Im Stich liegen ihre Karten in derselben Reihenfolge nebeneinander, deine Karte darunter.
+ * So bleiben Plätze und Ansagen immer sichtbar, auch wenn unten das Ansagefeld offen ist.
+ */
+function seatRow(list, W, sw, y, seats) {
+  const m = list.length;
+  const free = (W - m * sw) / (m + 1);
+  list.forEach((seat, j) => (seats[seat] = { x: Math.round(free * (j + 1) + sw * j + sw / 2), y }));
+}
+
 function geometry(g) {
   const tb = $('table');
   const W = tb.clientWidth;
   const H = tb.clientHeight;
   const n = g.n;
   const me = g.me < 0 ? 0 : g.me;
-  const kinds = KINDS[n - 1];
   const tw = L.cw;
   const th = L.ch;
-  const s = tw + 2;
+  const sw = L.sw;
   const sh = 60;
-  const top = [];
-  let left = -1;
-  let right = -1;
-  for (let k = 1; k < n; k++) {
-    const seat = (me + k) % n;
-    const kd = kinds[k - 1];
-    if (kd === 't') top.push(seat);
-    else if (kd === 'l') left = seat;
-    else right = seat;
-  }
-  const yTop = 10 + sh / 2;
-  const bandTop = yTop + sh / 2 + 14;
-  const bandBot = H - 8;
-  let y1;
-  let y2;
-  if (bandBot - bandTop >= 2 * th + 8) {
-    const mid = (bandTop + bandBot) / 2;
-    y1 = mid - th / 2 - 4;
-    y2 = mid + th / 2 + 4;
-  } else {
-    y1 = bandTop + th / 2;
-    y2 = Math.max(y1 + th * 0.35, bandBot - th / 2);
-  }
-  const cx = W / 2;
+  const opp = [];
+  for (let k = 1; k < n; k++) opp.push((me + k) % n);
   const seats = {};
   const slots = {};
-  const m = top.length;
-  top.forEach((seat, j) => {
-    seats[seat] = { x: (W * (j + 1)) / (m + 1), y: yTop };
-    slots[seat] = { x: cx + (j - (m - 1) / 2) * s, y: y1, z: 1 + j };
-  });
-  const ySide = Math.min(H - sh / 2 - 6, Math.max(yTop + sh + 12, (y1 + y2) / 2 - 14));
-  if (left >= 0) {
-    seats[left] = { x: 6 + L.sw / 2, y: ySide };
-    slots[left] = { x: cx - s, y: y2, z: 10 };
+  const yTop = 8 + sh / 2;
+  let seatBottom;
+  if ((W - opp.length * sw) / (opp.length + 1) >= 6) {
+    seatRow(opp, W, sw, yTop, seats);
+    seatBottom = yTop + sh / 2;
+  } else {
+    seatRow(opp.slice(1, -1), W, sw, yTop, seats);
+    const y2 = yTop + sh + 14;
+    seats[opp[0]] = { x: 6 + sw / 2, y: y2 };
+    seats[opp[opp.length - 1]] = { x: W - 6 - sw / 2, y: y2 };
+    seatBottom = y2 + sh / 2;
   }
-  if (right >= 0) {
-    seats[right] = { x: W - 6 - L.sw / 2, y: ySide };
-    slots[right] = { x: cx + s, y: y2, z: 12 };
+  /* Stich: Gegnerkarten in einer Reihe, deine darunter; wird es eng, überlappen die Reihen */
+  const m = opp.length;
+  const step = m > 1 ? Math.min(tw + 4, (W - 16 - tw) / (m - 1)) : 0;
+  const band0 = seatBottom + 14;
+  const band1 = H - 8;
+  let yA;
+  let yC;
+  if (band1 - band0 >= 2 * th + 14) {
+    const mid = (band0 + band1) / 2;
+    yA = mid - th / 2 - 7;
+    yC = mid + th / 2 + 7;
+  } else {
+    yA = band0 + th / 2;
+    yC = Math.max(yA + th * 0.42, band1 - th / 2);
   }
+  const cx = W / 2;
+  opp.forEach((seat, j) => (slots[seat] = { x: cx + (j - (m - 1) / 2) * step, y: yA, z: 1 + j }));
+  slots[me] = { x: cx, y: yC, z: 20 };
   seats[me] = { x: cx, y: H + 70 };
-  slots[me] = { x: cx, y: y2, z: 11 };
   return { W, H, seats, slots, tw, th };
 }
 
@@ -8260,11 +8490,13 @@ function renderGame() {
 function renderTrump(g) {
   const b = $('gTrump');
   let html;
-  if (g.phase === 'trump') html = '<span class="sw"></span><span><small>Trumpf</small>wird gewählt</span>';
+  if (g.phase === 'trump') html = '<span class="sw none">…</span><span><small>Trumpf</small>wird gewählt</span>';
   else if (g.trumpSuit >= 0) {
     const su = C.SUITS[g.trumpSuit];
     html = `<span class="sw" style="background:${su.bg};color:${su.fg}">${C.glyphSVG(g.trumpSuit)}</span><span><small>Trumpf</small>${su.name}</span>`;
-  } else html = '<span class="sw"></span><span><small>Trumpf</small>keiner</span>';
+  } else
+    html =
+      '<span class="sw none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M7 17L17 7"/></svg></span><span><small>Trumpf</small>keiner</span>';
   if (b._k !== html) {
     b.innerHTML = html;
     b._k = html;
@@ -8295,7 +8527,7 @@ function renderSeats(g, p, G) {
     s.classList.toggle('turn', g.turn === i);
     s.classList.toggle('away', away && !d.auto);
     s.querySelector('.nm').textContent = d.name + (d.kind === 'human' && d.auto ? ' (Computer)' : '');
-    const th = g.hiddenBids && g.phase === 'bid' ? `<span class="wait">${d.bidDone ? 'angesagt' : 'überlegt'}</span>` : tallyHTML(d.bid, d.tricks, g.phase === 'bid' && g.turn === i);
+    const th = g.hiddenBids && g.phase === 'bid' ? `<span class="wait">${d.bidDone ? 'angesagt' : 'überlegt'}</span>` : tallyHTML(d.bid, d.tricks, g.phase === 'bid' && g.turn === i, L.sw < 100 ? 3 : 4);
     const t = s.querySelector('.tally');
     if (t._k !== th) {
       t.innerHTML = th;
