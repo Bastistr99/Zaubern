@@ -1158,6 +1158,195 @@ button.qr {
   }
 }
 
+/* ---------- 1.3: Tische, Nummer der Partie ---------- */
+.tables {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ttile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 176px;
+  padding: 10px;
+  border-radius: 16px;
+  border: 1.5px solid var(--line);
+  background: var(--raised);
+  text-align: left;
+  color: var(--ink);
+}
+.ttile.new {
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 14px;
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--table);
+}
+.ttile.new .plus {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-bottom: auto;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+.ttile.new .plus::before,
+.ttile.new .plus::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 2.5px;
+  margin: -1.25px 0 0 -10px;
+  border-radius: 2px;
+  background: currentColor;
+}
+.ttile.new .plus::after {
+  transform: rotate(90deg);
+}
+.ttile.new b {
+  font: 800 24px/1 var(--display);
+}
+.ttile.new .sub {
+  font-size: 12px;
+  line-height: 1.3;
+  opacity: 0.75;
+}
+.ttile.empty {
+  justify-content: center;
+  border-style: dashed;
+  background: transparent;
+  color: var(--ink2);
+  font-size: 14px;
+  line-height: 1.35;
+}
+.ttile.busy {
+  background: var(--surface);
+}
+.ttile.busy:disabled {
+  opacity: 1;
+}
+.ttile.busy .tseats,
+.ttile.busy .thead {
+  opacity: 0.62;
+}
+.thead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 22px;
+}
+.ttag {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--table);
+  font: 800 14px/1 var(--display);
+  letter-spacing: 0.2px;
+}
+.tseats {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tseats li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.tseats .nm {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tseats li.free,
+.tseats li.bot {
+  color: var(--ink2);
+  font-weight: 400;
+}
+.av {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font: 800 14px/1 var(--display);
+}
+.av.free {
+  border: 1.5px dashed var(--line);
+}
+.av.bot {
+  border: 1.5px solid var(--line);
+  background: repeating-linear-gradient(45deg, transparent 0 3px, var(--line) 3px 4.5px);
+}
+.tfoot {
+  margin-top: auto;
+  font: 800 18px/1 var(--display);
+}
+.ttile.open .tfoot {
+  align-self: stretch;
+  padding: 8px 0 7px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--table);
+  text-align: center;
+}
+.ttile.busy .tfoot {
+  color: var(--ink2);
+}
+.ttile.open:active,
+.ttile.new:active {
+  transform: translateY(1px);
+}
+.joinrow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: end;
+}
+.joinrow .btn {
+  width: auto;
+  min-height: 50px;
+  border-radius: 13px;
+}
+.stats {
+  margin: 0;
+}
+.trow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+.trow b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topmid .gno {
+  display: inline-block;
+  flex: none;
+  padding: 3px 6px 2px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  color: var(--ink2);
+  font: 800 13px/1 var(--display);
+  letter-spacing: 0.2px;
+}
+.topmid .gno[hidden] {
+  display: none;
+}
+
 </style>
 </head>
 <body>
@@ -1224,7 +1413,7 @@ button.qr {
   <section id="game" class="screen" hidden>
     <header class="top">
       <button class="iconbtn" id="gMenu" aria-label="Menü"></button>
-      <div class="topmid"><b id="gRound"></b><span id="gSub"></span></div>
+      <div class="topmid"><div class="trow"><b id="gRound"></b><span class="gno" id="gNo" hidden></span></div><span id="gSub"></span></div>
       <button class="trump" id="gTrump"></button>
     </header>
     <div class="net" id="gNet" hidden role="status"></div>
@@ -1299,7 +1488,7 @@ button.qr {
       <h3>Variante Plus/Minus 1</h3>
       <p>Die Summe aller Ansagen darf nicht der Zahl der Stiche entsprechen. Wer zuletzt ansagt, kann eine Zahl deshalb nicht wählen. So trifft nie die ganze Runde.</p>
     </section>
-    <p class="hint">Zauberstich ist ein privates Projekt ohne Werbung und ohne Tracking. Schrift: Big Shoulders Display, SIL Open Font License. QR-Code: qrcode-generator von Kazuhiko Arase, MIT-Lizenz.</p>
+    <p class="hint">Zauberstich ist ein privates Projekt ohne Werbung und ohne Nutzerprofile. Gezählt wird nur, wie viele Partien mit Freunden gespielt werden, ohne Namen. Schrift: Big Shoulders Display, SIL Open Font License. QR-Code: qrcode-generator von Kazuhiko Arase, MIT-Lizenz.</p>
   </div>
 </template>
 
@@ -2729,7 +2918,12 @@ class Room {
     this.owner = null;
     /* Stellvertretung: Spieler am leitenden Gerät. Darf handeln, solange der Eröffner nicht erreichbar ist. */
     this.deputy = null;
-    this.cfg = { size: 4, level: 'geselle', pm1: false, dealerPicks: false, short: false, hiddenBids: false };
+    /* open: Der Tisch steht in der Liste „Offene Tische“, solange Plätze frei sind. */
+    this.cfg = { size: 4, level: 'geselle', pm1: false, dealerPicks: false, short: false, hiddenBids: false, open: true };
+    /* Zählung über alle Räume: laufende Nummer dieser Partie im Raum, schon gemeldet, Nummer über alle Partien */
+    this.gameNo = 0;
+    this.counted = 0;
+    this.nr = 0;
     /* Schnell-Reaktionen: flüchtig, nur die letzten paar */
     this.reacts = [];
     this.reactSeq = 0;
@@ -2751,6 +2945,10 @@ class Room {
     r.seatOf = snap.seatOf || {};
     r.v = (snap.v || 0) + 1;
     r.reactSeq = snap.reactSeq || 0;
+    if (r.cfg.open === undefined) r.cfg.open = true;
+    r.gameNo = snap.gameNo || 0;
+    r.counted = snap.counted || 0;
+    r.nr = snap.nr || 0;
     if (snap.game) {
       r.host = GameHost.restore(snap.game, r._hostHooks());
       r.host.resume();
@@ -2768,6 +2966,9 @@ class Room {
       seatOf: this.seatOf,
       v: this.v,
       reactSeq: this.reactSeq,
+      gameNo: this.gameNo,
+      counted: this.counted,
+      nr: this.nr,
       game: this.host ? this.host.snapshot() : null,
     };
   }
@@ -2890,6 +3091,7 @@ class Room {
       if (typeof msg.dealerPicks === 'boolean') this.cfg.dealerPicks = msg.dealerPicks;
       if (typeof msg.short === 'boolean') this.cfg.short = msg.short;
       if (typeof msg.hiddenBids === 'boolean') this.cfg.hiddenBids = msg.hiddenBids;
+      if (typeof msg.open === 'boolean') this.cfg.open = msg.open;
       if (this.cfg.hiddenBids) this.cfg.pm1 = false;
       this._changed();
       return { ok: true };
@@ -2976,7 +3178,46 @@ class Room {
     this.host = new GameHost(cfg, this._hostHooks());
     for (const p of this.players) if (!p.online) this.host.away[this.seatOf[p.pid]] = true;
     this.phase = 'game';
+    this.gameNo++;
+    this.nr = 0;
     this.host.start();
+    /* Partien mit mindestens zwei echten Spielern werden über alle Räume gezählt, jede genau einmal. */
+    if (this.players.length >= 2 && this.counted !== this.gameNo && this.hooks.onGameStart) {
+      this.counted = this.gameNo;
+      this.hooks.onGameStart(this, { humans: this.players.length, gameNo: this.gameNo });
+    }
+  }
+
+  /* Die Nummer dieser Partie über alle Räume, sobald der Zähler geantwortet hat. */
+  setNr(gameNo, nr) {
+    if (gameNo !== this.gameNo || !Number.isInteger(nr) || nr <= 0 || this.nr === nr) return;
+    this.nr = nr;
+    this._changed();
+  }
+
+  /*
+   * Eintrag für die Liste der Tische, oder null bei einem privaten Tisch.
+   * Im Warteraum mit den Namen der Wartenden, während der Partie mit allen Plätzen und der Runde.
+   */
+  listing() {
+    if (!this.cfg.open || !this.players.length) return null;
+    const base = { code: this.code, level: this.cfg.level, short: !!this.cfg.short, hiddenBids: !!this.cfg.hiddenBids };
+    if (this.phase === 'lobby') {
+      const ow = this._player(this.owner);
+      const names = (ow ? [ow] : []).concat(this.players.filter((p) => p !== ow)).map((p) => p.name);
+      return Object.assign(base, { phase: 'lobby', names, size: this.cfg.size });
+    }
+    if (!this.host) return null;
+    const G = this.host.G;
+    return Object.assign(base, {
+      phase: 'game',
+      names: this.host.cfg.seats.map((s) => s.name),
+      bots: this.host.cfg.seats.map((s) => s.kind !== 'human'),
+      size: this.host.cfg.seats.length,
+      round: G.round,
+      rounds: G.rounds,
+      over: G.phase === 'gameEnd',
+    });
   }
 
   viewFor(pid) {
@@ -3003,6 +3244,7 @@ class Room {
       owner: this._boss(pid),
       players: this.players.map((p) => ({ name: p.name, owner: p.pid === this.owner, boss: this._boss(p.pid), online: p.online, you: p.pid === pid })),
       cfg: this.cfg,
+      nr: this.phase === 'game' ? this.nr : 0,
       game,
     };
   }
@@ -5978,6 +6220,11 @@ class Link {
     return this.outQ;
   }
 
+  /* Sendet fertige Bytes auf ein Thema außerhalb des Raums, etwa die Liste offener Tische. */
+  pub(topic, bytes, retain) {
+    return !!(this.mq && this.mq.open && this.mq.publish(topic, bytes, retain));
+  }
+
   /* Verschlüsselt eine Nachricht auf Vorrat, damit sie später ohne Wartezeit rausgehen kann. */
   pack(obj) {
     return seal(this.key, obj);
@@ -6060,7 +6307,127 @@ function relayName(code) {
 }
 
 function toUI(v) {
-  return { room: { v: v.v, code: v.code, phase: v.phase, owner: v.owner, players: v.players, cfg: v.cfg, reacts: v.reacts || [] }, game: v.game };
+  return { room: { v: v.v, code: v.code, phase: v.phase, owner: v.owner, players: v.players, cfg: v.cfg, nr: v.nr || 0, reacts: v.reacts || [] }, game: v.game };
+}
+
+/*
+ * Offene Tische: Das leitende Handy eines Raums meldet ihn unter zst1/tische/<…> auf seinem Relay,
+ * als gespeicherte Nachricht (retain), damit neue Besucher die Liste sofort sehen. Verschlüsselt mit einem
+ * Schlüssel, den jede Kopie der App kennt: Das ist kein Geheimnis, hält aber fremde Nachrichten fern.
+ */
+const TABLES = 'zst1/tische/';
+let tablesKey = null;
+function tableKey() {
+  if (!tablesKey) tablesKey = deriveKey('offene-tische');
+  return tablesKey;
+}
+function tableTopic(code) {
+  return TABLES + hash53('tisch|' + code);
+}
+function validTable(t) {
+  return (
+    t &&
+    typeof t.code === 'string' &&
+    /^[A-HJ-NP-Z]{5}$/.test(t.code) &&
+    (t.phase === 'lobby' || t.phase === 'game') &&
+    Array.isArray(t.names) &&
+    t.names.length >= 1 &&
+    t.names.length <= 6 &&
+    t.names.every((x) => typeof x === 'string') &&
+    Number.isInteger(t.size) &&
+    t.size >= 3 &&
+    t.size <= 6 &&
+    Number.isFinite(t.at)
+  );
+}
+
+/* Beobachtet die offenen Tische auf allen Relays, solange der Bildschirm offen ist. */
+class TableWatch {
+  constructor(onList) {
+    this.onList = onList;
+    this.tables = {};
+    this.conns = [];
+    this.closed = false;
+    this.last = '';
+    this.timer = setInterval(() => this._emit(), 2000);
+  }
+
+  async start() {
+    this.key = await tableKey();
+    for (const url of Array.from(new Set(brokers()))) this._conn(url, 0);
+  }
+
+  _conn(url, tries) {
+    if (this.closed) return;
+    const mq = new MiniMqtt(url, {
+      keepalive: 25,
+      onMessage: (t, b) => this._in(t, b),
+      onClose: () => {
+        if (this.closed) return;
+        this.conns = this.conns.filter((c) => c !== mq);
+        setTimeout(() => this._conn(url, tries + 1), Math.min(30000, 3000 * (tries + 1)));
+      },
+    });
+    this.conns.push(mq);
+    mq.connect(8000)
+      .then(() => {
+        if (this.closed) mq.close();
+        else mq.subscribe([TABLES + '+']);
+      })
+      .catch(() => {});
+  }
+
+  async _in(topic, bytes) {
+    if (this.closed || topic.indexOf(TABLES) !== 0) return;
+    if (!bytes || !bytes.length) {
+      delete this.tables[topic];
+    } else {
+      const t = await unseal(this.key, bytes);
+      if (!validTable(t)) return;
+      const game = t.phase === 'game';
+      this.tables[topic] = {
+        code: t.code,
+        phase: t.phase,
+        names: t.names.map((x) => x.slice(0, 16)),
+        bots: game && Array.isArray(t.bots) ? t.names.map((_, i) => !!t.bots[i]) : t.names.map(() => false),
+        size: t.size,
+        open: !game && t.names.length < t.size,
+        round: game && Number.isInteger(t.round) ? t.round : 0,
+        rounds: game && Number.isInteger(t.rounds) ? t.rounds : 0,
+        over: game && !!t.over,
+        level: typeof t.level === 'string' ? t.level : '',
+        short: !!t.short,
+        hiddenBids: !!t.hiddenBids,
+        at: t.at,
+      };
+    }
+    this._emit();
+  }
+
+  list() {
+    const now = Date.now();
+    /* Tische mit freien Plätzen zuerst, dann wartende, dann laufende; jeweils die neuesten oben */
+    const rank = (t) => (t.open ? 0 : t.phase === 'lobby' ? 1 : 2);
+    return Object.values(this.tables)
+      .filter((t) => now - t.at < T.stale && t.at - now < T.stale)
+      .sort((a, b) => rank(a) - rank(b) || a.code.localeCompare(b.code));
+  }
+
+  _emit() {
+    if (this.closed) return;
+    const list = this.list();
+    const sig = JSON.stringify(list.map((t) => [t.code, t.phase, t.names, t.size, t.round, t.over, t.short, t.hiddenBids, t.level]));
+    if (sig === this.last) return;
+    this.last = sig;
+    this.onList(list);
+  }
+
+  close() {
+    this.closed = true;
+    clearInterval(this.timer);
+    for (const c of this.conns) c.close();
+    this.conns = [];
+  }
 }
 
 /* Zeiten in Millisekunden. Tests dürfen sie über __ZS_TIMING = { scale } gemeinsam verkürzen. */
@@ -6081,6 +6448,8 @@ const T = {
   find: 6400 * K, /* so lange sucht ein neuer Mitspieler nach dem Raum */
   ask: 1600 * K, /* Abstand der Anfragen beim Suchen */
   boost: 20000 * K,
+  list: 20000 * K, /* so oft erneuert ein offener Tisch seinen Eintrag */
+  stale: 65000 * K, /* ältere Einträge gelten als verwaist */
 };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -6123,6 +6492,8 @@ class Session {
     this.flush = null;
     this.defended = 0;
     this.byeBytes = null;
+    this.listed = '';
+    this.listedAt = 0;
     /* folgend */
     this.view = null;
     this.viewKey = '';
@@ -6149,7 +6520,38 @@ class Session {
   }
 
   _hooks() {
-    return Object.assign({}, this.o.hooks || {}, { onUpdate: () => this._dirty() });
+    return Object.assign({}, this.o.hooks || {}, {
+      onUpdate: () => this._dirty(),
+      onGameStart: (room, info) => {
+        if (!this.o.onGameStart) return;
+        Promise.resolve(this.o.onGameStart(info))
+          .then((nr) => room.setNr(info.gameNo, nr))
+          .catch(() => {});
+      },
+    });
+  }
+
+  /* Den Tisch in der Liste „Offene Tische“ melden, aktualisieren oder austragen. */
+  _list(force) {
+    if (this.role !== 'host' || !this.room || !this.link || this.link.state !== 'online') return;
+    const entry = this.room.listing();
+    const now = Date.now();
+    const sig = entry ? JSON.stringify(entry) : '';
+    if (!force && sig === this.listed && (!entry || now - this.listedAt < T.list)) return;
+    const topic = tableTopic(this.code);
+    if (!entry) {
+      if (this.listed && this.link.pub(topic, new Uint8Array(0), true)) this.listed = '';
+      return;
+    }
+    this.listed = sig;
+    this.listedAt = now;
+    const link = this.link;
+    tableKey()
+      .then((k) => seal(k, Object.assign(entry, { at: Date.now() })))
+      .then((b) => {
+        if (this.role === 'host' && this.link === link && this.listed === sig) link.pub(topic, b, true);
+      })
+      .catch(() => {});
   }
 
   _notify() {
@@ -6332,6 +6734,8 @@ class Session {
     this.claiming = null;
     this.hostBye = false;
     this.leftHost = '';
+    /* Unbekannt, was zuletzt in der Liste stand: beim ersten Mal auf jeden Fall melden oder austragen */
+    this.listed = '?';
     this.guests = {};
     const now = Date.now();
     for (const p of room.players) if (p.pid !== this.pid) this.guests[p.pid] = { seen: now, lastId: -1, lastRes: null };
@@ -6385,6 +6789,7 @@ class Session {
   /* Ein anderes Gerät leitet mit neuerer Amtszeit: einreihen. */
   _stepDown(ep, host) {
     this._log('abgelöst', { by: host, newEp: ep });
+    this.listed = '';
     clearTimeout(this.flush);
     this.flush = null;
     if (this.room) this.room.destroy();
@@ -6485,6 +6890,7 @@ class Session {
         return;
       }
       this.link.send('all', { t: 'hb', ep: this.ep, host: this.pid, v: this.room.v });
+      this._list(false);
       for (const p of this.room.players) {
         if (p.pid === this.pid || !p.online) continue;
         const g = this.guests[p.pid];
@@ -6523,6 +6929,7 @@ class Session {
     for (const p of room.players) {
       if (p.pid !== this.pid) this._sendView(p.pid);
     }
+    this._list(false);
     if (this.o.onView) this.o.onView(toUI(room.viewFor(this.pid)));
   }
 
@@ -6797,6 +7204,8 @@ class Session {
     if (this.closed) return;
     if (this.link && !silent) {
       if (this.role === 'host' && this.room) {
+        /* Aus der Liste austragen. Bleiben andere im Raum, meldet ihn das nächste leitende Handy neu. */
+        if (this.listed) this.link.pub(tableTopic(this.code), new Uint8Array(0), true);
         if (this.room.players.length > 1) this.link.send('all', { t: 'snap', ep: this.ep, host: this.pid, snap: JSON.parse(JSON.stringify(this._snap())) });
         this.link.send('all', { t: 'bye', ep: this.ep, host: this.pid, leave: !!leave });
       } else if (leave) this.link.send('up', { t: 'leave', pid: this.pid });
@@ -6819,7 +7228,7 @@ class Session {
   }
 }
 
-module.exports = { Session, Link, brokers, setBrokers, relayName, brokerIndexFor, normCode, PREFIX, DEFAULT_BROKERS, TIMING: T };
+module.exports = { Session, TableWatch, Link, brokers, setBrokers, relayName, brokerIndexFor, normCode, PREFIX, DEFAULT_BROKERS, TIMING: T };
 
 return module.exports;})(__req);
 __m["app"]=(function(require){var module={exports:{}};var exports=module.exports;
@@ -6832,7 +7241,7 @@ const Net = require('./net.js');
 const QR = require('../vendor/qrcode.js');
 
 const APP = 'Zauberstich';
-const VERSION = '1.2';
+const VERSION = '1.3';
 const REACTIONS = ['😂', '👏', '😱', '🙈', '😤', '🔥', 'Autsch', 'Danke'];
 /* Angaben für Impressum und Datenschutz, beim Bauen aus legal.json eingesetzt */
 const LEGAL = {"name":"Sebastian Straub","street":"Enzianweg 1","city":"89269 Vöhringen","email":"seba.straub99@gmail.com","phone":""};
@@ -6901,6 +7310,8 @@ function myPid() {
   if (!p) {
     p = Math.random().toString(36).slice(2, 12) + Date.now().toString(36).slice(-4);
     store.set('zs.pid', p);
+    /* Ein Gerät spielt zum ersten Mal mit Freunden: einmal mitzählen, ohne etwas zusätzlich zu speichern. */
+    counter('hit', 'geraete');
   }
   return p;
 }
@@ -6942,7 +7353,32 @@ let customRelay = store.get('zs.relay', '');
 function show(name) {
   for (const id of ['home', 'solo', 'mp', 'game']) $(id).hidden = id !== name;
   S.screen = name;
+  if (name !== 'mp') stopWatch();
 }
+
+/*
+ * Zähler über alle Spieler: ein kostenloser Zähldienst (Abacus) hält zwei Zahlen.
+ * partien: Partien mit mindestens zwei echten Spielern, gemeldet beim Start vom leitenden Handy.
+ * geraete: Geräte, die zum ersten Mal mit Freunden spielen.
+ * Keine Namen, keine Kennungen. Fällt der Dienst aus, zählt die App einfach nicht.
+ */
+const COUNTER = { base: globalThis.__ZS_COUNTER || 'https://abacus.jasoncameron.dev', ns: 'zauberstichbastistr99' };
+async function counter(op, key) {
+  if (inClaude() || globalThis.__ZS_COUNTER === false) return 0;
+  const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+  const t = setTimeout(() => ctl && ctl.abort(), 6000);
+  try {
+    const res = await fetch(`${COUNTER.base}/${op}/${COUNTER.ns}/${key}`, { cache: 'no-store', signal: ctl ? ctl.signal : undefined });
+    if (!res.ok) return 0;
+    const j = await res.json();
+    return Number.isInteger(j.value) && j.value > 0 ? j.value : 0;
+  } catch (e) {
+    return 0;
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 
 function toast(text) {
   const t = $('toast');
@@ -7218,8 +7654,72 @@ function nameField(parent) {
   return inp;
 }
 
+/* ---------- Mit Freunden: Tische ---------- */
+
+let tableWatch = null;
+function stopWatch() {
+  if (tableWatch) tableWatch.close();
+  tableWatch = null;
+}
+
+const AV_COLORS = ['var(--glut)', 'var(--flut)', 'var(--laub)', 'var(--licht)'];
+function avatar(name, bot) {
+  const a = el('span', 'av' + (bot ? ' bot' : name ? '' : ' free'));
+  if (name && !bot) {
+    let h = 7;
+    for (const ch of name.toLowerCase()) h = (h * 31 + ch.codePointAt(0)) >>> 0;
+    const k = h % 4;
+    a.style.background = AV_COLORS[k];
+    a.style.color = k === 3 ? '#221638' : '#fff6e6';
+    a.textContent = Array.from(name)[0].toUpperCase();
+  }
+  a.setAttribute('aria-hidden', 'true');
+  return a;
+}
+
+function fmtNum(n) {
+  return n.toLocaleString('de-DE');
+}
+
+/* Eine Kachel pro Tisch: oben Länge und Varianten, darunter die Plätze, unten was man tun kann. */
+function tableTile(t, onJoin) {
+  const b = el('button', 'ttile' + (t.open ? ' open' : ' busy'));
+  b.type = 'button';
+  const head = el('div', 'thead');
+  const rounds = t.phase === 'game' ? t.rounds : t.short ? 8 : 60 / t.size;
+  head.appendChild(el('span', 'ttag', t.short ? 'Kurz' : rounds + ' Runden'));
+  if (t.hiddenBids) head.appendChild(el('span', 'ttag', 'Verdeckt'));
+  b.appendChild(head);
+  const ul = el('ul', 'tseats');
+  for (let i = 0; i < t.size; i++) {
+    const nm = t.names[i];
+    const bot = !!(t.bots && t.bots[i]);
+    const li = el('li', nm ? (bot ? 'bot' : '') : 'free');
+    li.appendChild(avatar(nm, bot));
+    li.appendChild(el('span', 'nm', nm || 'frei'));
+    ul.appendChild(li);
+  }
+  b.appendChild(ul);
+  const free = t.size - t.names.length;
+  let foot;
+  if (t.open) foot = 'Beitreten';
+  else if (t.phase === 'lobby') foot = 'Voll, startet gleich';
+  else if (t.over) foot = 'Partie vorbei';
+  else foot = `Runde ${t.round} von ${t.rounds}`;
+  b.appendChild(el('span', 'tfoot', foot));
+  if (t.open) {
+    b.setAttribute('aria-label', `Tisch von ${t.names[0]}, ${free === 1 ? 'ein Platz' : free + ' Plätze'} frei. Beitreten`);
+    b.onclick = () => onJoin(t.code);
+  } else {
+    b.disabled = true;
+    b.setAttribute('aria-label', `Tisch von ${t.names[0]}. ${foot}`);
+  }
+  return b;
+}
+
 function renderMpEnter(msg) {
   show('mp');
+  stopWatch();
   $('mTitle').textContent = 'Mit Freunden';
   const body = $('mBody');
   body.innerHTML = '';
@@ -7235,14 +7735,35 @@ function renderMpEnter(msg) {
     inp.focus();
     return false;
   };
-  const open = el('button', 'btn primary', 'Raum eröffnen');
-  open.onclick = () => needName() && hostRoom();
-  const st1 = el('div', 'stack');
-  st1.append(open, el('p', 'hint', 'Du bekommst einen Code, einen Link und einen QR-Code für deine Freunde.'));
-  body.appendChild(st1);
 
+  const grid = el('div', 'tables');
+  const fresh = el('button', 'ttile new');
+  fresh.type = 'button';
+  fresh.innerHTML = '<span class="plus" aria-hidden="true"></span><b>Neuen Tisch eröffnen</b><span class="sub">Link und QR-Code für deine Freunde</span>';
+  fresh.onclick = () => needName() && hostRoom();
+  const started = Date.now();
+  let list = [];
+  const draw = () => {
+    grid.innerHTML = '';
+    grid.appendChild(fresh);
+    for (const t of list) grid.appendChild(tableTile(t, (code) => needName() && joinRoom(code)));
+    if (!list.length) {
+      const searching = Date.now() - started < 3500;
+      grid.appendChild(el('div', 'ttile empty', searching ? 'Suche offene Tische …' : 'Gerade spielt sonst niemand. Eröffne einen Tisch, dann sehen ihn alle hier.'));
+    }
+  };
+  draw();
+  setTimeout(() => tableWatch && draw(), 3600);
+  body.appendChild(grid);
+  tableWatch = new Net.TableWatch((l) => {
+    list = l;
+    draw();
+  });
+  tableWatch.start().catch(() => {});
+
+  const row = el('div', 'joinrow');
   const f = el('div', 'field codein');
-  const lab = el('label', '', 'Raumcode');
+  const lab = el('label', '', 'Mit Raumcode beitreten');
   lab.htmlFor = 'mCode';
   const code = el('input');
   code.id = 'mCode';
@@ -7253,7 +7774,7 @@ function renderMpEnter(msg) {
   code.placeholder = 'ABCDE';
   code.value = Net.normCode(QS.get('r') || '');
   code.oninput = () => (code.value = Net.normCode(code.value));
-  const join = el('button', 'btn', 'Raum beitreten');
+  const join = el('button', 'btn', 'Beitreten');
   join.onclick = () => {
     if (!needName()) return;
     if (Net.normCode(code.value).length !== 5) {
@@ -7263,15 +7784,51 @@ function renderMpEnter(msg) {
     }
     joinRoom(code.value);
   };
+  code.onkeydown = (e) => e.key === 'Enter' && join.onclick();
   f.append(lab, code);
-  const st2 = el('div', 'stack');
-  st2.append(f, join);
-  body.appendChild(st2);
+  row.append(f, join);
+  body.appendChild(row);
+
+  const stats = el('p', 'hint stats');
+  stats.hidden = true;
+  body.appendChild(stats);
+  Promise.all([counter('get', 'partien'), counter('get', 'geraete')]).then(([games, devices]) => {
+    if (!games && !devices) return;
+    const parts = [];
+    if (games) parts.push(`${fmtNum(games)} ${games === 1 ? 'Partie' : 'Partien'} mit Freunden`);
+    if (devices) parts.push(`${fmtNum(devices)} ${devices === 1 ? 'Gerät war' : 'Geräte waren'} dabei`);
+    stats.textContent = 'Bisher ' + parts.join(', ') + '.';
+    stats.hidden = false;
+  });
   body.appendChild(legalLinks());
+}
+
+/* Über Link oder QR-Code eingeladen, aber noch ohne Namen: nur den Namen abfragen, dann direkt an den Tisch. */
+function renderInvite(code) {
+  show('mp');
+  $('mTitle').textContent = 'Einladung';
+  const body = $('mBody');
+  body.innerHTML = '';
+  body.appendChild(el('p', 'lede', `Du bist an Tisch ${code} eingeladen. Wie sollen dich die anderen sehen?`));
+  const inp = nameField(body);
+  const go = el('button', 'btn primary', 'Mitspielen');
+  go.onclick = () => {
+    if (!settings.name) {
+      toast('Gib zuerst deinen Namen ein.');
+      inp.focus();
+      return;
+    }
+    joinRoom(code);
+  };
+  inp.onkeydown = (e) => e.key === 'Enter' && go.onclick();
+  body.appendChild(go);
+  body.appendChild(legalLinks());
+  setTimeout(() => inp.focus(), 50);
 }
 
 function mpBusy(text) {
   show('mp');
+  stopWatch();
   const body = $('mBody');
   body.innerHTML = '';
   body.appendChild(el('p', 'lede', text));
@@ -7290,6 +7847,8 @@ function sessionOptions(name) {
     },
     /* Stand des Raums auf diesem Gerät sichern: So kann es den Raum wieder öffnen oder die Leitung übernehmen. */
     onSave: (rec) => store.set('zs.mp', { role: rec.role, code: rec.code, name, at: Date.now(), ep: rec.ep, snap: rec.snap }),
+    /* Das leitende Handy meldet den Start einer Partie mit Freunden und bekommt ihre Nummer zurück. */
+    onGameStart: () => counter('hit', 'partien'),
     testCfg: DEV.rounds || DEV.speed !== undefined ? { rounds: DEV.rounds, speed: DEV.speed } : null,
   };
 }
@@ -7491,12 +8050,15 @@ function renderLobby() {
     body.appendChild(
       switchRow('Geber wählt den Trumpf', 'Gilt, wenn ein Zauberer aufgedeckt wird (Originalregel). Ausgeschaltet wird die Trumpffarbe dann ausgelost.', !!r.cfg.dealerPicks, (v) => S.session.send({ t: 'cfg', dealerPicks: v }))
     );
+    body.appendChild(
+      switchRow('Offener Tisch', 'Alle sehen ihn unter „Mit Freunden“ und können sich setzen. Aus: nur mit Link, QR-Code oder Raumcode.', r.cfg.open !== false, (v) => S.session.send({ t: 'cfg', open: v }))
+    );
     body.appendChild(el('p', 'hint', 'Legt jemand sein Handy weg, läuft die Partie auf den anderen weiter.'));
     body.appendChild(relay);
   } else {
     const ow = r.players.find((p) => p.boss && p.online) || r.players.find((p) => p.owner);
     body.appendChild(el('p', 'lede', `Warte, bis ${ow ? ow.name : 'der Eröffner'} die Partie startet.`));
-    body.appendChild(el('p', 'hint', `${r.cfg.size} Plätze, ${r.cfg.short ? '8 Runden (kurze Partie)' : 60 / r.cfg.size + ' Runden'}${r.cfg.hiddenBids ? ', verdeckte Ansage' : ''}${r.cfg.pm1 ? ', Variante Plus/Minus 1' : ''}${r.cfg.dealerPicks ? ', Geber wählt den Trumpf bei aufgedecktem Zauberer' : ''}.`));
+    body.appendChild(el('p', 'hint', `${r.cfg.size} Plätze, ${r.cfg.short ? '8 Runden (kurze Partie)' : 60 / r.cfg.size + ' Runden'}${r.cfg.hiddenBids ? ', verdeckte Ansage' : ''}${r.cfg.pm1 ? ', Variante Plus/Minus 1' : ''}${r.cfg.dealerPicks ? ', Geber wählt den Trumpf bei aufgedecktem Zauberer' : ''}${r.cfg.open === false ? ', privater Tisch' : ''}.`));
     body.appendChild(relay);
   }
   body.appendChild(legalLinks());
@@ -7656,6 +8218,12 @@ function renderGame() {
   if (hBox.style.height !== newH) hBox.style.height = newH;
 
   $('gRound').textContent = `Runde ${g.round} von ${g.rounds}`;
+  const nr = S.room && S.room.nr;
+  $('gNo').hidden = !nr;
+  if (nr) {
+    $('gNo').textContent = 'Nr. ' + fmtNum(nr);
+    $('gNo').title = `Partie Nr. ${fmtNum(nr)} mit Freunden, über alle Tische gezählt`;
+  }
   const bids = g.seats.map((s) => s.bid).filter((b) => b !== null);
   const sum = bids.reduce((a, b) => a + b, 0);
   const nTricks = g.cards || g.round;
@@ -8121,7 +8689,12 @@ function openGameEnd(g) {
   };
   foot.append(blk, home);
   void h;
-  openSheet('end', title, ul, { sticky: true, footer: foot });
+  let content = ul;
+  if (!solo && S.room && S.room.nr) {
+    content = el('div', 'stack');
+    content.append(el('p', 'hint', `Das war Partie Nr. ${fmtNum(S.room.nr)} mit Freunden, über alle Tische gezählt.`), ul);
+  }
+  openSheet('end', title, content, { sticky: true, footer: foot });
 }
 
 function renderSheets(g) {
@@ -8267,12 +8840,14 @@ function openImpressum(back) {
 function openPrivacy(back) {
   const w = el('div', 'legaltext');
   w.innerHTML =
-    `<section><h3>Kurz gesagt</h3><p>${APP} braucht kein Konto und nutzt weder Werbung noch Tracking noch Cookies. Verarbeitet wird nur, was technisch nötig ist, um die Seite auszuliefern und Partien zwischen Geräten zu vermitteln.</p></section>` +
+    `<section><h3>Kurz gesagt</h3><p>${APP} braucht kein Konto, zeigt keine Werbung, setzt keine Cookies und legt keine Nutzerprofile an. Verarbeitet wird, was nötig ist, um die Seite auszuliefern und Partien zwischen Geräten zu vermitteln. Dazu kommen zwei Zähler ohne Namen: wie viele Partien mit Freunden gespielt wurden und wie viele Geräte dabei waren.</p></section>` +
     `<section><h3>Verantwortlich</h3><p>${esc(LEGAL.name)}, ${esc(LEGAL.street)}, ${esc(LEGAL.city)}, E-Mail: ${esc(LEGAL.email)}</p></section>` +
     `<section><h3>Aufruf der Seite</h3><p>Die Seite liegt bei GitHub Pages, einem Dienst der GitHub, Inc. (USA). Beim Aufruf überträgt dein Browser technisch bedingt deine IP-Adresse an GitHub. Nach der Dokumentation von GitHub wird die IP-Adresse von Besuchern zu Sicherheitszwecken protokolliert und gespeichert. Dabei können Daten in die USA übermittelt werden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO, das berechtigte Interesse an einer sicheren und stabilen Bereitstellung. Näheres steht in der <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>.</p></section>` +
     `<section><h3>Speicher auf deinem Gerät</h3><p>Die App legt im Browser deines Geräts ab: deinen Spielernamen, deine Einstellungen, eine zufällige Gerätekennung für Räume und den Stand laufender Partien. Diese Daten bleiben auf deinem Gerät und dienen nur der Funktion der App. Du löschst sie über die Website-Daten in den Einstellungen deines Browsers. Der Zugriff ist für den von dir gewünschten Dienst unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG).</p></section>` +
     `<section><h3>Mit Freunden spielen</h3><p>In einem Raum werden Spielernamen, Spielzüge, Karten und Reaktionen zwischen den beteiligten Geräten übertragen. Das Gerät, das die Partie leitet, verarbeitet diese Daten. Damit die Partie einen Ausfall übersteht, erhalten auch die Geräte der anderen Mitspieler eine Sicherung des Spielstands.</p><p>Die Vermittlung läuft über öffentliche MQTT-Relays Dritter (broker.emqx.io, broker.hivemq.com, mqtt.eclipseprojects.io, test.mosquitto.org). Deren Betreiber sehen dabei deine IP-Adresse und können außerhalb der EU sitzen. Die Inhalte sind mit einem Schlüssel aus dem Raumcode verschlüsselt (AES-GCM). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, weil die Übertragung für die von dir gewählte Funktion nötig ist. Im Solo-Modus findet keine solche Übertragung statt.</p></section>` +
-    `<section><h3>Keine Auswertung</h3><p>Es gibt keine Analyse-Werkzeuge, keine Werbung und keine eingebundenen sozialen Netzwerke. Der Betreiber erhält keine Spieldaten und führt keine Nutzerprofile.</p></section>` +
+    `<section><h3>Offene Tische</h3><p>Ein Tisch ist zunächst offen. Dann sehen alle, die unter „Mit Freunden“ die Liste der Tische öffnen, den Raumcode, die Namen am Tisch, die Einstellungen und während der Partie die Runde, und sie können sich an freie Plätze setzen. Diese Angaben laufen ebenfalls über die genannten Relays. Wer den Raum eröffnet hat, kann den Tisch im Warteraum privat schalten; dann erscheint er nicht in der Liste. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p></section>` +
+    `<section><h3>Zähler</h3><p>Die App nutzt den kostenlosen Zähldienst Abacus (abacus.jasoncameron.dev), den eine Privatperson betreibt und dessen Server außerhalb der EU liegen können. Er wird in drei Fällen aufgerufen: wenn ein Gerät zum ersten Mal mit Freunden spielt, wenn das leitende Gerät eine Partie mit mindestens zwei Spielern startet, und wenn du die Seite „Mit Freunden“ öffnest, um die Zählerstände anzuzeigen. Übertragen wird nur der Aufruf selbst, ohne Namen, Spieldaten oder Kennung. Der Dienst sieht dabei technisch bedingt deine IP-Adresse. Auf deinem Gerät wird dafür nichts zusätzlich gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO, das berechtigte Interesse, die Nutzung der App in groben Zahlen zu kennen. Du kannst widersprechen, indem du die App nicht mit Freunden nutzt; im Solo-Modus wird nichts gezählt.</p></section>` +
+    `<section><h3>Keine weitere Auswertung</h3><p>Außer den beiden Zählern gibt es keine Analyse-Werkzeuge, keine Werbung und keine eingebundenen sozialen Netzwerke. Der Betreiber erhält keine Spieldaten und führt keine Nutzerprofile.</p></section>` +
     `<section><h3>Deine Rechte</h3><p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Der Betreiber speichert selbst keine Daten über einzelne Spieler. Anfragen richtest du an die oben genannte Adresse.</p></section>` +
     `<p class="hint">Stand: November 2026</p>`;
   openSheet('ds', 'Datenschutz', w, { back });
@@ -8337,7 +8912,7 @@ function openMenu() {
     add('Impressum', () => openImpressum(openMenu));
     add('Datenschutz', () => openPrivacy(openMenu));
   }
-  if (S.room) menu.appendChild(el('p', 'hint', `Raumcode ${S.room.code}` + (S.session && S.session.role === 'host' ? '. Dieses Handy leitet gerade die Partie.' : '')));
+  if (S.room) menu.appendChild(el('p', 'hint', `Raumcode ${S.room.code}` + (S.room.nr ? `, Partie Nr. ${fmtNum(S.room.nr)} über alle Tische` : '') + (S.session && S.session.role === 'host' ? '. Dieses Handy leitet gerade die Partie.' : '.')));
   add(solo ? 'Zum Start (Partie bleibt gespeichert)' : 'Raum verlassen', () => {
     if (!solo) store.del('zs.mp');
     leaveSession(true);
@@ -8453,9 +9028,19 @@ function init() {
   show('home');
   const mp = store.get('zs.mp', null);
   const code = Net.normCode(QS.get('r') || '');
+  if (code) {
+    /* Den Code aus der Adresse nehmen, damit ein späteres Neuladen nicht wieder an diesen Tisch führt. */
+    const q = new URLSearchParams(location.search);
+    q.delete('r');
+    try {
+      history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+    } catch (e) {}
+  }
   if (!inClaude() && mp && Date.now() - mp.at < 30 * 60e3 && (!code || code === mp.code)) resumeRoom(mp);
-  else if (code.length === 5 && !inClaude()) renderMpEnter('');
-  else if (QS.get('solo') === '1') startSolo();
+  else if (code.length === 5 && !inClaude()) {
+    if (settings.name) joinRoom(code);
+    else renderInvite(code);
+  } else if (QS.get('solo') === '1') startSolo();
   window.__zs = { S, settings, store, poke: autopilot };
 }
 
