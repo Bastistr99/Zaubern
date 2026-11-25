@@ -989,6 +989,153 @@ p {
   animation: rise 0.2s;
 }
 
+/* ---------- Version 1.2: Reaktionen, QR-Code, Rechtliches ---------- */
+.stickyfoot {
+  position: sticky;
+  bottom: 0;
+  margin: 0 -20px -22px;
+  padding: 12px 20px 22px;
+  background: linear-gradient(to top, var(--table) 78%, transparent);
+}
+.switch[aria-disabled='true'] {
+  opacity: 0.4;
+}
+.rx {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  margin: -4px -6px -4px 0;
+  border-radius: 11px;
+  border: 1.5px solid var(--line);
+  background: var(--raised);
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.rx svg {
+  width: 22px;
+  height: 22px;
+}
+.mebar.turn .rx {
+  background: transparent;
+  border-color: var(--table);
+  color: var(--table);
+}
+.rxpal {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  z-index: 45;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 10px;
+  border-radius: 16px;
+  border: 2px solid var(--ink);
+  background: var(--raised);
+  box-shadow: var(--lift);
+  animation: rise 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.rxpal button {
+  min-width: 58px;
+  height: 50px;
+  padding: 0 8px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  font: 800 18px/1 var(--display);
+}
+.rxpal button.emo {
+  font: 26px/1 var(--body);
+}
+.bubble.emo {
+  font: 30px/1 var(--body);
+  padding: 7px 10px;
+  background: var(--raised);
+  border: 2px solid var(--ink);
+  animation-duration: 2.8s;
+}
+.bubble.word {
+  animation-duration: 2.8s;
+}
+.bubble.self {
+  top: auto;
+  bottom: 10px;
+  margin-top: 0;
+  z-index: 44;
+}
+.coderow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.coderow .code {
+  font-size: 54px;
+  letter-spacing: 4px;
+}
+.qr {
+  flex: none;
+  width: 124px;
+  height: 124px;
+  padding: 6px;
+  border-radius: 12px;
+  background: #fff;
+}
+.qr svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+button.qr {
+  border: 0;
+}
+.qr.big {
+  width: min(100%, 320px);
+  height: auto;
+  aspect-ratio: 1;
+  align-self: center;
+  padding: 10px;
+}
+.legal {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 24px;
+}
+.legal button {
+  border: 0;
+  background: none;
+  padding: 6px 0;
+  color: var(--ink2);
+  font-size: 13px;
+  text-decoration: underline;
+}
+.legaltext {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.legaltext h3 {
+  font: 800 21px/1.1 var(--display);
+  margin-bottom: 3px;
+}
+.legaltext p,
+.legaltext li {
+  font-size: 14.5px;
+  line-height: 1.45;
+  max-width: 64ch;
+}
+.legaltext ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.legaltext a {
+  color: inherit;
+}
+
 @media (max-height: 620px) {
   .fan {
     height: 150px;
@@ -1026,6 +1173,7 @@ p {
       <button class="btn primary" id="hSolo">Allein gegen den Computer</button>
       <button class="btn" id="hFriends">Mit Freunden spielen</button>
       <button class="btn plain" id="hRules">Regeln und Karten</button>
+      <p class="hint legal"><span id="hVer"></span><button id="hImp" hidden>Impressum</button><button id="hDs" hidden>Datenschutz</button></p>
     </div>
   </section>
 
@@ -1044,12 +1192,25 @@ p {
       <div class="seg" id="sLevel" role="group" aria-labelledby="sLevelL"></div>
       <span class="hint" id="sLevelHint"></span>
     </div>
+    <div class="field">
+      <span class="label" id="sLenL">Länge der Partie</span>
+      <div class="seg" id="sLen" role="group" aria-labelledby="sLenL"></div>
+      <span class="hint" id="sLenHint"></span>
+    </div>
+    <button class="switch" id="sHid" role="switch" aria-checked="false">
+      <span><b>Verdeckte Ansage</b><span>Alle wählen gleichzeitig und geheim. Aufgedeckt wird, wenn jeder angesagt hat.</span></span>
+      <span class="knob"></span>
+    </button>
     <button class="switch" id="sPm1" role="switch" aria-checked="false">
       <span><b>Variante Plus/Minus 1</b><span>Die Ansagen dürfen zusammen nicht genau aufgehen. Wer zuletzt ansagt, muss ausweichen.</span></span>
       <span class="knob"></span>
     </button>
+    <button class="switch" id="sDp" role="switch" aria-checked="false">
+      <span><b>Geber wählt den Trumpf</b><span>Gilt, wenn ein Zauberer aufgedeckt wird (Originalregel). Ausgeschaltet wird die Trumpffarbe dann ausgelost.</span></span>
+      <span class="knob"></span>
+    </button>
     <div class="grow"></div>
-    <button class="btn primary" id="sStart">Partie starten</button>
+    <div class="stickyfoot"><button class="btn primary" id="sStart">Partie starten</button></div>
   </section>
 
   <section id="mp" class="screen page scroll" hidden>
@@ -1071,6 +1232,7 @@ p {
       <div id="seats"></div>
       <div id="trick"></div>
       <div class="panel" id="panel" hidden></div>
+      <div class="rxpal" id="rxPal" hidden></div>
     </div>
     <div class="mebar" id="mebar" aria-live="polite"></div>
     <div class="hand" id="hand"></div>
@@ -1093,7 +1255,7 @@ p {
     </section>
     <section>
       <h3>Trumpf</h3>
-      <p>Nach dem Geben wird die nächste Karte aufgedeckt. Ihre Farbe ist Trumpf. Liegt ein Narr auf, gibt es keinen Trumpf. Liegt ein Zauberer auf, wählt der Geber die Trumpffarbe. In der letzten Runde sind alle Karten verteilt, dann gibt es ebenfalls keinen Trumpf.</p>
+      <p>Nach dem Geben wird die nächste Karte aufgedeckt. Ihre Farbe ist Trumpf. Liegt ein Narr auf, gibt es keinen Trumpf. Liegt ein Zauberer auf, wird die Trumpffarbe ausgelost. Nach der Originalregel wählt sie in diesem Fall der Geber, das lässt sich vor der Partie einschalten. In der letzten Runde sind alle Karten verteilt, dann gibt es ebenfalls keinen Trumpf.</p>
     </section>
     <section>
       <h3>Ansagen</h3>
@@ -1126,10 +1288,18 @@ p {
       <p>Die Kreise neben einem Namen zeigen die Ansage. Ein gefüllter Kreis ist ein gewonnener Stich, ein leerer fehlt noch, ein roter ist einer zu viel. Der Geber trägt ein G.</p>
     </section>
     <section>
+      <h3>Kurze Partie</h3>
+      <p>Statt aller Runden werden 8 gespielt. Die Kartenzahl steigt in größeren Schritten von einer Karte bis zur vollen Hand, zu viert zum Beispiel 1, 3, 5, 7, 9, 11, 13 und 15 Karten.</p>
+    </section>
+    <section>
+      <h3>Variante Verdeckte Ansage</h3>
+      <p>Alle wählen ihre Ansage gleichzeitig und geheim. Erst wenn jeder gewählt hat, werden die Ansagen aufgedeckt. Plus/Minus 1 ist dann nicht möglich.</p>
+    </section>
+    <section>
       <h3>Variante Plus/Minus 1</h3>
       <p>Die Summe aller Ansagen darf nicht der Zahl der Stiche entsprechen. Wer zuletzt ansagt, kann eine Zahl deshalb nicht wählen. So trifft nie die ganze Runde.</p>
     </section>
-    <p class="hint">Zauberstich folgt den Regeln des Kartenspiels Wizard von Ken Fisher. Es ist ein eigenes, unabhängiges Projekt mit eigener Kartengestaltung. Schrift: Big Shoulders Display, SIL Open Font License.</p>
+    <p class="hint">Zauberstich ist ein privates Projekt ohne Werbung und ohne Tracking. Schrift: Big Shoulders Display, SIL Open Font License. QR-Code: qrcode-generator von Kazuhiko Arase, MIT-Lizenz.</p>
   </div>
 </template>
 
@@ -1255,14 +1425,51 @@ function scoreFor(bid, tricks) {
   return bid === tricks ? 20 + 10 * tricks : -10 * Math.abs(bid - tricks);
 }
 
+/* Kartenzahl je Runde. Volle Partie: 1, 2, 3 ... bis alle Karten verteilt sind. */
+function fullPlan(n) {
+  const out = [];
+  for (let c = 1; c <= DECK_SIZE / n; c++) out.push(c);
+  return out;
+}
+
+/* Kurze Partie: 8 Runden, gleichmäßig von 1 Karte bis zur vollen Hand gestaffelt. */
+function shortPlan(n) {
+  const max = DECK_SIZE / n;
+  const out = [];
+  for (let i = 0; i < 8; i++) {
+    const c = Math.round(1 + (i * (max - 1)) / 7);
+    if (out[out.length - 1] !== c) out.push(c);
+  }
+  return out;
+}
+
+/* Ältere gespeicherte Partien kennen noch keinen Rundenplan. */
+function migrate(G) {
+  if (!G.plan) {
+    G.plan = [];
+    for (let c = 1; c <= G.rounds; c++) G.plan.push(c);
+    G.cards = G.round;
+  }
+  return G;
+}
+
 function newGame(opts) {
   const n = opts.n | 0;
   if (n < 3 || n > 6) throw new Error('Spielerzahl muss 3 bis 6 sein');
-  const full = DECK_SIZE / n;
-  const rounds = opts.rounds ? Math.max(1, Math.min(full, opts.rounds | 0)) : full;
+  let plan = opts.short ? shortPlan(n) : fullPlan(n);
+  if (opts.rounds) plan = fullPlan(n).slice(0, Math.max(1, opts.rounds | 0));
+  const rounds = plan.length;
+  const hidden = !!opts.hiddenBids;
   const G = {
     n,
-    pm1: !!opts.pm1,
+    /* verdeckte Ansage: alle sagen gleichzeitig an; Plus/Minus 1 ist damit nicht vereinbar */
+    hiddenBids: hidden,
+    short: !!opts.short,
+    plan,
+    cards: 0,
+    pm1: !!opts.pm1 && !hidden,
+    /* true = Originalregel: liegt ein Zauberer auf, wählt der Geber. Sonst wird die Trumpffarbe ausgelost. */
+    dealerPicks: !!opts.dealerPicks,
     rounds,
     round: 0,
     rng: { s: (opts.seed === undefined ? (Math.random() * 0x7fffffff) | 0 : opts.seed) | 0 },
@@ -1291,8 +1498,9 @@ function newGame(opts) {
 function startRound(G) {
   const n = G.n;
   G.round += 1;
-  const r = G.round;
-  G.dealer = (G.firstDealer + r - 1) % n;
+  const r = G.plan[G.round - 1];
+  G.cards = r;
+  G.dealer = (G.firstDealer + G.round - 1) % n;
   const deck = [];
   for (let i = 0; i < DECK_SIZE; i++) deck.push(i);
   shuffle(deck, G.rng);
@@ -1308,28 +1516,32 @@ function startRound(G) {
   G.lastTrick = null;
   const first = (G.dealer + 1) % n;
   G.trick = { leader: first, plays: [], winner: -1 };
-  if (G.trumpCard >= 0 && isWizard(G.trumpCard)) {
+  if (G.trumpCard >= 0 && isWizard(G.trumpCard) && G.dealerPicks) {
     G.trumpSuit = -1;
     G.phase = 'trump';
     G.turn = G.dealer;
+  } else if (G.trumpCard >= 0 && isWizard(G.trumpCard)) {
+    G.trumpSuit = Math.floor(rand(G.rng) * SUIT_COUNT);
+    G.phase = 'bid';
+    G.turn = G.hiddenBids ? -1 : first;
   } else {
     G.trumpSuit = G.trumpCard >= 0 && isSuitCard(G.trumpCard) ? suitOf(G.trumpCard) : -1;
     G.phase = 'bid';
-    G.turn = first;
+    G.turn = G.hiddenBids ? -1 : first;
   }
 }
 
 /* Verbotene Ansage für diesen Sitz (Variante Plus/Minus 1) oder -1. */
 function forbiddenBid(G, seat) {
-  if (!G.pm1 || G.phase !== 'bid' || seat !== G.dealer) return -1;
+  if (!G.pm1 || G.hiddenBids || G.phase !== 'bid' || seat !== G.dealer) return -1;
   let sum = 0;
   for (let p = 0; p < G.n; p++) {
     if (p === seat) continue;
     if (G.bids[p] === null) return -1;
     sum += G.bids[p];
   }
-  const f = G.round - sum;
-  return f >= 0 && f <= G.round ? f : -1;
+  const f = G.cards - sum;
+  return f >= 0 && f <= G.cards ? f : -1;
 }
 
 function currentLegal(G, seat) {
@@ -1354,14 +1566,24 @@ function apply(G, seat, a) {
     if (!Number.isInteger(s) || s < 0 || s >= SUIT_COUNT) return { error: 'Ungültige Farbe' };
     G.trumpSuit = s;
     G.phase = 'bid';
-    G.turn = (G.dealer + 1) % n;
+    G.turn = G.hiddenBids ? -1 : (G.dealer + 1) % n;
     return { ok: true };
   }
   if (a.t === 'bid') {
     if (G.phase !== 'bid') return { error: 'Gerade wird nicht angesagt' };
-    if (seat !== G.turn) return { error: 'Du bist nicht an der Reihe' };
     const b = a.n;
-    if (!Number.isInteger(b) || b < 0 || b > G.round) return { error: 'Ungültige Ansage' };
+    if (G.hiddenBids) {
+      if (G.bids[seat] !== null) return { error: 'Du hast schon angesagt' };
+      if (!Number.isInteger(b) || b < 0 || b > G.cards) return { error: 'Ungültige Ansage' };
+      G.bids[seat] = b;
+      if (G.bids.every((x) => x !== null)) {
+        G.phase = 'play';
+        G.turn = G.trick.leader;
+      }
+      return { ok: true };
+    }
+    if (seat !== G.turn) return { error: 'Du bist nicht an der Reihe' };
+    if (!Number.isInteger(b) || b < 0 || b > G.cards) return { error: 'Ungültige Ansage' };
     if (b === forbiddenBid(G, seat)) return { error: 'Diese Ansage ist bei Plus/Minus 1 nicht erlaubt' };
     G.bids[seat] = b;
     const next = (seat + 1) % n;
@@ -1422,6 +1644,7 @@ function advance(G) {
       }
       G.history.push({
         round: G.round,
+        cards: G.cards,
         dealer: G.dealer,
         trumpSuit: G.trumpSuit,
         trumpCard: G.trumpCard,
@@ -1471,6 +1694,9 @@ module.exports = {
   trickWinnerIndex,
   wouldWin,
   scoreFor,
+  fullPlan,
+  shortPlan,
+  migrate,
   newGame,
   startRound,
   forbiddenBid,
@@ -1511,7 +1737,8 @@ function botInfo(G, seat) {
     hand: G.hands[seat].slice(),
     trump: G.trumpSuit,
     trumpCard: G.trumpCard,
-    bids: G.bids.slice(),
+    /* bei verdeckter Ansage kennt niemand die Ansagen der anderen */
+    bids: G.hiddenBids && G.phase === 'bid' ? G.bids.map((b, i) => (i === seat ? b : null)) : G.bids.slice(),
     tricks: G.tricks.slice(),
     trick: G.trick.plays.map((p) => p.card),
     leader: G.trick.leader,
@@ -2217,7 +2444,9 @@ class GameHost {
   /*
    * cfg: {
    *   seats: [{ name, kind: 'human' | 'bot', level }],
-   *   pm1: Variante Plus/Minus 1, seed, rounds (nur für Tests),
+   *   pm1: Variante Plus/Minus 1, dealerPicks: Geber wählt den Trumpf bei aufgedecktem Zauberer,
+   *   short: kurze Partie (8 Runden), hiddenBids: verdeckte Ansage,
+   *   seed, rounds (nur für Tests),
    *   speed: Faktor für Wartezeiten (1 = normal),
    *   roundEndTimeout: ms bis zur nächsten Runde, wenn nicht alle bestätigen (0 = warten),
    *   awayGrace: ms, nach denen ein Bot für einen abwesenden Menschen zieht (0 = nie)
@@ -2228,7 +2457,7 @@ class GameHost {
     this.cfg = cfg;
     this.hooks = hooks || {};
     const n = cfg.seats.length;
-    this.G = E.newGame({ n, pm1: cfg.pm1, seed: cfg.seed, rounds: cfg.rounds });
+    this.G = E.newGame({ n, pm1: cfg.pm1, dealerPicks: cfg.dealerPicks, short: cfg.short, hiddenBids: cfg.hiddenBids, seed: cfg.seed, rounds: cfg.rounds });
     this.auto = new Array(n).fill(false);
     this.away = new Array(n).fill(false);
     this.ready = new Array(n).fill(false);
@@ -2240,7 +2469,7 @@ class GameHost {
 
   static restore(snap, hooks) {
     const h = new GameHost(snap.cfg, hooks);
-    h.G = snap.G;
+    h.G = E.migrate(snap.G);
     h.auto = snap.auto || h.auto;
     h.away = snap.away || h.away;
     h.ready = snap.ready || h.ready;
@@ -2312,23 +2541,31 @@ class GameHost {
   view(seat) {
     const G = this.G;
     const me = Number.isInteger(seat) && seat >= 0 && seat < G.n ? seat : -1;
+    /* verdeckte Ansage: fremde Ansagen bleiben unsichtbar, bis alle angesagt haben */
+    const hide = !!G.hiddenBids && G.phase === 'bid';
+    const bidOf = (i) => (G.bids[i] === undefined ? null : G.bids[i]);
     return {
       v: this.v,
       phase: G.phase,
       n: G.n,
       round: G.round,
       rounds: G.rounds,
+      cards: G.cards,
+      short: !!G.short,
+      hiddenBids: !!G.hiddenBids,
       dealer: G.dealer,
       turn: G.turn,
       trumpCard: G.trumpCard,
       trumpSuit: G.trumpSuit,
       pm1: G.pm1,
+      dealerPicks: !!G.dealerPicks,
       trickNo: G.trickNo,
       seats: this.cfg.seats.map((s, i) => ({
         name: s.name,
         kind: s.kind,
         level: s.kind === 'bot' ? s.level : undefined,
-        bid: G.bids[i] === undefined ? null : G.bids[i],
+        bid: hide && i !== me ? null : bidOf(i),
+        bidDone: bidOf(i) !== null,
         tricks: G.tricks[i] || 0,
         score: G.scores[i],
         cards: G.hands[i] ? G.hands[i].length : 0,
@@ -2382,6 +2619,21 @@ class GameHost {
     this._clear();
     if (this.dead) return;
     const G = this.G;
+    if (G.phase === 'bid' && G.hiddenBids) {
+      /* verdeckte Ansage: Bots sagen nacheinander an, Menschen wann sie wollen */
+      let botSeat = -1;
+      let awaySeat = -1;
+      for (let i = 0; i < G.n; i++) {
+        if (G.bids[i] !== null) continue;
+        if (!this.isHuman(i) || this.auto[i]) {
+          if (botSeat < 0) botSeat = i;
+        } else if (this.away[i] && awaySeat < 0) awaySeat = i;
+      }
+      const sp = this.cfg.speed === undefined ? 1 : this.cfg.speed;
+      if (botSeat >= 0) this._later(() => this._botAct(botSeat), DELAY.botBid * 0.6 + (this.fresh ? DELAY.deal : 0));
+      else if (awaySeat >= 0 && this.cfg.awayGrace) this._later(() => this._botAct(awaySeat), this.cfg.awayGrace / (sp || 1));
+      return;
+    }
     if (G.phase === 'trump' || G.phase === 'bid' || G.phase === 'play') {
       const seat = G.turn;
       const bot = !this.isHuman(seat) || this.auto[seat];
@@ -2416,7 +2668,8 @@ class GameHost {
 
   _botAct(seat) {
     const G = this.G;
-    if (G.turn !== seat) return;
+    const hiddenBid = G.phase === 'bid' && G.hiddenBids;
+    if (hiddenBid ? G.bids[seat] !== null : G.turn !== seat) return;
     const level = this.isHuman(seat) ? 'geselle' : this.cfg.seats[seat].level || 'geselle';
     const rnd = this.hooks.random || Math.random;
     const info = B.botInfo(G, seat);
@@ -2450,13 +2703,14 @@ __m["room"]=(function(require){var module={exports:{}};var exports=module.export
 'use strict';
 /*
  * Ein Spielraum: Warteraum, Sitzverteilung, Weiterleitung der Aktionen an die Spielleitung.
- * Unabhängig vom Transportweg. Läuft auf dem Server oder im Browser des Raum-Eröffners.
+ * Unabhängig vom Transportweg. Läuft auf dem Server oder im Browser des Geräts, das die Partie leitet.
  */
 const { GameHost } = require('./host.js');
 const B = require('./bots.js');
 
 const BOT_NAMES = ['Mira', 'Ignaz', 'Thekla', 'Balduin', 'Fenja', 'Kasimir', 'Ottilie', 'Leopold'];
 const MAX_PLAYERS = 6;
+const REACTION_COUNT = 8;
 
 function cleanName(s) {
   const t = String(s === undefined || s === null ? '' : s)
@@ -2473,7 +2727,13 @@ class Room {
     this.hooks = hooks || {};
     this.players = [];
     this.owner = null;
-    this.cfg = { size: 4, level: 'geselle', pm1: false };
+    /* Stellvertretung: Spieler am leitenden Gerät. Darf handeln, solange der Eröffner nicht erreichbar ist. */
+    this.deputy = null;
+    this.cfg = { size: 4, level: 'geselle', pm1: false, dealerPicks: false, short: false, hiddenBids: false };
+    /* Schnell-Reaktionen: flüchtig, nur die letzten paar */
+    this.reacts = [];
+    this.reactSeq = 0;
+    this.lastReact = {};
     this.phase = 'lobby';
     this.host = null;
     this.seatOf = {};
@@ -2490,6 +2750,7 @@ class Room {
     r.phase = snap.phase;
     r.seatOf = snap.seatOf || {};
     r.v = (snap.v || 0) + 1;
+    r.reactSeq = snap.reactSeq || 0;
     if (snap.game) {
       r.host = GameHost.restore(snap.game, r._hostHooks());
       r.host.resume();
@@ -2506,6 +2767,7 @@ class Room {
       phase: this.phase,
       seatOf: this.seatOf,
       v: this.v,
+      reactSeq: this.reactSeq,
       game: this.host ? this.host.snapshot() : null,
     };
   }
@@ -2538,10 +2800,19 @@ class Room {
     return !!this._player(pid);
   }
 
+  /* Wer darf Einstellungen ändern, starten und abbrechen? */
+  _boss(pid) {
+    if (pid === this.owner) return true;
+    if (!this.deputy || pid !== this.deputy) return false;
+    const o = this._player(this.owner);
+    return !o || !o.online || !!o.left;
+  }
+
   join(pid, name) {
     const known = this._player(pid);
     if (known) {
       if (name && this.phase === 'lobby') known.name = this._uniqueName(cleanName(name), pid);
+      delete known.left;
       this._changed();
       return { ok: true };
     }
@@ -2571,10 +2842,18 @@ class Room {
       if (this.owner === pid) this.owner = this.players.length ? this.players[0].pid : null;
     } else {
       p.online = false;
+      p.left = true;
+      if (this.owner === pid) {
+        /* Der Eröffner geht für immer: Seine Rechte gehen an das leitende Gerät, sonst an den Nächsten. */
+        const rest = this.players.filter((x) => x.pid !== pid && !x.left);
+        const next = rest.find((x) => x.pid === this.deputy) || rest.find((x) => x.online) || rest[0];
+        if (next) this.owner = next.pid;
+      }
       const seat = this.seatOf[pid];
       if (this.host && seat !== undefined) {
         this.host.away[seat] = true;
-        this.host.setAuto(seat, true);
+        this.host.auto[seat] = true;
+        this.host._changed();
         return { ok: true };
       }
     }
@@ -2600,7 +2879,7 @@ class Room {
     const p = this._player(pid);
     if (!p) return { error: 'Du bist nicht in diesem Raum.' };
     if (!msg || typeof msg !== 'object') return { error: 'Ungültige Nachricht' };
-    const isOwner = pid === this.owner;
+    const isOwner = this._boss(pid);
     const t = msg.t;
     if (t === 'cfg') {
       if (!isOwner) return { error: 'Nur wer den Raum eröffnet hat, ändert die Einstellungen.' };
@@ -2608,6 +2887,10 @@ class Room {
       if (Number.isInteger(msg.size)) this.cfg.size = Math.max(3, this.players.length, Math.min(MAX_PLAYERS, msg.size));
       if (typeof msg.level === 'string' && B.LEVELS[msg.level]) this.cfg.level = msg.level;
       if (typeof msg.pm1 === 'boolean') this.cfg.pm1 = msg.pm1;
+      if (typeof msg.dealerPicks === 'boolean') this.cfg.dealerPicks = msg.dealerPicks;
+      if (typeof msg.short === 'boolean') this.cfg.short = msg.short;
+      if (typeof msg.hiddenBids === 'boolean') this.cfg.hiddenBids = msg.hiddenBids;
+      if (this.cfg.hiddenBids) this.cfg.pm1 = false;
       this._changed();
       return { ok: true };
     }
@@ -2624,8 +2907,10 @@ class Room {
       this.host.destroy();
       this.host = null;
       this.seatOf = {};
+      this.reacts = [];
       this.phase = 'lobby';
-      this.players = this.players.filter((x) => x.online || x.pid === this.owner);
+      this.players = this.players.filter((x) => !x.left && (x.online || x.pid === this.owner || x.pid === pid));
+      if (!this._player(this.owner)) this.owner = pid;
       this.cfg.size = Math.max(3, this.cfg.size, this.players.length);
       this._changed();
       return { ok: true };
@@ -2635,6 +2920,20 @@ class Room {
       if (!this.host || !Number.isInteger(msg.seat) || msg.seat < 0 || msg.seat >= this.host.G.n) return { error: 'Unbekannter Platz' };
       if (!this.host.isHuman(msg.seat)) return { error: 'Dort sitzt schon ein Computer.' };
       this.host.setAuto(msg.seat, !!msg.on);
+      return { ok: true };
+    }
+    if (t === 'react') {
+      if (!this.host) return { error: 'Es läuft keine Partie.' };
+      const seat = this.seatOf[pid];
+      if (seat === undefined) return { error: 'Du spielst in dieser Partie nicht mit.' };
+      const k = msg.k;
+      if (!Number.isInteger(k) || k < 0 || k >= REACTION_COUNT) return { error: 'Unbekannte Reaktion' };
+      const now = Date.now();
+      if (now - (this.lastReact[pid] || 0) < 900) return { error: 'Nicht so schnell.' };
+      this.lastReact[pid] = now;
+      this.reacts.push({ id: ++this.reactSeq, seat, k, at: now });
+      if (this.reacts.length > 8) this.reacts.shift();
+      this._changed();
       return { ok: true };
     }
     if (t === 'bid' || t === 'play' || t === 'trump' || t === 'ready') {
@@ -2671,7 +2970,7 @@ class Room {
       if (s.pid) this.seatOf[s.pid] = i;
     });
     const cfg = Object.assign(
-      { seats, pm1: this.cfg.pm1, roundEndTimeout: 30000, awayGrace: 90000 },
+      { seats, pm1: this.cfg.pm1, dealerPicks: !!this.cfg.dealerPicks, short: !!this.cfg.short, hiddenBids: !!this.cfg.hiddenBids, roundEndTimeout: 30000, awayGrace: 90000 },
       this.testCfg || {}
     );
     this.host = new GameHost(cfg, this._hostHooks());
@@ -2695,12 +2994,14 @@ class Room {
         }
       });
     }
+    const now = Date.now();
     return {
       v: this.v,
       code: this.code,
       phase: this.phase,
-      owner: this.owner === pid,
-      players: this.players.map((p) => ({ name: p.name, owner: p.pid === this.owner, online: p.online, you: p.pid === pid })),
+      reacts: this.reacts.map((r) => ({ id: r.id, seat: r.seat, k: r.k, age: now - r.at })),
+      owner: this._boss(pid),
+      players: this.players.map((p) => ({ name: p.name, owner: p.pid === this.owner, boss: this._boss(p.pid), online: p.online, you: p.pid === pid })),
       cfg: this.cfg,
       game,
     };
@@ -2717,7 +3018,7 @@ function makeCode(rnd, prefixAlphabet) {
   return s;
 }
 
-module.exports = { Room, makeCode, cleanName, BOT_NAMES, MAX_PLAYERS };
+module.exports = { Room, makeCode, cleanName, BOT_NAMES, MAX_PLAYERS, REACTION_COUNT };
 
 return module.exports;})(__req);
 __m["cards"]=(function(require){var module={exports:{}};var exports=module.exports;
@@ -2978,6 +3279,2306 @@ function cardName(id) {
 }
 
 module.exports = { SUITS, INK, CREAM, cardSVG, backSVG, glyphSVG, logoSVG, cardName, pinwheel, sparkle };
+
+return module.exports;})(__req);
+__m["qrcode"]=(function(require){var module={exports:{}};var exports=module.exports;
+//---------------------------------------------------------------------
+//
+// QR Code Generator for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//  http://www.opensource.org/licenses/mit-license.php
+//
+// The word 'QR Code' is registered trademark of
+// DENSO WAVE INCORPORATED
+//  http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+
+var qrcode = function() {
+
+  //---------------------------------------------------------------------
+  // qrcode
+  //---------------------------------------------------------------------
+
+  /**
+   * qrcode
+   * @param typeNumber 1 to 40
+   * @param errorCorrectionLevel 'L','M','Q','H'
+   */
+  var qrcode = function(typeNumber, errorCorrectionLevel) {
+
+    var PAD0 = 0xEC;
+    var PAD1 = 0x11;
+
+    var _typeNumber = typeNumber;
+    var _errorCorrectionLevel = QRErrorCorrectionLevel[errorCorrectionLevel];
+    var _modules = null;
+    var _moduleCount = 0;
+    var _dataCache = null;
+    var _dataList = [];
+
+    var _this = {};
+
+    var makeImpl = function(test, maskPattern) {
+
+      _moduleCount = _typeNumber * 4 + 17;
+      _modules = function(moduleCount) {
+        var modules = new Array(moduleCount);
+        for (var row = 0; row < moduleCount; row += 1) {
+          modules[row] = new Array(moduleCount);
+          for (var col = 0; col < moduleCount; col += 1) {
+            modules[row][col] = null;
+          }
+        }
+        return modules;
+      }(_moduleCount);
+
+      setupPositionProbePattern(0, 0);
+      setupPositionProbePattern(_moduleCount - 7, 0);
+      setupPositionProbePattern(0, _moduleCount - 7);
+      setupPositionAdjustPattern();
+      setupTimingPattern();
+      setupTypeInfo(test, maskPattern);
+
+      if (_typeNumber >= 7) {
+        setupTypeNumber(test);
+      }
+
+      if (_dataCache == null) {
+        _dataCache = createData(_typeNumber, _errorCorrectionLevel, _dataList);
+      }
+
+      mapData(_dataCache, maskPattern);
+    };
+
+    var setupPositionProbePattern = function(row, col) {
+
+      for (var r = -1; r <= 7; r += 1) {
+
+        if (row + r <= -1 || _moduleCount <= row + r) continue;
+
+        for (var c = -1; c <= 7; c += 1) {
+
+          if (col + c <= -1 || _moduleCount <= col + c) continue;
+
+          if ( (0 <= r && r <= 6 && (c == 0 || c == 6) )
+              || (0 <= c && c <= 6 && (r == 0 || r == 6) )
+              || (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+            _modules[row + r][col + c] = true;
+          } else {
+            _modules[row + r][col + c] = false;
+          }
+        }
+      }
+    };
+
+    var getBestMaskPattern = function() {
+
+      var minLostPoint = 0;
+      var pattern = 0;
+
+      for (var i = 0; i < 8; i += 1) {
+
+        makeImpl(true, i);
+
+        var lostPoint = QRUtil.getLostPoint(_this);
+
+        if (i == 0 || minLostPoint > lostPoint) {
+          minLostPoint = lostPoint;
+          pattern = i;
+        }
+      }
+
+      return pattern;
+    };
+
+    var setupTimingPattern = function() {
+
+      for (var r = 8; r < _moduleCount - 8; r += 1) {
+        if (_modules[r][6] != null) {
+          continue;
+        }
+        _modules[r][6] = (r % 2 == 0);
+      }
+
+      for (var c = 8; c < _moduleCount - 8; c += 1) {
+        if (_modules[6][c] != null) {
+          continue;
+        }
+        _modules[6][c] = (c % 2 == 0);
+      }
+    };
+
+    var setupPositionAdjustPattern = function() {
+
+      var pos = QRUtil.getPatternPosition(_typeNumber);
+
+      for (var i = 0; i < pos.length; i += 1) {
+
+        for (var j = 0; j < pos.length; j += 1) {
+
+          var row = pos[i];
+          var col = pos[j];
+
+          if (_modules[row][col] != null) {
+            continue;
+          }
+
+          for (var r = -2; r <= 2; r += 1) {
+
+            for (var c = -2; c <= 2; c += 1) {
+
+              if (r == -2 || r == 2 || c == -2 || c == 2
+                  || (r == 0 && c == 0) ) {
+                _modules[row + r][col + c] = true;
+              } else {
+                _modules[row + r][col + c] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+
+    var setupTypeNumber = function(test) {
+
+      var bits = QRUtil.getBCHTypeNumber(_typeNumber);
+
+      for (var i = 0; i < 18; i += 1) {
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+        _modules[Math.floor(i / 3)][i % 3 + _moduleCount - 8 - 3] = mod;
+      }
+
+      for (var i = 0; i < 18; i += 1) {
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+        _modules[i % 3 + _moduleCount - 8 - 3][Math.floor(i / 3)] = mod;
+      }
+    };
+
+    var setupTypeInfo = function(test, maskPattern) {
+
+      var data = (_errorCorrectionLevel << 3) | maskPattern;
+      var bits = QRUtil.getBCHTypeInfo(data);
+
+      // vertical
+      for (var i = 0; i < 15; i += 1) {
+
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+
+        if (i < 6) {
+          _modules[i][8] = mod;
+        } else if (i < 8) {
+          _modules[i + 1][8] = mod;
+        } else {
+          _modules[_moduleCount - 15 + i][8] = mod;
+        }
+      }
+
+      // horizontal
+      for (var i = 0; i < 15; i += 1) {
+
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+
+        if (i < 8) {
+          _modules[8][_moduleCount - i - 1] = mod;
+        } else if (i < 9) {
+          _modules[8][15 - i - 1 + 1] = mod;
+        } else {
+          _modules[8][15 - i - 1] = mod;
+        }
+      }
+
+      // fixed module
+      _modules[_moduleCount - 8][8] = (!test);
+    };
+
+    var mapData = function(data, maskPattern) {
+
+      var inc = -1;
+      var row = _moduleCount - 1;
+      var bitIndex = 7;
+      var byteIndex = 0;
+      var maskFunc = QRUtil.getMaskFunction(maskPattern);
+
+      for (var col = _moduleCount - 1; col > 0; col -= 2) {
+
+        if (col == 6) col -= 1;
+
+        while (true) {
+
+          for (var c = 0; c < 2; c += 1) {
+
+            if (_modules[row][col - c] == null) {
+
+              var dark = false;
+
+              if (byteIndex < data.length) {
+                dark = ( ( (data[byteIndex] >>> bitIndex) & 1) == 1);
+              }
+
+              var mask = maskFunc(row, col - c);
+
+              if (mask) {
+                dark = !dark;
+              }
+
+              _modules[row][col - c] = dark;
+              bitIndex -= 1;
+
+              if (bitIndex == -1) {
+                byteIndex += 1;
+                bitIndex = 7;
+              }
+            }
+          }
+
+          row += inc;
+
+          if (row < 0 || _moduleCount <= row) {
+            row -= inc;
+            inc = -inc;
+            break;
+          }
+        }
+      }
+    };
+
+    var createBytes = function(buffer, rsBlocks) {
+
+      var offset = 0;
+
+      var maxDcCount = 0;
+      var maxEcCount = 0;
+
+      var dcdata = new Array(rsBlocks.length);
+      var ecdata = new Array(rsBlocks.length);
+
+      for (var r = 0; r < rsBlocks.length; r += 1) {
+
+        var dcCount = rsBlocks[r].dataCount;
+        var ecCount = rsBlocks[r].totalCount - dcCount;
+
+        maxDcCount = Math.max(maxDcCount, dcCount);
+        maxEcCount = Math.max(maxEcCount, ecCount);
+
+        dcdata[r] = new Array(dcCount);
+
+        for (var i = 0; i < dcdata[r].length; i += 1) {
+          dcdata[r][i] = 0xff & buffer.getBuffer()[i + offset];
+        }
+        offset += dcCount;
+
+        var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+        var rawPoly = qrPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+        var modPoly = rawPoly.mod(rsPoly);
+        ecdata[r] = new Array(rsPoly.getLength() - 1);
+        for (var i = 0; i < ecdata[r].length; i += 1) {
+          var modIndex = i + modPoly.getLength() - ecdata[r].length;
+          ecdata[r][i] = (modIndex >= 0)? modPoly.getAt(modIndex) : 0;
+        }
+      }
+
+      var totalCodeCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) {
+        totalCodeCount += rsBlocks[i].totalCount;
+      }
+
+      var data = new Array(totalCodeCount);
+      var index = 0;
+
+      for (var i = 0; i < maxDcCount; i += 1) {
+        for (var r = 0; r < rsBlocks.length; r += 1) {
+          if (i < dcdata[r].length) {
+            data[index] = dcdata[r][i];
+            index += 1;
+          }
+        }
+      }
+
+      for (var i = 0; i < maxEcCount; i += 1) {
+        for (var r = 0; r < rsBlocks.length; r += 1) {
+          if (i < ecdata[r].length) {
+            data[index] = ecdata[r][i];
+            index += 1;
+          }
+        }
+      }
+
+      return data;
+    };
+
+    var createData = function(typeNumber, errorCorrectionLevel, dataList) {
+
+      var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectionLevel);
+
+      var buffer = qrBitBuffer();
+
+      for (var i = 0; i < dataList.length; i += 1) {
+        var data = dataList[i];
+        buffer.put(data.getMode(), 4);
+        buffer.put(data.getLength(), QRUtil.getLengthInBits(data.getMode(), typeNumber) );
+        data.write(buffer);
+      }
+
+      // calc num max data.
+      var totalDataCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) {
+        totalDataCount += rsBlocks[i].dataCount;
+      }
+
+      if (buffer.getLengthInBits() > totalDataCount * 8) {
+        throw 'code length overflow. ('
+          + buffer.getLengthInBits()
+          + '>'
+          + totalDataCount * 8
+          + ')';
+      }
+
+      // end code
+      if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+        buffer.put(0, 4);
+      }
+
+      // padding
+      while (buffer.getLengthInBits() % 8 != 0) {
+        buffer.putBit(false);
+      }
+
+      // padding
+      while (true) {
+
+        if (buffer.getLengthInBits() >= totalDataCount * 8) {
+          break;
+        }
+        buffer.put(PAD0, 8);
+
+        if (buffer.getLengthInBits() >= totalDataCount * 8) {
+          break;
+        }
+        buffer.put(PAD1, 8);
+      }
+
+      return createBytes(buffer, rsBlocks);
+    };
+
+    _this.addData = function(data, mode) {
+
+      mode = mode || 'Byte';
+
+      var newData = null;
+
+      switch(mode) {
+      case 'Numeric' :
+        newData = qrNumber(data);
+        break;
+      case 'Alphanumeric' :
+        newData = qrAlphaNum(data);
+        break;
+      case 'Byte' :
+        newData = qr8BitByte(data);
+        break;
+      case 'Kanji' :
+        newData = qrKanji(data);
+        break;
+      default :
+        throw 'mode:' + mode;
+      }
+
+      _dataList.push(newData);
+      _dataCache = null;
+    };
+
+    _this.isDark = function(row, col) {
+      if (row < 0 || _moduleCount <= row || col < 0 || _moduleCount <= col) {
+        throw row + ',' + col;
+      }
+      return _modules[row][col];
+    };
+
+    _this.getModuleCount = function() {
+      return _moduleCount;
+    };
+
+    _this.make = function() {
+      if (_typeNumber < 1) {
+        var typeNumber = 1;
+
+        for (; typeNumber < 40; typeNumber++) {
+          var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, _errorCorrectionLevel);
+          var buffer = qrBitBuffer();
+
+          for (var i = 0; i < _dataList.length; i++) {
+            var data = _dataList[i];
+            buffer.put(data.getMode(), 4);
+            buffer.put(data.getLength(), QRUtil.getLengthInBits(data.getMode(), typeNumber) );
+            data.write(buffer);
+          }
+
+          var totalDataCount = 0;
+          for (var i = 0; i < rsBlocks.length; i++) {
+            totalDataCount += rsBlocks[i].dataCount;
+          }
+
+          if (buffer.getLengthInBits() <= totalDataCount * 8) {
+            break;
+          }
+        }
+
+        _typeNumber = typeNumber;
+      }
+
+      makeImpl(false, getBestMaskPattern() );
+    };
+
+    _this.createTableTag = function(cellSize, margin) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var qrHtml = '';
+
+      qrHtml += '<table style="';
+      qrHtml += ' border-width: 0px; border-style: none;';
+      qrHtml += ' border-collapse: collapse;';
+      qrHtml += ' padding: 0px; margin: ' + margin + 'px;';
+      qrHtml += '">';
+      qrHtml += '<tbody>';
+
+      for (var r = 0; r < _this.getModuleCount(); r += 1) {
+
+        qrHtml += '<tr>';
+
+        for (var c = 0; c < _this.getModuleCount(); c += 1) {
+          qrHtml += '<td style="';
+          qrHtml += ' border-width: 0px; border-style: none;';
+          qrHtml += ' border-collapse: collapse;';
+          qrHtml += ' padding: 0px; margin: 0px;';
+          qrHtml += ' width: ' + cellSize + 'px;';
+          qrHtml += ' height: ' + cellSize + 'px;';
+          qrHtml += ' background-color: ';
+          qrHtml += _this.isDark(r, c)? '#000000' : '#ffffff';
+          qrHtml += ';';
+          qrHtml += '"/>';
+        }
+
+        qrHtml += '</tr>';
+      }
+
+      qrHtml += '</tbody>';
+      qrHtml += '</table>';
+
+      return qrHtml;
+    };
+
+    _this.createSvgTag = function(cellSize, margin, alt, title) {
+
+      var opts = {};
+      if (typeof arguments[0] == 'object') {
+        // Called by options.
+        opts = arguments[0];
+        // overwrite cellSize and margin.
+        cellSize = opts.cellSize;
+        margin = opts.margin;
+        alt = opts.alt;
+        title = opts.title;
+      }
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      // Compose alt property surrogate
+      alt = (typeof alt === 'string') ? {text: alt} : alt || {};
+      alt.text = alt.text || null;
+      alt.id = (alt.text) ? alt.id || 'qrcode-description' : null;
+
+      // Compose title property surrogate
+      title = (typeof title === 'string') ? {text: title} : title || {};
+      title.text = title.text || null;
+      title.id = (title.text) ? title.id || 'qrcode-title' : null;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var c, mc, r, mr, qrSvg='', rect;
+
+      rect = 'l' + cellSize + ',0 0,' + cellSize +
+        ' -' + cellSize + ',0 0,-' + cellSize + 'z ';
+
+      qrSvg += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg"';
+      qrSvg += !opts.scalable ? ' width="' + size + 'px" height="' + size + 'px"' : '';
+      qrSvg += ' viewBox="0 0 ' + size + ' ' + size + '" ';
+      qrSvg += ' preserveAspectRatio="xMinYMin meet"';
+      qrSvg += (title.text || alt.text) ? ' role="img" aria-labelledby="' +
+          escapeXml([title.id, alt.id].join(' ').trim() ) + '"' : '';
+      qrSvg += '>';
+      qrSvg += (title.text) ? '<title id="' + escapeXml(title.id) + '">' +
+          escapeXml(title.text) + '</title>' : '';
+      qrSvg += (alt.text) ? '<description id="' + escapeXml(alt.id) + '">' +
+          escapeXml(alt.text) + '</description>' : '';
+      qrSvg += '<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>';
+      qrSvg += '<path d="';
+
+      for (r = 0; r < _this.getModuleCount(); r += 1) {
+        mr = r * cellSize + margin;
+        for (c = 0; c < _this.getModuleCount(); c += 1) {
+          if (_this.isDark(r, c) ) {
+            mc = c*cellSize+margin;
+            qrSvg += 'M' + mc + ',' + mr + rect;
+          }
+        }
+      }
+
+      qrSvg += '" stroke="transparent" fill="black"/>';
+      qrSvg += '</svg>';
+
+      return qrSvg;
+    };
+
+    _this.createDataURL = function(cellSize, margin) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      return createDataURL(size, size, function(x, y) {
+        if (min <= x && x < max && min <= y && y < max) {
+          var c = Math.floor( (x - min) / cellSize);
+          var r = Math.floor( (y - min) / cellSize);
+          return _this.isDark(r, c)? 0 : 1;
+        } else {
+          return 1;
+        }
+      } );
+    };
+
+    _this.createImgTag = function(cellSize, margin, alt) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+
+      var img = '';
+      img += '<img';
+      img += '\u0020src="';
+      img += _this.createDataURL(cellSize, margin);
+      img += '"';
+      img += '\u0020width="';
+      img += size;
+      img += '"';
+      img += '\u0020height="';
+      img += size;
+      img += '"';
+      if (alt) {
+        img += '\u0020alt="';
+        img += escapeXml(alt);
+        img += '"';
+      }
+      img += '/>';
+
+      return img;
+    };
+
+    var escapeXml = function(s) {
+      var escaped = '';
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charAt(i);
+        switch(c) {
+        case '<': escaped += '&lt;'; break;
+        case '>': escaped += '&gt;'; break;
+        case '&': escaped += '&amp;'; break;
+        case '"': escaped += '&quot;'; break;
+        default : escaped += c; break;
+        }
+      }
+      return escaped;
+    };
+
+    var _createHalfASCII = function(margin) {
+      var cellSize = 1;
+      margin = (typeof margin == 'undefined')? cellSize * 2 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      var y, x, r1, r2, p;
+
+      var blocks = {
+        '██': '█',
+        '█ ': '▀',
+        ' █': '▄',
+        '  ': ' '
+      };
+
+      var blocksLastLineNoMargin = {
+        '██': '▀',
+        '█ ': '▀',
+        ' █': ' ',
+        '  ': ' '
+      };
+
+      var ascii = '';
+      for (y = 0; y < size; y += 2) {
+        r1 = Math.floor((y - min) / cellSize);
+        r2 = Math.floor((y + 1 - min) / cellSize);
+        for (x = 0; x < size; x += 1) {
+          p = '█';
+
+          if (min <= x && x < max && min <= y && y < max && _this.isDark(r1, Math.floor((x - min) / cellSize))) {
+            p = ' ';
+          }
+
+          if (min <= x && x < max && min <= y+1 && y+1 < max && _this.isDark(r2, Math.floor((x - min) / cellSize))) {
+            p += ' ';
+          }
+          else {
+            p += '█';
+          }
+
+          // Output 2 characters per pixel, to create full square. 1 character per pixels gives only half width of square.
+          ascii += (margin < 1 && y+1 >= max) ? blocksLastLineNoMargin[p] : blocks[p];
+        }
+
+        ascii += '\n';
+      }
+
+      if (size % 2 && margin > 0) {
+        return ascii.substring(0, ascii.length - size - 1) + Array(size+1).join('▀');
+      }
+
+      return ascii.substring(0, ascii.length-1);
+    };
+
+    _this.createASCII = function(cellSize, margin) {
+      cellSize = cellSize || 1;
+
+      if (cellSize < 2) {
+        return _createHalfASCII(margin);
+      }
+
+      cellSize -= 1;
+      margin = (typeof margin == 'undefined')? cellSize * 2 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      var y, x, r, p;
+
+      var white = Array(cellSize+1).join('██');
+      var black = Array(cellSize+1).join('  ');
+
+      var ascii = '';
+      var line = '';
+      for (y = 0; y < size; y += 1) {
+        r = Math.floor( (y - min) / cellSize);
+        line = '';
+        for (x = 0; x < size; x += 1) {
+          p = 1;
+
+          if (min <= x && x < max && min <= y && y < max && _this.isDark(r, Math.floor((x - min) / cellSize))) {
+            p = 0;
+          }
+
+          // Output 2 characters per pixel, to create full square. 1 character per pixels gives only half width of square.
+          line += p ? white : black;
+        }
+
+        for (r = 0; r < cellSize; r += 1) {
+          ascii += line + '\n';
+        }
+      }
+
+      return ascii.substring(0, ascii.length-1);
+    };
+
+    _this.renderTo2dContext = function(context, cellSize) {
+      cellSize = cellSize || 2;
+      var length = _this.getModuleCount();
+      for (var row = 0; row < length; row++) {
+        for (var col = 0; col < length; col++) {
+          context.fillStyle = _this.isDark(row, col) ? 'black' : 'white';
+          context.fillRect(row * cellSize, col * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrcode.stringToBytes
+  //---------------------------------------------------------------------
+
+  qrcode.stringToBytesFuncs = {
+    'default' : function(s) {
+      var bytes = [];
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charCodeAt(i);
+        bytes.push(c & 0xff);
+      }
+      return bytes;
+    }
+  };
+
+  qrcode.stringToBytes = qrcode.stringToBytesFuncs['default'];
+
+  //---------------------------------------------------------------------
+  // qrcode.createStringToBytes
+  //---------------------------------------------------------------------
+
+  /**
+   * @param unicodeData base64 string of byte array.
+   * [16bit Unicode],[16bit Bytes], ...
+   * @param numChars
+   */
+  qrcode.createStringToBytes = function(unicodeData, numChars) {
+
+    // create conversion map.
+
+    var unicodeMap = function() {
+
+      var bin = base64DecodeInputStream(unicodeData);
+      var read = function() {
+        var b = bin.read();
+        if (b == -1) throw 'eof';
+        return b;
+      };
+
+      var count = 0;
+      var unicodeMap = {};
+      while (true) {
+        var b0 = bin.read();
+        if (b0 == -1) break;
+        var b1 = read();
+        var b2 = read();
+        var b3 = read();
+        var k = String.fromCharCode( (b0 << 8) | b1);
+        var v = (b2 << 8) | b3;
+        unicodeMap[k] = v;
+        count += 1;
+      }
+      if (count != numChars) {
+        throw count + ' != ' + numChars;
+      }
+
+      return unicodeMap;
+    }();
+
+    var unknownChar = '?'.charCodeAt(0);
+
+    return function(s) {
+      var bytes = [];
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charCodeAt(i);
+        if (c < 128) {
+          bytes.push(c);
+        } else {
+          var b = unicodeMap[s.charAt(i)];
+          if (typeof b == 'number') {
+            if ( (b & 0xff) == b) {
+              // 1byte
+              bytes.push(b);
+            } else {
+              // 2bytes
+              bytes.push(b >>> 8);
+              bytes.push(b & 0xff);
+            }
+          } else {
+            bytes.push(unknownChar);
+          }
+        }
+      }
+      return bytes;
+    };
+  };
+
+  //---------------------------------------------------------------------
+  // QRMode
+  //---------------------------------------------------------------------
+
+  var QRMode = {
+    MODE_NUMBER :    1 << 0,
+    MODE_ALPHA_NUM : 1 << 1,
+    MODE_8BIT_BYTE : 1 << 2,
+    MODE_KANJI :     1 << 3
+  };
+
+  //---------------------------------------------------------------------
+  // QRErrorCorrectionLevel
+  //---------------------------------------------------------------------
+
+  var QRErrorCorrectionLevel = {
+    L : 1,
+    M : 0,
+    Q : 3,
+    H : 2
+  };
+
+  //---------------------------------------------------------------------
+  // QRMaskPattern
+  //---------------------------------------------------------------------
+
+  var QRMaskPattern = {
+    PATTERN000 : 0,
+    PATTERN001 : 1,
+    PATTERN010 : 2,
+    PATTERN011 : 3,
+    PATTERN100 : 4,
+    PATTERN101 : 5,
+    PATTERN110 : 6,
+    PATTERN111 : 7
+  };
+
+  //---------------------------------------------------------------------
+  // QRUtil
+  //---------------------------------------------------------------------
+
+  var QRUtil = function() {
+
+    var PATTERN_POSITION_TABLE = [
+      [],
+      [6, 18],
+      [6, 22],
+      [6, 26],
+      [6, 30],
+      [6, 34],
+      [6, 22, 38],
+      [6, 24, 42],
+      [6, 26, 46],
+      [6, 28, 50],
+      [6, 30, 54],
+      [6, 32, 58],
+      [6, 34, 62],
+      [6, 26, 46, 66],
+      [6, 26, 48, 70],
+      [6, 26, 50, 74],
+      [6, 30, 54, 78],
+      [6, 30, 56, 82],
+      [6, 30, 58, 86],
+      [6, 34, 62, 90],
+      [6, 28, 50, 72, 94],
+      [6, 26, 50, 74, 98],
+      [6, 30, 54, 78, 102],
+      [6, 28, 54, 80, 106],
+      [6, 32, 58, 84, 110],
+      [6, 30, 58, 86, 114],
+      [6, 34, 62, 90, 118],
+      [6, 26, 50, 74, 98, 122],
+      [6, 30, 54, 78, 102, 126],
+      [6, 26, 52, 78, 104, 130],
+      [6, 30, 56, 82, 108, 134],
+      [6, 34, 60, 86, 112, 138],
+      [6, 30, 58, 86, 114, 142],
+      [6, 34, 62, 90, 118, 146],
+      [6, 30, 54, 78, 102, 126, 150],
+      [6, 24, 50, 76, 102, 128, 154],
+      [6, 28, 54, 80, 106, 132, 158],
+      [6, 32, 58, 84, 110, 136, 162],
+      [6, 26, 54, 82, 110, 138, 166],
+      [6, 30, 58, 86, 114, 142, 170]
+    ];
+    var G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0);
+    var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0);
+    var G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1);
+
+    var _this = {};
+
+    var getBCHDigit = function(data) {
+      var digit = 0;
+      while (data != 0) {
+        digit += 1;
+        data >>>= 1;
+      }
+      return digit;
+    };
+
+    _this.getBCHTypeInfo = function(data) {
+      var d = data << 10;
+      while (getBCHDigit(d) - getBCHDigit(G15) >= 0) {
+        d ^= (G15 << (getBCHDigit(d) - getBCHDigit(G15) ) );
+      }
+      return ( (data << 10) | d) ^ G15_MASK;
+    };
+
+    _this.getBCHTypeNumber = function(data) {
+      var d = data << 12;
+      while (getBCHDigit(d) - getBCHDigit(G18) >= 0) {
+        d ^= (G18 << (getBCHDigit(d) - getBCHDigit(G18) ) );
+      }
+      return (data << 12) | d;
+    };
+
+    _this.getPatternPosition = function(typeNumber) {
+      return PATTERN_POSITION_TABLE[typeNumber - 1];
+    };
+
+    _this.getMaskFunction = function(maskPattern) {
+
+      switch (maskPattern) {
+
+      case QRMaskPattern.PATTERN000 :
+        return function(i, j) { return (i + j) % 2 == 0; };
+      case QRMaskPattern.PATTERN001 :
+        return function(i, j) { return i % 2 == 0; };
+      case QRMaskPattern.PATTERN010 :
+        return function(i, j) { return j % 3 == 0; };
+      case QRMaskPattern.PATTERN011 :
+        return function(i, j) { return (i + j) % 3 == 0; };
+      case QRMaskPattern.PATTERN100 :
+        return function(i, j) { return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 == 0; };
+      case QRMaskPattern.PATTERN101 :
+        return function(i, j) { return (i * j) % 2 + (i * j) % 3 == 0; };
+      case QRMaskPattern.PATTERN110 :
+        return function(i, j) { return ( (i * j) % 2 + (i * j) % 3) % 2 == 0; };
+      case QRMaskPattern.PATTERN111 :
+        return function(i, j) { return ( (i * j) % 3 + (i + j) % 2) % 2 == 0; };
+
+      default :
+        throw 'bad maskPattern:' + maskPattern;
+      }
+    };
+
+    _this.getErrorCorrectPolynomial = function(errorCorrectLength) {
+      var a = qrPolynomial([1], 0);
+      for (var i = 0; i < errorCorrectLength; i += 1) {
+        a = a.multiply(qrPolynomial([1, QRMath.gexp(i)], 0) );
+      }
+      return a;
+    };
+
+    _this.getLengthInBits = function(mode, type) {
+
+      if (1 <= type && type < 10) {
+
+        // 1 - 9
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 10;
+        case QRMode.MODE_ALPHA_NUM : return 9;
+        case QRMode.MODE_8BIT_BYTE : return 8;
+        case QRMode.MODE_KANJI     : return 8;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else if (type < 27) {
+
+        // 10 - 26
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 12;
+        case QRMode.MODE_ALPHA_NUM : return 11;
+        case QRMode.MODE_8BIT_BYTE : return 16;
+        case QRMode.MODE_KANJI     : return 10;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else if (type < 41) {
+
+        // 27 - 40
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 14;
+        case QRMode.MODE_ALPHA_NUM : return 13;
+        case QRMode.MODE_8BIT_BYTE : return 16;
+        case QRMode.MODE_KANJI     : return 12;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else {
+        throw 'type:' + type;
+      }
+    };
+
+    _this.getLostPoint = function(qrcode) {
+
+      var moduleCount = qrcode.getModuleCount();
+
+      var lostPoint = 0;
+
+      // LEVEL1
+
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount; col += 1) {
+
+          var sameCount = 0;
+          var dark = qrcode.isDark(row, col);
+
+          for (var r = -1; r <= 1; r += 1) {
+
+            if (row + r < 0 || moduleCount <= row + r) {
+              continue;
+            }
+
+            for (var c = -1; c <= 1; c += 1) {
+
+              if (col + c < 0 || moduleCount <= col + c) {
+                continue;
+              }
+
+              if (r == 0 && c == 0) {
+                continue;
+              }
+
+              if (dark == qrcode.isDark(row + r, col + c) ) {
+                sameCount += 1;
+              }
+            }
+          }
+
+          if (sameCount > 5) {
+            lostPoint += (3 + sameCount - 5);
+          }
+        }
+      };
+
+      // LEVEL2
+
+      for (var row = 0; row < moduleCount - 1; row += 1) {
+        for (var col = 0; col < moduleCount - 1; col += 1) {
+          var count = 0;
+          if (qrcode.isDark(row, col) ) count += 1;
+          if (qrcode.isDark(row + 1, col) ) count += 1;
+          if (qrcode.isDark(row, col + 1) ) count += 1;
+          if (qrcode.isDark(row + 1, col + 1) ) count += 1;
+          if (count == 0 || count == 4) {
+            lostPoint += 3;
+          }
+        }
+      }
+
+      // LEVEL3
+
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount - 6; col += 1) {
+          if (qrcode.isDark(row, col)
+              && !qrcode.isDark(row, col + 1)
+              &&  qrcode.isDark(row, col + 2)
+              &&  qrcode.isDark(row, col + 3)
+              &&  qrcode.isDark(row, col + 4)
+              && !qrcode.isDark(row, col + 5)
+              &&  qrcode.isDark(row, col + 6) ) {
+            lostPoint += 40;
+          }
+        }
+      }
+
+      for (var col = 0; col < moduleCount; col += 1) {
+        for (var row = 0; row < moduleCount - 6; row += 1) {
+          if (qrcode.isDark(row, col)
+              && !qrcode.isDark(row + 1, col)
+              &&  qrcode.isDark(row + 2, col)
+              &&  qrcode.isDark(row + 3, col)
+              &&  qrcode.isDark(row + 4, col)
+              && !qrcode.isDark(row + 5, col)
+              &&  qrcode.isDark(row + 6, col) ) {
+            lostPoint += 40;
+          }
+        }
+      }
+
+      // LEVEL4
+
+      var darkCount = 0;
+
+      for (var col = 0; col < moduleCount; col += 1) {
+        for (var row = 0; row < moduleCount; row += 1) {
+          if (qrcode.isDark(row, col) ) {
+            darkCount += 1;
+          }
+        }
+      }
+
+      var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+      lostPoint += ratio * 10;
+
+      return lostPoint;
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // QRMath
+  //---------------------------------------------------------------------
+
+  var QRMath = function() {
+
+    var EXP_TABLE = new Array(256);
+    var LOG_TABLE = new Array(256);
+
+    // initialize tables
+    for (var i = 0; i < 8; i += 1) {
+      EXP_TABLE[i] = 1 << i;
+    }
+    for (var i = 8; i < 256; i += 1) {
+      EXP_TABLE[i] = EXP_TABLE[i - 4]
+        ^ EXP_TABLE[i - 5]
+        ^ EXP_TABLE[i - 6]
+        ^ EXP_TABLE[i - 8];
+    }
+    for (var i = 0; i < 255; i += 1) {
+      LOG_TABLE[EXP_TABLE[i] ] = i;
+    }
+
+    var _this = {};
+
+    _this.glog = function(n) {
+
+      if (n < 1) {
+        throw 'glog(' + n + ')';
+      }
+
+      return LOG_TABLE[n];
+    };
+
+    _this.gexp = function(n) {
+
+      while (n < 0) {
+        n += 255;
+      }
+
+      while (n >= 256) {
+        n -= 255;
+      }
+
+      return EXP_TABLE[n];
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // qrPolynomial
+  //---------------------------------------------------------------------
+
+  function qrPolynomial(num, shift) {
+
+    if (typeof num.length == 'undefined') {
+      throw num.length + '/' + shift;
+    }
+
+    var _num = function() {
+      var offset = 0;
+      while (offset < num.length && num[offset] == 0) {
+        offset += 1;
+      }
+      var _num = new Array(num.length - offset + shift);
+      for (var i = 0; i < num.length - offset; i += 1) {
+        _num[i] = num[i + offset];
+      }
+      return _num;
+    }();
+
+    var _this = {};
+
+    _this.getAt = function(index) {
+      return _num[index];
+    };
+
+    _this.getLength = function() {
+      return _num.length;
+    };
+
+    _this.multiply = function(e) {
+
+      var num = new Array(_this.getLength() + e.getLength() - 1);
+
+      for (var i = 0; i < _this.getLength(); i += 1) {
+        for (var j = 0; j < e.getLength(); j += 1) {
+          num[i + j] ^= QRMath.gexp(QRMath.glog(_this.getAt(i) ) + QRMath.glog(e.getAt(j) ) );
+        }
+      }
+
+      return qrPolynomial(num, 0);
+    };
+
+    _this.mod = function(e) {
+
+      if (_this.getLength() - e.getLength() < 0) {
+        return _this;
+      }
+
+      var ratio = QRMath.glog(_this.getAt(0) ) - QRMath.glog(e.getAt(0) );
+
+      var num = new Array(_this.getLength() );
+      for (var i = 0; i < _this.getLength(); i += 1) {
+        num[i] = _this.getAt(i);
+      }
+
+      for (var i = 0; i < e.getLength(); i += 1) {
+        num[i] ^= QRMath.gexp(QRMath.glog(e.getAt(i) ) + ratio);
+      }
+
+      // recursive call
+      return qrPolynomial(num, 0).mod(e);
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // QRRSBlock
+  //---------------------------------------------------------------------
+
+  var QRRSBlock = function() {
+
+    var RS_BLOCK_TABLE = [
+
+      // L
+      // M
+      // Q
+      // H
+
+      // 1
+      [1, 26, 19],
+      [1, 26, 16],
+      [1, 26, 13],
+      [1, 26, 9],
+
+      // 2
+      [1, 44, 34],
+      [1, 44, 28],
+      [1, 44, 22],
+      [1, 44, 16],
+
+      // 3
+      [1, 70, 55],
+      [1, 70, 44],
+      [2, 35, 17],
+      [2, 35, 13],
+
+      // 4
+      [1, 100, 80],
+      [2, 50, 32],
+      [2, 50, 24],
+      [4, 25, 9],
+
+      // 5
+      [1, 134, 108],
+      [2, 67, 43],
+      [2, 33, 15, 2, 34, 16],
+      [2, 33, 11, 2, 34, 12],
+
+      // 6
+      [2, 86, 68],
+      [4, 43, 27],
+      [4, 43, 19],
+      [4, 43, 15],
+
+      // 7
+      [2, 98, 78],
+      [4, 49, 31],
+      [2, 32, 14, 4, 33, 15],
+      [4, 39, 13, 1, 40, 14],
+
+      // 8
+      [2, 121, 97],
+      [2, 60, 38, 2, 61, 39],
+      [4, 40, 18, 2, 41, 19],
+      [4, 40, 14, 2, 41, 15],
+
+      // 9
+      [2, 146, 116],
+      [3, 58, 36, 2, 59, 37],
+      [4, 36, 16, 4, 37, 17],
+      [4, 36, 12, 4, 37, 13],
+
+      // 10
+      [2, 86, 68, 2, 87, 69],
+      [4, 69, 43, 1, 70, 44],
+      [6, 43, 19, 2, 44, 20],
+      [6, 43, 15, 2, 44, 16],
+
+      // 11
+      [4, 101, 81],
+      [1, 80, 50, 4, 81, 51],
+      [4, 50, 22, 4, 51, 23],
+      [3, 36, 12, 8, 37, 13],
+
+      // 12
+      [2, 116, 92, 2, 117, 93],
+      [6, 58, 36, 2, 59, 37],
+      [4, 46, 20, 6, 47, 21],
+      [7, 42, 14, 4, 43, 15],
+
+      // 13
+      [4, 133, 107],
+      [8, 59, 37, 1, 60, 38],
+      [8, 44, 20, 4, 45, 21],
+      [12, 33, 11, 4, 34, 12],
+
+      // 14
+      [3, 145, 115, 1, 146, 116],
+      [4, 64, 40, 5, 65, 41],
+      [11, 36, 16, 5, 37, 17],
+      [11, 36, 12, 5, 37, 13],
+
+      // 15
+      [5, 109, 87, 1, 110, 88],
+      [5, 65, 41, 5, 66, 42],
+      [5, 54, 24, 7, 55, 25],
+      [11, 36, 12, 7, 37, 13],
+
+      // 16
+      [5, 122, 98, 1, 123, 99],
+      [7, 73, 45, 3, 74, 46],
+      [15, 43, 19, 2, 44, 20],
+      [3, 45, 15, 13, 46, 16],
+
+      // 17
+      [1, 135, 107, 5, 136, 108],
+      [10, 74, 46, 1, 75, 47],
+      [1, 50, 22, 15, 51, 23],
+      [2, 42, 14, 17, 43, 15],
+
+      // 18
+      [5, 150, 120, 1, 151, 121],
+      [9, 69, 43, 4, 70, 44],
+      [17, 50, 22, 1, 51, 23],
+      [2, 42, 14, 19, 43, 15],
+
+      // 19
+      [3, 141, 113, 4, 142, 114],
+      [3, 70, 44, 11, 71, 45],
+      [17, 47, 21, 4, 48, 22],
+      [9, 39, 13, 16, 40, 14],
+
+      // 20
+      [3, 135, 107, 5, 136, 108],
+      [3, 67, 41, 13, 68, 42],
+      [15, 54, 24, 5, 55, 25],
+      [15, 43, 15, 10, 44, 16],
+
+      // 21
+      [4, 144, 116, 4, 145, 117],
+      [17, 68, 42],
+      [17, 50, 22, 6, 51, 23],
+      [19, 46, 16, 6, 47, 17],
+
+      // 22
+      [2, 139, 111, 7, 140, 112],
+      [17, 74, 46],
+      [7, 54, 24, 16, 55, 25],
+      [34, 37, 13],
+
+      // 23
+      [4, 151, 121, 5, 152, 122],
+      [4, 75, 47, 14, 76, 48],
+      [11, 54, 24, 14, 55, 25],
+      [16, 45, 15, 14, 46, 16],
+
+      // 24
+      [6, 147, 117, 4, 148, 118],
+      [6, 73, 45, 14, 74, 46],
+      [11, 54, 24, 16, 55, 25],
+      [30, 46, 16, 2, 47, 17],
+
+      // 25
+      [8, 132, 106, 4, 133, 107],
+      [8, 75, 47, 13, 76, 48],
+      [7, 54, 24, 22, 55, 25],
+      [22, 45, 15, 13, 46, 16],
+
+      // 26
+      [10, 142, 114, 2, 143, 115],
+      [19, 74, 46, 4, 75, 47],
+      [28, 50, 22, 6, 51, 23],
+      [33, 46, 16, 4, 47, 17],
+
+      // 27
+      [8, 152, 122, 4, 153, 123],
+      [22, 73, 45, 3, 74, 46],
+      [8, 53, 23, 26, 54, 24],
+      [12, 45, 15, 28, 46, 16],
+
+      // 28
+      [3, 147, 117, 10, 148, 118],
+      [3, 73, 45, 23, 74, 46],
+      [4, 54, 24, 31, 55, 25],
+      [11, 45, 15, 31, 46, 16],
+
+      // 29
+      [7, 146, 116, 7, 147, 117],
+      [21, 73, 45, 7, 74, 46],
+      [1, 53, 23, 37, 54, 24],
+      [19, 45, 15, 26, 46, 16],
+
+      // 30
+      [5, 145, 115, 10, 146, 116],
+      [19, 75, 47, 10, 76, 48],
+      [15, 54, 24, 25, 55, 25],
+      [23, 45, 15, 25, 46, 16],
+
+      // 31
+      [13, 145, 115, 3, 146, 116],
+      [2, 74, 46, 29, 75, 47],
+      [42, 54, 24, 1, 55, 25],
+      [23, 45, 15, 28, 46, 16],
+
+      // 32
+      [17, 145, 115],
+      [10, 74, 46, 23, 75, 47],
+      [10, 54, 24, 35, 55, 25],
+      [19, 45, 15, 35, 46, 16],
+
+      // 33
+      [17, 145, 115, 1, 146, 116],
+      [14, 74, 46, 21, 75, 47],
+      [29, 54, 24, 19, 55, 25],
+      [11, 45, 15, 46, 46, 16],
+
+      // 34
+      [13, 145, 115, 6, 146, 116],
+      [14, 74, 46, 23, 75, 47],
+      [44, 54, 24, 7, 55, 25],
+      [59, 46, 16, 1, 47, 17],
+
+      // 35
+      [12, 151, 121, 7, 152, 122],
+      [12, 75, 47, 26, 76, 48],
+      [39, 54, 24, 14, 55, 25],
+      [22, 45, 15, 41, 46, 16],
+
+      // 36
+      [6, 151, 121, 14, 152, 122],
+      [6, 75, 47, 34, 76, 48],
+      [46, 54, 24, 10, 55, 25],
+      [2, 45, 15, 64, 46, 16],
+
+      // 37
+      [17, 152, 122, 4, 153, 123],
+      [29, 74, 46, 14, 75, 47],
+      [49, 54, 24, 10, 55, 25],
+      [24, 45, 15, 46, 46, 16],
+
+      // 38
+      [4, 152, 122, 18, 153, 123],
+      [13, 74, 46, 32, 75, 47],
+      [48, 54, 24, 14, 55, 25],
+      [42, 45, 15, 32, 46, 16],
+
+      // 39
+      [20, 147, 117, 4, 148, 118],
+      [40, 75, 47, 7, 76, 48],
+      [43, 54, 24, 22, 55, 25],
+      [10, 45, 15, 67, 46, 16],
+
+      // 40
+      [19, 148, 118, 6, 149, 119],
+      [18, 75, 47, 31, 76, 48],
+      [34, 54, 24, 34, 55, 25],
+      [20, 45, 15, 61, 46, 16]
+    ];
+
+    var qrRSBlock = function(totalCount, dataCount) {
+      var _this = {};
+      _this.totalCount = totalCount;
+      _this.dataCount = dataCount;
+      return _this;
+    };
+
+    var _this = {};
+
+    var getRsBlockTable = function(typeNumber, errorCorrectionLevel) {
+
+      switch(errorCorrectionLevel) {
+      case QRErrorCorrectionLevel.L :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+      case QRErrorCorrectionLevel.M :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+      case QRErrorCorrectionLevel.Q :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+      case QRErrorCorrectionLevel.H :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+      default :
+        return undefined;
+      }
+    };
+
+    _this.getRSBlocks = function(typeNumber, errorCorrectionLevel) {
+
+      var rsBlock = getRsBlockTable(typeNumber, errorCorrectionLevel);
+
+      if (typeof rsBlock == 'undefined') {
+        throw 'bad rs block @ typeNumber:' + typeNumber +
+            '/errorCorrectionLevel:' + errorCorrectionLevel;
+      }
+
+      var length = rsBlock.length / 3;
+
+      var list = [];
+
+      for (var i = 0; i < length; i += 1) {
+
+        var count = rsBlock[i * 3 + 0];
+        var totalCount = rsBlock[i * 3 + 1];
+        var dataCount = rsBlock[i * 3 + 2];
+
+        for (var j = 0; j < count; j += 1) {
+          list.push(qrRSBlock(totalCount, dataCount) );
+        }
+      }
+
+      return list;
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // qrBitBuffer
+  //---------------------------------------------------------------------
+
+  var qrBitBuffer = function() {
+
+    var _buffer = [];
+    var _length = 0;
+
+    var _this = {};
+
+    _this.getBuffer = function() {
+      return _buffer;
+    };
+
+    _this.getAt = function(index) {
+      var bufIndex = Math.floor(index / 8);
+      return ( (_buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+    };
+
+    _this.put = function(num, length) {
+      for (var i = 0; i < length; i += 1) {
+        _this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+      }
+    };
+
+    _this.getLengthInBits = function() {
+      return _length;
+    };
+
+    _this.putBit = function(bit) {
+
+      var bufIndex = Math.floor(_length / 8);
+      if (_buffer.length <= bufIndex) {
+        _buffer.push(0);
+      }
+
+      if (bit) {
+        _buffer[bufIndex] |= (0x80 >>> (_length % 8) );
+      }
+
+      _length += 1;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrNumber
+  //---------------------------------------------------------------------
+
+  var qrNumber = function(data) {
+
+    var _mode = QRMode.MODE_NUMBER;
+    var _data = data;
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _data.length;
+    };
+
+    _this.write = function(buffer) {
+
+      var data = _data;
+
+      var i = 0;
+
+      while (i + 2 < data.length) {
+        buffer.put(strToNum(data.substring(i, i + 3) ), 10);
+        i += 3;
+      }
+
+      if (i < data.length) {
+        if (data.length - i == 1) {
+          buffer.put(strToNum(data.substring(i, i + 1) ), 4);
+        } else if (data.length - i == 2) {
+          buffer.put(strToNum(data.substring(i, i + 2) ), 7);
+        }
+      }
+    };
+
+    var strToNum = function(s) {
+      var num = 0;
+      for (var i = 0; i < s.length; i += 1) {
+        num = num * 10 + chatToNum(s.charAt(i) );
+      }
+      return num;
+    };
+
+    var chatToNum = function(c) {
+      if ('0' <= c && c <= '9') {
+        return c.charCodeAt(0) - '0'.charCodeAt(0);
+      }
+      throw 'illegal char :' + c;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrAlphaNum
+  //---------------------------------------------------------------------
+
+  var qrAlphaNum = function(data) {
+
+    var _mode = QRMode.MODE_ALPHA_NUM;
+    var _data = data;
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _data.length;
+    };
+
+    _this.write = function(buffer) {
+
+      var s = _data;
+
+      var i = 0;
+
+      while (i + 1 < s.length) {
+        buffer.put(
+          getCode(s.charAt(i) ) * 45 +
+          getCode(s.charAt(i + 1) ), 11);
+        i += 2;
+      }
+
+      if (i < s.length) {
+        buffer.put(getCode(s.charAt(i) ), 6);
+      }
+    };
+
+    var getCode = function(c) {
+
+      if ('0' <= c && c <= '9') {
+        return c.charCodeAt(0) - '0'.charCodeAt(0);
+      } else if ('A' <= c && c <= 'Z') {
+        return c.charCodeAt(0) - 'A'.charCodeAt(0) + 10;
+      } else {
+        switch (c) {
+        case ' ' : return 36;
+        case '$' : return 37;
+        case '%' : return 38;
+        case '*' : return 39;
+        case '+' : return 40;
+        case '-' : return 41;
+        case '.' : return 42;
+        case '/' : return 43;
+        case ':' : return 44;
+        default :
+          throw 'illegal char :' + c;
+        }
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qr8BitByte
+  //---------------------------------------------------------------------
+
+  var qr8BitByte = function(data) {
+
+    var _mode = QRMode.MODE_8BIT_BYTE;
+    var _data = data;
+    var _bytes = qrcode.stringToBytes(data);
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _bytes.length;
+    };
+
+    _this.write = function(buffer) {
+      for (var i = 0; i < _bytes.length; i += 1) {
+        buffer.put(_bytes[i], 8);
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrKanji
+  //---------------------------------------------------------------------
+
+  var qrKanji = function(data) {
+
+    var _mode = QRMode.MODE_KANJI;
+    var _data = data;
+
+    var stringToBytes = qrcode.stringToBytesFuncs['SJIS'];
+    if (!stringToBytes) {
+      throw 'sjis not supported.';
+    }
+    !function(c, code) {
+      // self test for sjis support.
+      var test = stringToBytes(c);
+      if (test.length != 2 || ( (test[0] << 8) | test[1]) != code) {
+        throw 'sjis not supported.';
+      }
+    }('\u53cb', 0x9746);
+
+    var _bytes = stringToBytes(data);
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return ~~(_bytes.length / 2);
+    };
+
+    _this.write = function(buffer) {
+
+      var data = _bytes;
+
+      var i = 0;
+
+      while (i + 1 < data.length) {
+
+        var c = ( (0xff & data[i]) << 8) | (0xff & data[i + 1]);
+
+        if (0x8140 <= c && c <= 0x9FFC) {
+          c -= 0x8140;
+        } else if (0xE040 <= c && c <= 0xEBBF) {
+          c -= 0xC140;
+        } else {
+          throw 'illegal char at ' + (i + 1) + '/' + c;
+        }
+
+        c = ( (c >>> 8) & 0xff) * 0xC0 + (c & 0xff);
+
+        buffer.put(c, 13);
+
+        i += 2;
+      }
+
+      if (i < data.length) {
+        throw 'illegal char at ' + (i + 1);
+      }
+    };
+
+    return _this;
+  };
+
+  //=====================================================================
+  // GIF Support etc.
+  //
+
+  //---------------------------------------------------------------------
+  // byteArrayOutputStream
+  //---------------------------------------------------------------------
+
+  var byteArrayOutputStream = function() {
+
+    var _bytes = [];
+
+    var _this = {};
+
+    _this.writeByte = function(b) {
+      _bytes.push(b & 0xff);
+    };
+
+    _this.writeShort = function(i) {
+      _this.writeByte(i);
+      _this.writeByte(i >>> 8);
+    };
+
+    _this.writeBytes = function(b, off, len) {
+      off = off || 0;
+      len = len || b.length;
+      for (var i = 0; i < len; i += 1) {
+        _this.writeByte(b[i + off]);
+      }
+    };
+
+    _this.writeString = function(s) {
+      for (var i = 0; i < s.length; i += 1) {
+        _this.writeByte(s.charCodeAt(i) );
+      }
+    };
+
+    _this.toByteArray = function() {
+      return _bytes;
+    };
+
+    _this.toString = function() {
+      var s = '';
+      s += '[';
+      for (var i = 0; i < _bytes.length; i += 1) {
+        if (i > 0) {
+          s += ',';
+        }
+        s += _bytes[i];
+      }
+      s += ']';
+      return s;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // base64EncodeOutputStream
+  //---------------------------------------------------------------------
+
+  var base64EncodeOutputStream = function() {
+
+    var _buffer = 0;
+    var _buflen = 0;
+    var _length = 0;
+    var _base64 = '';
+
+    var _this = {};
+
+    var writeEncoded = function(b) {
+      _base64 += String.fromCharCode(encode(b & 0x3f) );
+    };
+
+    var encode = function(n) {
+      if (n < 0) {
+        // error.
+      } else if (n < 26) {
+        return 0x41 + n;
+      } else if (n < 52) {
+        return 0x61 + (n - 26);
+      } else if (n < 62) {
+        return 0x30 + (n - 52);
+      } else if (n == 62) {
+        return 0x2b;
+      } else if (n == 63) {
+        return 0x2f;
+      }
+      throw 'n:' + n;
+    };
+
+    _this.writeByte = function(n) {
+
+      _buffer = (_buffer << 8) | (n & 0xff);
+      _buflen += 8;
+      _length += 1;
+
+      while (_buflen >= 6) {
+        writeEncoded(_buffer >>> (_buflen - 6) );
+        _buflen -= 6;
+      }
+    };
+
+    _this.flush = function() {
+
+      if (_buflen > 0) {
+        writeEncoded(_buffer << (6 - _buflen) );
+        _buffer = 0;
+        _buflen = 0;
+      }
+
+      if (_length % 3 != 0) {
+        // padding
+        var padlen = 3 - _length % 3;
+        for (var i = 0; i < padlen; i += 1) {
+          _base64 += '=';
+        }
+      }
+    };
+
+    _this.toString = function() {
+      return _base64;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // base64DecodeInputStream
+  //---------------------------------------------------------------------
+
+  var base64DecodeInputStream = function(str) {
+
+    var _str = str;
+    var _pos = 0;
+    var _buffer = 0;
+    var _buflen = 0;
+
+    var _this = {};
+
+    _this.read = function() {
+
+      while (_buflen < 8) {
+
+        if (_pos >= _str.length) {
+          if (_buflen == 0) {
+            return -1;
+          }
+          throw 'unexpected end of file./' + _buflen;
+        }
+
+        var c = _str.charAt(_pos);
+        _pos += 1;
+
+        if (c == '=') {
+          _buflen = 0;
+          return -1;
+        } else if (c.match(/^\s$/) ) {
+          // ignore if whitespace.
+          continue;
+        }
+
+        _buffer = (_buffer << 6) | decode(c.charCodeAt(0) );
+        _buflen += 6;
+      }
+
+      var n = (_buffer >>> (_buflen - 8) ) & 0xff;
+      _buflen -= 8;
+      return n;
+    };
+
+    var decode = function(c) {
+      if (0x41 <= c && c <= 0x5a) {
+        return c - 0x41;
+      } else if (0x61 <= c && c <= 0x7a) {
+        return c - 0x61 + 26;
+      } else if (0x30 <= c && c <= 0x39) {
+        return c - 0x30 + 52;
+      } else if (c == 0x2b) {
+        return 62;
+      } else if (c == 0x2f) {
+        return 63;
+      } else {
+        throw 'c:' + c;
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // gifImage (B/W)
+  //---------------------------------------------------------------------
+
+  var gifImage = function(width, height) {
+
+    var _width = width;
+    var _height = height;
+    var _data = new Array(width * height);
+
+    var _this = {};
+
+    _this.setPixel = function(x, y, pixel) {
+      _data[y * _width + x] = pixel;
+    };
+
+    _this.write = function(out) {
+
+      //---------------------------------
+      // GIF Signature
+
+      out.writeString('GIF87a');
+
+      //---------------------------------
+      // Screen Descriptor
+
+      out.writeShort(_width);
+      out.writeShort(_height);
+
+      out.writeByte(0x80); // 2bit
+      out.writeByte(0);
+      out.writeByte(0);
+
+      //---------------------------------
+      // Global Color Map
+
+      // black
+      out.writeByte(0x00);
+      out.writeByte(0x00);
+      out.writeByte(0x00);
+
+      // white
+      out.writeByte(0xff);
+      out.writeByte(0xff);
+      out.writeByte(0xff);
+
+      //---------------------------------
+      // Image Descriptor
+
+      out.writeString(',');
+      out.writeShort(0);
+      out.writeShort(0);
+      out.writeShort(_width);
+      out.writeShort(_height);
+      out.writeByte(0);
+
+      //---------------------------------
+      // Local Color Map
+
+      //---------------------------------
+      // Raster Data
+
+      var lzwMinCodeSize = 2;
+      var raster = getLZWRaster(lzwMinCodeSize);
+
+      out.writeByte(lzwMinCodeSize);
+
+      var offset = 0;
+
+      while (raster.length - offset > 255) {
+        out.writeByte(255);
+        out.writeBytes(raster, offset, 255);
+        offset += 255;
+      }
+
+      out.writeByte(raster.length - offset);
+      out.writeBytes(raster, offset, raster.length - offset);
+      out.writeByte(0x00);
+
+      //---------------------------------
+      // GIF Terminator
+      out.writeString(';');
+    };
+
+    var bitOutputStream = function(out) {
+
+      var _out = out;
+      var _bitLength = 0;
+      var _bitBuffer = 0;
+
+      var _this = {};
+
+      _this.write = function(data, length) {
+
+        if ( (data >>> length) != 0) {
+          throw 'length over';
+        }
+
+        while (_bitLength + length >= 8) {
+          _out.writeByte(0xff & ( (data << _bitLength) | _bitBuffer) );
+          length -= (8 - _bitLength);
+          data >>>= (8 - _bitLength);
+          _bitBuffer = 0;
+          _bitLength = 0;
+        }
+
+        _bitBuffer = (data << _bitLength) | _bitBuffer;
+        _bitLength = _bitLength + length;
+      };
+
+      _this.flush = function() {
+        if (_bitLength > 0) {
+          _out.writeByte(_bitBuffer);
+        }
+      };
+
+      return _this;
+    };
+
+    var getLZWRaster = function(lzwMinCodeSize) {
+
+      var clearCode = 1 << lzwMinCodeSize;
+      var endCode = (1 << lzwMinCodeSize) + 1;
+      var bitLength = lzwMinCodeSize + 1;
+
+      // Setup LZWTable
+      var table = lzwTable();
+
+      for (var i = 0; i < clearCode; i += 1) {
+        table.add(String.fromCharCode(i) );
+      }
+      table.add(String.fromCharCode(clearCode) );
+      table.add(String.fromCharCode(endCode) );
+
+      var byteOut = byteArrayOutputStream();
+      var bitOut = bitOutputStream(byteOut);
+
+      // clear code
+      bitOut.write(clearCode, bitLength);
+
+      var dataIndex = 0;
+
+      var s = String.fromCharCode(_data[dataIndex]);
+      dataIndex += 1;
+
+      while (dataIndex < _data.length) {
+
+        var c = String.fromCharCode(_data[dataIndex]);
+        dataIndex += 1;
+
+        if (table.contains(s + c) ) {
+
+          s = s + c;
+
+        } else {
+
+          bitOut.write(table.indexOf(s), bitLength);
+
+          if (table.size() < 0xfff) {
+
+            if (table.size() == (1 << bitLength) ) {
+              bitLength += 1;
+            }
+
+            table.add(s + c);
+          }
+
+          s = c;
+        }
+      }
+
+      bitOut.write(table.indexOf(s), bitLength);
+
+      // end code
+      bitOut.write(endCode, bitLength);
+
+      bitOut.flush();
+
+      return byteOut.toByteArray();
+    };
+
+    var lzwTable = function() {
+
+      var _map = {};
+      var _size = 0;
+
+      var _this = {};
+
+      _this.add = function(key) {
+        if (_this.contains(key) ) {
+          throw 'dup key:' + key;
+        }
+        _map[key] = _size;
+        _size += 1;
+      };
+
+      _this.size = function() {
+        return _size;
+      };
+
+      _this.indexOf = function(key) {
+        return _map[key];
+      };
+
+      _this.contains = function(key) {
+        return typeof _map[key] != 'undefined';
+      };
+
+      return _this;
+    };
+
+    return _this;
+  };
+
+  var createDataURL = function(width, height, getPixel) {
+    var gif = gifImage(width, height);
+    for (var y = 0; y < height; y += 1) {
+      for (var x = 0; x < width; x += 1) {
+        gif.setPixel(x, y, getPixel(x, y) );
+      }
+    }
+
+    var b = byteArrayOutputStream();
+    gif.write(b);
+
+    var base64 = base64EncodeOutputStream();
+    var bytes = b.toByteArray();
+    for (var i = 0; i < bytes.length; i += 1) {
+      base64.writeByte(bytes[i]);
+    }
+    base64.flush();
+
+    return 'data:image/gif;base64,' + base64;
+  };
+
+  //---------------------------------------------------------------------
+  // returns qrcode function.
+
+  return qrcode;
+}();
+
+// multibyte support
+!function() {
+
+  qrcode.stringToBytesFuncs['UTF-8'] = function(s) {
+    // http://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array
+    function toUTF8Array(str) {
+      var utf8 = [];
+      for (var i=0; i < str.length; i++) {
+        var charcode = str.charCodeAt(i);
+        if (charcode < 0x80) utf8.push(charcode);
+        else if (charcode < 0x800) {
+          utf8.push(0xc0 | (charcode >> 6),
+              0x80 | (charcode & 0x3f));
+        }
+        else if (charcode < 0xd800 || charcode >= 0xe000) {
+          utf8.push(0xe0 | (charcode >> 12),
+              0x80 | ((charcode>>6) & 0x3f),
+              0x80 | (charcode & 0x3f));
+        }
+        // surrogate pair
+        else {
+          i++;
+          // UTF-16 encodes 0x10000-0x10FFFF by
+          // subtracting 0x10000 and splitting the
+          // 20 bits of 0x0-0xFFFFF into two halves
+          charcode = 0x10000 + (((charcode & 0x3ff)<<10)
+            | (str.charCodeAt(i) & 0x3ff));
+          utf8.push(0xf0 | (charcode >>18),
+              0x80 | ((charcode>>12) & 0x3f),
+              0x80 | ((charcode>>6) & 0x3f),
+              0x80 | (charcode & 0x3f));
+        }
+      }
+      return utf8;
+    }
+    return toUTF8Array(s);
+  };
+
+}();
+
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+      define([], factory);
+  } else if (typeof exports === 'object') {
+      module.exports = factory();
+  }
+}(function () {
+    return qrcode;
+}));
 
 return module.exports;})(__req);
 __m["mqtt"]=(function(require){var module={exports:{}};var exports=module.exports;
@@ -3355,6 +5956,18 @@ class Link {
     this._connect().catch(() => this._again());
   }
 
+  /* Verbindung wegwerfen und neu aufbauen, z. B. wenn sie nach einer Pause nur noch scheinbar steht. */
+  restart() {
+    if (this.closed || this.state === 'connecting') return;
+    clearTimeout(this.rt);
+    const mq = this.mq;
+    this.mq = null;
+    if (mq) mq.close();
+    this._set('offline');
+    this.retry = 0;
+    this._connect().catch(() => this._again());
+  }
+
   send(suffix, obj) {
     this.outQ = this.outQ
       .then(() => seal(this.key, obj))
@@ -3363,6 +5976,15 @@ class Link {
       })
       .catch(() => {});
     return this.outQ;
+  }
+
+  /* Verschlüsselt eine Nachricht auf Vorrat, damit sie später ohne Wartezeit rausgehen kann. */
+  pack(obj) {
+    return seal(this.key, obj);
+  }
+
+  sendNow(suffix, bytes) {
+    if (this.mq && this.mq.open) this.mq.publish(this.base + '/' + suffix, bytes);
   }
 
   _in(topic, bytes) {
@@ -3438,57 +6060,452 @@ function relayName(code) {
 }
 
 function toUI(v) {
-  return { room: { v: v.v, code: v.code, phase: v.phase, owner: v.owner, players: v.players, cfg: v.cfg }, game: v.game };
+  return { room: { v: v.v, code: v.code, phase: v.phase, owner: v.owner, players: v.players, cfg: v.cfg, reacts: v.reacts || [] }, game: v.game };
 }
 
-/* Raum eröffnen: dieses Gerät führt die Partie. */
-class HostSession {
-  /* o: { pid, name, snap, onView, onState, onSnapshot, hooks } */
+/* Zeiten in Millisekunden. Tests dürfen sie über __ZS_TIMING = { scale } gemeinsam verkürzen. */
+const K = (G.__ZS_TIMING && G.__ZS_TIMING.scale) || 1;
+const T = {
+  tick: 1000 * K,
+  hb: 3000 * K, /* Lebenszeichen des leitenden Geräts */
+  ghb: 5000 * K, /* Lebenszeichen der Mitspieler */
+  away: 13000 * K, /* ohne Lebenszeichen gilt ein Mitspieler als abwesend */
+  quiet: 9000 * K, /* so lange Stille, bevor ein anderes Gerät übernimmt */
+  rank: 6000 * K, /* Abstand zwischen den Nachrückern */
+  byeRank: 2500 * K, /* dasselbe, wenn sich das leitende Gerät abgemeldet hat */
+  grace: 3000 * K, /* Schonfrist nach eigener Unterbrechung */
+  claim: 1500 * K, /* Bedenkzeit nach der Ankündigung einer Übernahme */
+  hold: 3000 * K, /* Pause nach einer gescheiterten Bewerbung */
+  probe: 1800 * K, /* so lange sucht ein zurückkehrendes Leitgerät nach einem Nachfolger */
+  search: 4500 * K, /* so lange sucht ein zurückkehrender Mitspieler nach dem Raum */
+  find: 6400 * K, /* so lange sucht ein neuer Mitspieler nach dem Raum */
+  ask: 1600 * K, /* Abstand der Anfragen beim Suchen */
+  boost: 20000 * K,
+};
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function fresher(ep1, v1, ep2, v2) {
+  return ep1 > ep2 || (ep1 === ep2 && v1 > v2);
+}
+
+/*
+ * Eine Sitzung in einem Raum.
+ *
+ * Genau ein Gerät leitet die Partie (role 'host'): Es hält den Raum, prüft Züge und lässt die Bots spielen.
+ * Alle anderen folgen (role 'guest'). Das leitende Gerät verteilt nach jeder Änderung eine verschlüsselte
+ * Sicherung des Spielstands an alle. Meldet es sich ab oder bleibt es stumm, übernimmt ein anderes Gerät
+ * mit dieser Sicherung. Jede Übernahme erhöht die Amtszeit (ep). Nachrichten älterer Amtszeiten zählen
+ * nicht, und ein früheres Leitgerät, das zurückkommt, reiht sich als Mitspieler ein.
+ *
+ * o: { pid, name, onView(ui), onState(), onGone(text), onSave(rec), onRole(info), hooks, testCfg }
+ */
+class Session {
   constructor(o) {
-    this.kind = 'host';
     this.o = o;
     this.pid = o.pid;
-    this.guests = {};
-    this.room = null;
+    this.name = o.name;
+    this.role = 'idle'; /* 'host' | 'guest' | 'probe' (sucht den Raum) */
+    this.code = '';
     this.link = null;
-    this.flush = null;
-    this.tick = null;
     this.closed = false;
+    this.ep = 0;
+    this.hostPid = '';
+    this.led = false; /* habe ich den Raum zuletzt geleitet? */
+    this.hidden = false;
+    this.hiddenAt = 0;
+    this.paused = false;
+    this.busy = false;
+    this.echoAt = 0;
+    /* leitend */
+    this.room = null;
+    this.guests = {};
+    this.flush = null;
+    this.defended = 0;
+    this.byeBytes = null;
+    /* folgend */
+    this.view = null;
+    this.viewKey = '';
+    this.viewN = 0;
+    this.asking = null;
+    this.acks = {};
+    this.seq = Math.floor(Math.random() * 1e6);
+    this.lastHost = 0;
+    this.hostBye = false;
+    this.byeAt = 0;
+    this.leftHost = '';
+    /* Übernahme */
+    this.snap = null;
+    this.claiming = null;
+    this.claimSeen = 0;
+    this.hold = 0;
+    this.boost = 0;
+    this.tick = null;
+    this.ticks = 0;
   }
 
-  get code() {
-    return this.room ? this.room.code : '';
+  get kind() {
+    return this.role === 'host' ? 'host' : 'guest';
   }
 
-  async start() {
-    const o = this.o;
-    const hooks = Object.assign({}, o.hooks || {}, { onUpdate: () => this._dirty() });
-    let idx;
-    if (o.snap) {
-      idx = brokerIndexFor(o.snap.code);
-      this.room = Room.restore(o.snap, hooks);
-      for (const p of this.room.players) if (p.pid !== this.pid) p.online = false;
-      if (this.room.host) this.room.players.forEach((p) => (this.room.host.away[this.room.seatOf[p.pid]] = !p.online));
-    } else {
-      idx = await pickBroker();
-      this.room = new Room(makeCode(Math.random, PREFIX[idx % PREFIX.length]), hooks);
-      this.room.join(this.pid, o.name);
-    }
-    this.link = new Link(this.room.code, {
+  _hooks() {
+    return Object.assign({}, this.o.hooks || {}, { onUpdate: () => this._dirty() });
+  }
+
+  _notify() {
+    if (this.o.onState) this.o.onState();
+  }
+
+  /* Ereignisse der Übergabe, für Tests und zur Fehlersuche */
+  _log(what, extra) {
+    if (this.o.onLog) this.o.onLog(what, Object.assign({ ep: this.ep, role: this.role }, extra || {}));
+  }
+
+  _save() {
+    if (this.closed || !this.o.onSave || !this.code) return;
+    this.o.onSave({ role: this.led ? 'host' : 'guest', code: this.code, ep: this.ep, snap: this.snap });
+  }
+
+  async _open(code) {
+    this.code = code;
+    this.link = new Link(code, {
       onMessage: (sfx, m) => this._msg(sfx, m),
       onState: (s) => {
-        if (s === 'online') this._dirty();
-        if (o.onState) o.onState(s);
+        if (s === 'online') {
+          this.echoAt = Date.now();
+          if (this.role === 'host') this._dirty();
+          else if (this.role === 'guest') {
+            this._spare();
+            if (this.view) this.link.send('up', { t: 'sync', pid: this.pid });
+          }
+        }
+        this._notify();
       },
     });
-    this.link.subscribe(['up']);
-    await this.link.open(brokers()[idx]);
-    this.tick = setInterval(() => this._tick(), 4000);
+    this.link.subscribe(['up', 'all', 'd/' + this.pid]);
+    try {
+      await this.link.open(brokers()[brokerIndexFor(code)]);
+    } catch (e) {
+      this.link.close();
+      const err = new Error('Der Relay für diesen Raum ist von deinem Netz aus nicht erreichbar. Prüfe deine Verbindung oder wechsle das Netz (WLAN oder mobile Daten).');
+      err.net = true;
+      throw err;
+    }
+  }
+
+  /* Nach einer eigenen Unterbrechung bekommt das leitende Gerät eine kurze Schonfrist. */
+  _spare() {
+    this.lastHost = Math.max(this.lastHost, Date.now() - (T.quiet - T.grace));
+  }
+
+  /* ---- Einstiege ---- */
+
+  async openRoom() {
+    const idx = await pickBroker();
+    const code = makeCode(Math.random, PREFIX[idx % PREFIX.length]);
+    await this._open(code);
+    const room = new Room(code, this._hooks());
+    room.join(this.pid, this.name);
+    this._becomeHost(room, 1);
+  }
+
+  async join(code) {
+    code = normCode(code);
+    if (code.length !== 5) throw new Error('Der Raumcode hat 5 Buchstaben.');
+    this.role = 'probe';
+    await this._open(code);
+    try {
+      if (!(await this._ask(T.find))) throw new Error('Raum nicht gefunden. Stimmt der Code, und ist der Raum noch offen?');
+    } catch (e) {
+      this.close(false, true);
+      throw e;
+    }
+    this._startTick();
+    this._save();
+  }
+
+  /*
+   * Zurück in einen Raum, in dem dieses Gerät schon war. rec: { role, code, ep, snap } aus dem Speicher.
+   * Leitet inzwischen ein anderes Gerät, reihe ich mich ein. Antwortet niemand, öffne ich den Raum
+   * aus meiner Sicherung wieder.
+   */
+  async resume(rec) {
+    const code = normCode(rec && rec.code);
+    const snap = rec && rec.snap && rec.snap.code === code && Array.isArray(rec.snap.players) ? rec.snap : null;
+    if (!snap) return this.join(code);
+    this.snap = snap;
+    this.ep = snap.ep || 1;
+    this.led = rec.role === 'host';
+    this.role = 'probe';
+    await this._open(code);
+    try {
+      await this._enter();
+    } catch (e) {
+      this.close(false, true);
+      throw e;
+    }
+  }
+
+  async _enter() {
+    if (this.busy) return;
+    this.busy = true;
+    try {
+      for (let round = 0; round < 3; round++) {
+        const found = await this._ask(this.led ? T.probe : T.search);
+        if (this.closed) return;
+        if (found) {
+          this.led = false;
+          this._log('eingereiht', { host: this.hostPid });
+          this._startTick();
+          this._save();
+          return;
+        }
+        if (this.role === 'probe' && this.led) {
+          /* Niemand hat übernommen: Ich leite einfach weiter. */
+          if (this._reopen(this.ep)) return;
+          break;
+        }
+        if (this.role === 'probe' || Date.now() - this.lastHost > 3500 * K) {
+          /* Niemand leitet mehr: Ich bewerbe mich mit meiner Sicherung. */
+          const ep = this.ep + 1;
+          const t0 = Date.now();
+          if ((await this._claim(ep)) && !this.closed && this.role !== 'host' && this.ep < ep && this.lastHost < t0) {
+            if (this._reopen(ep, { took: true })) return;
+            break;
+          }
+          if (this.closed) return;
+        }
+      }
+      throw new Error('Raum nicht gefunden. Vielleicht ist die Partie schon vorbei.');
+    } finally {
+      this.busy = false;
+    }
+  }
+
+  /* Fragt nach dem Raum, bis ein leitendes Gerät meine Sicht schickt. false: Niemand hat geantwortet. */
+  async _ask(ms) {
+    const n0 = this.viewN;
+    const ask = (this.asking = { nope: null });
+    let t0 = 0;
+    let last = 0;
+    try {
+      for (;;) {
+        if (this.closed) return false;
+        if (ask.nope) throw new Error(ask.nope);
+        if (this.role === 'host') return false;
+        if (this.role === 'guest' && this.viewN > n0) return true;
+        const now = Date.now();
+        if (this.link.state === 'online') {
+          if (!t0) t0 = now;
+          if (now - last >= T.ask) {
+            last = now;
+            this.link.send('up', { t: 'join', pid: this.pid, name: this.name });
+          }
+          /* Bewirbt sich gerade jemand um die Leitung, warte ich das Ergebnis ab. */
+          const until = Math.max(t0 + ms, this.claimSeen ? this.claimSeen + T.claim + 900 * K : 0, this.role === 'guest' ? this.lastHost + 4000 * K : 0);
+          if (now >= Math.min(until, t0 + ms + 15000 * K)) return false;
+        } else {
+          t0 = 0;
+          last = 0;
+        }
+        await sleep(Math.max(20, 100 * K));
+      }
+    } finally {
+      if (this.asking === ask) this.asking = null;
+    }
+  }
+
+  /* ---- Rollenwechsel ---- */
+
+  _becomeHost(room, ep, info) {
+    this.role = 'host';
+    this.led = true;
+    this.paused = false;
+    this.room = room;
+    room.deputy = this.pid;
+    room.testCfg = this.o.testCfg || null;
+    this.ep = ep;
+    this.hostPid = this.pid;
+    this.code = room.code;
+    this.view = null;
+    this.viewKey = '';
+    this.claiming = null;
+    this.hostBye = false;
+    this.leftHost = '';
+    this.guests = {};
+    const now = Date.now();
+    for (const p of room.players) if (p.pid !== this.pid) this.guests[p.pid] = { seen: now, lastId: -1, lastRes: null };
+    room.setOnline(this.pid, true);
+    this._log('leite', { v: room.v, took: !!(info && info.took) });
+    this._startTick();
+    this.echoAt = Date.now();
+    this.link.send('all', { t: 'hb', ep, host: this.pid, v: room.v });
+    this._dirty();
+    /* Den Abschied schon jetzt verschlüsseln: Beim Wegwischen der Seite bleibt dafür keine Zeit. */
+    this.byeBytes = null;
+    this.link
+      .pack({ t: 'bye', ep, host: this.pid, leave: false })
+      .then((b) => {
+        if (this.role === 'host' && this.ep === ep) this.byeBytes = b;
+      })
+      .catch(() => {});
+    if (this.o.onRole) this.o.onRole(Object.assign({ role: 'host' }, info || {}));
+    this._notify();
+  }
+
+  /* Öffnet den Raum aus der eigenen Sicherung. */
+  _reopen(ep, info) {
+    let room;
+    try {
+      room = Room.restore(JSON.parse(JSON.stringify(this.snap)), this._hooks());
+    } catch (e) {
+      return false;
+    }
+    if (!room.has(this.pid)) {
+      room.destroy();
+      return false;
+    }
+    this._becomeHost(room, ep, info);
+    return true;
+  }
+
+  /* Übernahme im laufenden Betrieb: Das bisherige Leitgerät ist weg. */
+  _takeOver(ep) {
+    const old = this.hostPid;
+    const left = this.leftHost === old;
+    if (!this._reopen(ep, { took: true })) return;
+    const room = this.room;
+    if (old && old !== this.pid && room.has(old)) {
+      if (left) room.leave(old);
+      else room.setOnline(old, false);
+    }
     this._dirty();
   }
 
+  /* Ein anderes Gerät leitet mit neuerer Amtszeit: einreihen. */
+  _stepDown(ep, host) {
+    this._log('abgelöst', { by: host, newEp: ep });
+    clearTimeout(this.flush);
+    this.flush = null;
+    if (this.room) this.room.destroy();
+    this.room = null;
+    this.guests = {};
+    this.role = 'guest';
+    this.led = false;
+    this.ep = ep;
+    this.hostPid = host;
+    this.viewKey = '';
+    this.lastHost = Date.now();
+    this.hostBye = false;
+    this.claiming = null;
+    this.link.send('up', { t: 'join', pid: this.pid, name: this.name });
+    this._startTick();
+    this._save();
+    if (this.o.onRole) this.o.onRole({ role: 'guest', stepped: true });
+    this._notify();
+  }
+
+  /*
+   * Die Seite verschwindet in den Hintergrund. Ein Leitgerät gibt die Leitung ab, damit die anderen
+   * nicht warten müssen: Im Hintergrund friert das Handy die Seite ein.
+   */
+  pause() {
+    if (this.closed || this.hidden) return;
+    this.hidden = true;
+    this.hiddenAt = Date.now();
+    if (this.role === 'host') this._resign();
+  }
+
+  _resign() {
+    const room = this.room;
+    if (!room || !room.players.some((p) => p.pid !== this.pid && p.online)) return; /* niemand da, der übernehmen könnte */
+    const snap = JSON.parse(JSON.stringify(this._snap()));
+    this.snap = snap;
+    this._save();
+    clearTimeout(this.flush);
+    this.flush = null;
+    if (this.byeBytes) this.link.sendNow('all', this.byeBytes);
+    this.link.send('all', { t: 'snap', ep: this.ep, host: this.pid, snap });
+    this.link.send('all', { t: 'bye', ep: this.ep, host: this.pid, leave: false });
+    room.destroy();
+    this.room = null;
+    this.guests = {};
+    this.role = 'probe';
+    this.paused = true;
+    this._log('abgemeldet', { v: snap.v });
+    clearInterval(this.tick);
+    this._notify();
+  }
+
+  /* Die Seite ist wieder sichtbar. */
+  wake() {
+    if (this.closed) return;
+    const longGone = this.hidden && Date.now() - this.hiddenAt > 4000 * K;
+    this.hidden = false;
+    if (this.link) {
+      /* Nach einer längeren Pause steht die Verbindung oft nur noch scheinbar. */
+      if (longGone) this.link.restart();
+      else this.link.kick();
+    }
+    if (this.paused) {
+      /* Ich hatte die Leitung abgegeben: nachsehen, wer jetzt leitet. */
+      this.paused = false;
+      this._enter().catch((e) => {
+        if (this.closed) return;
+        this.close(false, true);
+        if (this.o.onGone) this.o.onGone(e.message);
+      });
+    } else if (this.role === 'guest') {
+      this._spare();
+      this.boost = Date.now();
+      this.link.send('up', { t: 'sync', pid: this.pid });
+    }
+  }
+
+  _startTick() {
+    clearInterval(this.tick);
+    this.ticks = 0;
+    this.tick = setInterval(() => this._tick(), T.tick);
+  }
+
+  _tick() {
+    if (this.closed) return;
+    this.ticks++;
+    if (this.role === 'host') {
+      if (this.hidden) {
+        this._resign();
+        if (this.role !== 'host') return;
+      }
+      if (this.ticks % Math.max(1, Math.round(T.hb / T.tick)) !== 0) return;
+      const now = Date.now();
+      /* Kommt mein eigenes Lebenszeichen nicht mehr vom Relay zurück, ist die Verbindung tot. */
+      if (this.link.state === 'online' && now - this.echoAt > T.quiet) {
+        this.echoAt = now;
+        this.link.restart();
+        return;
+      }
+      this.link.send('all', { t: 'hb', ep: this.ep, host: this.pid, v: this.room.v });
+      for (const p of this.room.players) {
+        if (p.pid === this.pid || !p.online) continue;
+        const g = this.guests[p.pid];
+        if (!g || now - g.seen > T.away) this.room.setOnline(p.pid, false);
+      }
+      return;
+    }
+    if (this.role !== 'guest') return;
+    if (this.ticks % Math.max(1, Math.round(T.ghb / T.tick)) === 0) this.link.send('up', { t: 'hb', pid: this.pid, v: this.view ? this.view.v : 0 });
+    this._maybeClaim();
+    this._notify();
+  }
+
+  /* ---- leitendes Gerät ---- */
+
+  _snap() {
+    return Object.assign(this.room.snapshot(), { ep: this.ep });
+  }
+
   _dirty() {
-    if (this.flush || this.closed) return;
+    if (this.flush || this.closed || this.role !== 'host') return;
     this.flush = setTimeout(() => {
       this.flush = null;
       this._push();
@@ -3496,17 +6513,32 @@ class HostSession {
   }
 
   _push() {
-    if (this.closed || !this.room) return;
+    if (this.closed || this.role !== 'host' || !this.room) return;
     const room = this.room;
-    if (this.o.onSnapshot) this.o.onSnapshot(room.snapshot());
+    const snap = this._snap();
+    /* Die eigene Sicherung als Kopie halten: Der Raum arbeitet auf denselben Objekten weiter. */
+    this.snap = JSON.parse(JSON.stringify(snap));
+    this._save();
+    if (room.players.length > 1) this.link.send('all', { t: 'snap', ep: this.ep, host: this.pid, snap: this.snap });
     for (const p of room.players) {
-      if (p.pid !== this.pid) this.link.send('d/' + p.pid, { t: 'view', view: room.viewFor(p.pid) });
+      if (p.pid !== this.pid) this._sendView(p.pid);
     }
     if (this.o.onView) this.o.onView(toUI(room.viewFor(this.pid)));
   }
 
-  _msg(sfx, m) {
-    if (sfx !== 'up' || !m || typeof m.pid !== 'string' || this.closed) return;
+  _sendView(pid) {
+    this.link.send('d/' + pid, { t: 'view', ep: this.ep, host: this.pid, view: this.room.viewFor(pid) });
+  }
+
+  _defend() {
+    const now = Date.now();
+    if (now - this.defended < 700 * K) return;
+    this.defended = now;
+    this.link.send('all', { t: 'hb', ep: this.ep, host: this.pid, v: this.room.v });
+  }
+
+  _hostUp(m) {
+    if (!m || typeof m.pid !== 'string') return;
     const pid = m.pid.slice(0, 24);
     if (pid === this.pid) return;
     const room = this.room;
@@ -3514,21 +6546,23 @@ class HostSession {
     g.seen = Date.now();
     if (m.t === 'join') {
       const res = room.join(pid, m.name);
-      if (res.error) this.link.send('d/' + pid, { t: 'nope', error: res.error });
+      if (res.error) this.link.send('d/' + pid, { t: 'nope', ep: this.ep, host: this.pid, error: res.error });
       else {
         room.setOnline(pid, true);
-        this.link.send('d/' + pid, { t: 'view', view: room.viewFor(pid) });
+        this._sendView(pid);
+        this.link.send('d/' + pid, { t: 'snap', ep: this.ep, host: this.pid, snap: JSON.parse(JSON.stringify(this._snap())) });
       }
       return;
     }
     if (!room.has(pid)) {
-      this.link.send('d/' + pid, { t: 'nope', error: 'Du bist nicht mehr in diesem Raum.' });
+      this.link.send('d/' + pid, { t: 'nope', ep: this.ep, host: this.pid, error: 'Du bist nicht mehr in diesem Raum.' });
       return;
     }
     if (m.t === 'hb' || m.t === 'sync') {
       room.setOnline(pid, true);
-      if (m.t === 'sync' || (m.v | 0) < room.v) this.link.send('d/' + pid, { t: 'view', view: room.viewFor(pid) });
+      if (m.t === 'sync' || (m.v | 0) !== room.v) this._sendView(pid);
     } else if (m.t === 'act') {
+      if (m.ep !== this.ep) return;
       let res;
       if (m.id === g.lastId && g.lastRes) res = g.lastRes;
       else {
@@ -3537,163 +6571,212 @@ class HostSession {
         g.lastId = m.id;
         g.lastRes = res;
       }
-      this.link.send('d/' + pid, { t: 'ack', id: m.id, error: res.error || null });
+      this.link.send('d/' + pid, { t: 'ack', ep: this.ep, host: this.pid, id: m.id, error: res.error || null });
     } else if (m.t === 'leave') {
       room.leave(pid);
       delete this.guests[pid];
     }
   }
 
-  _tick() {
-    if (this.closed) return;
-    const now = Date.now();
-    this.link.send('all', { t: 'hb', v: this.room.v });
-    for (const p of this.room.players) {
-      if (p.pid === this.pid || !p.online) continue;
-      const g = this.guests[p.pid];
-      if (!g || now - g.seen > 13000) this.room.setOnline(p.pid, false);
-    }
+  /* ---- Rundrufe an alle ---- */
+
+  _newer(ep, host) {
+    return ep > this.ep || (ep === this.ep && host < this.pid);
   }
 
-  send(msg) {
-    return Promise.resolve(this.room.handle(this.pid, msg));
-  }
-
-  status() {
-    return { link: this.link ? this.link.state : 'idle', hostAlive: true };
-  }
-
-  close() {
-    if (this.closed) return;
-    this.closed = true;
-    clearInterval(this.tick);
-    clearTimeout(this.flush);
-    if (this.link) {
-      this.link.send('all', { t: 'bye' });
-      const l = this.link;
-      setTimeout(() => l.close(), 200);
-    }
-    if (this.room) this.room.destroy();
-  }
-}
-
-/* Einem Raum beitreten. */
-class GuestSession {
-  /* o: { pid, name, code, onView, onState, onGone(text) } */
-  constructor(o) {
-    this.kind = 'guest';
-    this.o = o;
-    this.pid = o.pid;
-    this.code = normCode(o.code);
-    this.view = null;
-    this.acks = {};
-    this.seq = Math.floor(Math.random() * 1e6);
-    this.lastHost = 0;
-    this.hostBye = false;
-    this.closed = false;
-    this.first = null;
-  }
-
-  async start() {
-    if (this.code.length !== 5) throw new Error('Der Raumcode hat 5 Buchstaben.');
-    this.link = new Link(this.code, {
-      onMessage: (sfx, m) => this._msg(sfx, m),
-      onState: (s) => {
-        if (s === 'online' && this.view) this.link.send('up', { t: 'sync', pid: this.pid });
-        if (this.o.onState) this.o.onState(s);
-      },
-    });
-    this.link.subscribe(['d/' + this.pid, 'all']);
-    try {
-      await this.link.open(brokers()[brokerIndexFor(this.code)]);
-    } catch (e) {
-      this.link.close();
-      throw new Error('Der Relay für diesen Raum ist von deinem Netz aus nicht erreichbar. Prüfe deine Verbindung oder wechsle das Netz (WLAN oder mobile Daten).');
-    }
-    try {
-      await new Promise((resolve, reject) => {
-        this.first = { resolve, reject };
-        this.tries = 0;
-        this._joinLoop();
-      });
-    } catch (e) {
-      this.close();
-      throw e;
-    }
-    this.tick = setInterval(() => this._tick(), 5000);
-  }
-
-  _joinLoop() {
-    if (this.view || this.closed || !this.first) return;
-    if (this.tries++ >= 4) {
-      const f = this.first;
-      this.first = null;
-      f.reject(new Error('Raum nicht gefunden. Stimmt der Code, und ist der Raum noch offen?'));
+  _all(m) {
+    if (!m || typeof m.t !== 'string') return;
+    if (m.t === 'claim') {
+      if (typeof m.pid !== 'string' || !Number.isInteger(m.ep)) return;
+      const c = this.claiming;
+      if (m.pid === this.pid) {
+        if (c && m.ep === c.ep) c.echo = true;
+        return;
+      }
+      if (this.role === 'host') {
+        this._defend(); /* ich bin noch da */
+        return;
+      }
+      this.claimSeen = Date.now();
+      const mine = this.snap ? [this.snap.ep || 0, this.snap.v || 0] : null;
+      const able = !this.hidden && this.link.state === 'online' && (this.busy || (this.role === 'guest' && !!this.view));
+      if (mine && able && fresher(mine[0], mine[1], m.base | 0, m.v | 0)) {
+        /* Einspruch: Meine Sicherung ist neuer als die des Bewerbers. */
+        this._log('einspruch', { gegen: m.pid, mine, theirs: [m.base | 0, m.v | 0] });
+        this.link.send('all', { t: 'veto', pid: this.pid, ep: m.ep });
+        this.boost = Date.now();
+      } else if (c && m.ep === c.ep && (!mine || fresher(m.base | 0, m.v | 0, mine[0], mine[1]) || m.pid < this.pid)) c.lost = true;
       return;
     }
-    this.link.send('up', { t: 'join', pid: this.pid, name: this.o.name });
-    this.jt = setTimeout(() => this._joinLoop(), 1600);
-  }
-
-  _msg(sfx, m) {
-    if (this.closed || !m) return;
-    this.lastHost = Date.now();
-    if (sfx === 'all') {
-      if (m.t === 'hb') {
-        this.hostBye = false;
-        if (this.view && m.v > this.view.v) this.link.send('up', { t: 'sync', pid: this.pid });
-      } else if (m.t === 'bye') this.hostBye = true;
-      if (this.o.onState) this.o.onState(this.link.state);
+    if (m.t === 'veto') {
+      if (this.claiming && m.pid !== this.pid && m.ep === this.claiming.ep) this.claiming.lost = true;
       return;
     }
-    if (m.t === 'view' && m.view) {
-      this.hostBye = false;
-      if (!this.view || m.view.v >= this.view.v) {
-        this.view = m.view;
-        if (this.first) {
-          const f = this.first;
-          this.first = null;
-          clearTimeout(this.jt);
-          f.resolve();
+    if (typeof m.host !== 'string' || !Number.isInteger(m.ep)) return;
+    if (m.host === this.pid) {
+      this.echoAt = Date.now();
+      return;
+    }
+    if (m.t === 'hb' || m.t === 'snap') {
+      if (!this._heard(m.ep, m.host, m.t === 'hb')) return;
+      if (m.t === 'snap') {
+        if (m.snap && m.snap.code === this.code) {
+          this.snap = m.snap;
+          this._save();
         }
+      } else if (this.role === 'guest' && this.view && m.v !== this.view.v) this.link.send('up', { t: 'sync', pid: this.pid });
+      return;
+    }
+    if (m.t === 'bye') {
+      if (this.role !== 'guest' || m.host !== this.hostPid || m.ep !== this.ep) return;
+      this.hostBye = true;
+      this.byeAt = Date.now();
+      if (m.leave) this.leftHost = m.host;
+      this._notify();
+    }
+  }
+
+  /*
+   * Nachricht eines leitenden Geräts. true: Ich folge ihm.
+   * Höhere Amtszeit gewinnt, bei Gleichstand die kleinere Kennung.
+   */
+  _heard(ep, host, alive) {
+    if (this.role === 'host') {
+      if (this._newer(ep, host)) this._stepDown(ep, host);
+      else this._defend(); /* ein veraltetes Leitgerät: Es soll merken, dass es abgelöst ist */
+      return false;
+    }
+    if (ep < this.ep) return false;
+    if (this.role === 'probe') this.role = 'guest';
+    else if (ep === this.ep && this.hostPid && host > this.hostPid) return false;
+    if (ep !== this.ep || host !== this.hostPid) {
+      this.ep = ep;
+      this.hostPid = host;
+      this.viewKey = '';
+      this.claiming = null;
+      this.leftHost = '';
+      this.hostBye = false;
+    }
+    this.lastHost = Date.now();
+    /* Eine Abmeldung gilt, bis sich das Gerät mit einem Lebenszeichen zurückmeldet. */
+    if (alive) this.hostBye = false;
+    return true;
+  }
+
+  /* ---- Nachrichten an mich ---- */
+
+  _down(m) {
+    if (!m || typeof m.host !== 'string' || !Number.isInteger(m.ep) || m.host === this.pid) return;
+    if (!this._heard(m.ep, m.host)) return;
+    if (m.t === 'view' && m.view) {
+      const key = m.ep + '|' + m.host;
+      if (!this.view || this.viewKey !== key || m.view.v >= this.view.v) {
+        this.view = m.view;
+        this.viewKey = key;
+        this.viewN++;
         if (this.o.onView) this.o.onView(toUI(m.view));
+      }
+    } else if (m.t === 'snap') {
+      if (m.snap && m.snap.code === this.code) {
+        this.snap = m.snap;
+        this._save();
       }
     } else if (m.t === 'ack') {
       const a = this.acks[m.id];
       if (a) {
         delete this.acks[m.id];
         clearTimeout(a.timer);
-        a.resolve(m.error ? { error: m.error } : { ok: true });
+        /* Hat zwischendurch die Leitung gewechselt, kann der Zug schon angekommen sein. */
+        a.resolve(m.error ? (a.ep0 !== m.ep ? { ok: true, late: m.error } : { error: m.error }) : { ok: true });
       }
     } else if (m.t === 'nope') {
-      if (this.first) {
-        const f = this.first;
-        this.first = null;
-        clearTimeout(this.jt);
-        f.reject(new Error(m.error || 'Beitritt abgelehnt'));
-      } else if (this.o.onGone) this.o.onGone(m.error || 'Du bist nicht mehr in diesem Raum.');
+      if (this.asking) this.asking.nope = m.error || 'Beitritt abgelehnt';
+      else if (this.o.onGone) this.o.onGone(m.error || 'Du bist nicht mehr in diesem Raum.');
     }
   }
 
-  _tick() {
+  /* ---- Übernahme ---- */
+
+  /* Platz in der Reihe der Nachrücker: Reihenfolge der Spieler im Raum, ohne das leitende Gerät. */
+  _rank() {
+    if (Date.now() - this.boost < T.boost) return 0;
+    const list = this.snap.players.filter((p) => p.pid !== this.hostPid && p.online);
+    const i = list.findIndex((p) => p.pid === this.pid);
+    return i >= 0 ? i : list.length;
+  }
+
+  /*
+   * Kündigt die Übernahme an und wartet die Bedenkzeit ab. true: Niemand hat widersprochen.
+   * Ohne das eigene Echo vom Relay bin ich selbst offline und darf nichts übernehmen.
+   */
+  _claim(ep) {
+    return new Promise((resolve) => {
+      const c = (this.claiming = { ep, echo: false, lost: false });
+      this._log('bewerbung', { for: ep, base: (this.snap && this.snap.ep) || 0, v: (this.snap && this.snap.v) || 0 });
+      this.link.send('all', { t: 'claim', pid: this.pid, ep, base: (this.snap && this.snap.ep) || 0, v: (this.snap && this.snap.v) || 0 });
+      setTimeout(() => {
+        if (this.claiming === c) this.claiming = null;
+        const ok = !this.closed && c.echo && !c.lost;
+        if (!ok) this.hold = Date.now() + T.hold;
+        if (!ok) this._log('bewerbung gescheitert', { echo: c.echo, lost: c.lost });
+        /* Kein Echo: Meine eigene Verbindung ist tot, nicht das leitende Gerät. */
+        if (!this.closed && !c.echo && this.link.state === 'online') this.link.restart();
+        resolve(ok);
+      }, T.claim);
+    });
+  }
+
+  _maybeClaim() {
+    if (this.role !== 'guest' || this.claiming || this.busy || this.hidden || !this.snap || !this.view) return;
+    if (!this.link || this.link.state !== 'online') return;
+    const now = Date.now();
+    if (now < this.hold || now - this.claimSeen < T.claim + 2500 * K) return;
+    const rank = this._rank();
+    if (this.hostBye) {
+      if (now - this.byeAt < 250 * K + rank * T.byeRank) return;
+    } else if (now - this.lastHost < T.quiet + rank * T.rank) return;
+    const ep = this.ep + 1;
+    this._claim(ep).then((ok) => {
+      if (!ok || this.closed || this.role !== 'guest' || this.ep >= ep) return;
+      if (!this.hostBye && this.lastHost > now) return; /* das leitende Gerät lebt doch */
+      this._takeOver(ep);
+    });
+  }
+
+  /* ---- gemeinsam ---- */
+
+  _msg(sfx, m) {
     if (this.closed) return;
-    this.link.send('up', { t: 'hb', pid: this.pid, v: this.view ? this.view.v : 0 });
-    if (this.o.onState) this.o.onState(this.link.state);
+    if (sfx === 'up') {
+      if (this.role === 'host' && this.room) this._hostUp(m);
+    } else if (sfx === 'all') this._all(m);
+    else if (sfx === 'd/' + this.pid) this._down(m);
   }
 
   send(msg) {
+    if (this.role === 'host' && this.room) return Promise.resolve(this.room.handle(this.pid, msg));
     return new Promise((resolve) => {
       const id = ++this.seq;
+      const rec = (this.acks[id] = { resolve, timer: null, ep0: -1 });
       let tries = 0;
-      const rec = (this.acks[id] = { resolve, timer: null });
       const go = () => {
-        if (this.closed) return;
-        if (tries++ >= 4) {
+        if (this.closed || this.acks[id] !== rec) return;
+        if (this.role === 'host' && this.room) {
+          /* Inzwischen leite ich selbst. */
+          delete this.acks[id];
+          const res = this.room.handle(this.pid, msg);
+          resolve(res.error && rec.ep0 >= 0 ? { ok: true, late: res.error } : res);
+          return;
+        }
+        if (tries++ >= 9) {
           delete this.acks[id];
           resolve({ error: 'Keine Antwort vom Raum. Prüfe deine Verbindung.' });
           return;
         }
-        this.link.send('up', { t: 'act', pid: this.pid, id, m: msg });
+        if (this.role === 'guest') {
+          if (rec.ep0 < 0) rec.ep0 = this.ep;
+          this.link.send('up', { t: 'act', pid: this.pid, ep: this.ep, id, m: msg });
+        }
         rec.timer = setTimeout(go, 2200);
       };
       go();
@@ -3701,25 +6784,42 @@ class GuestSession {
   }
 
   status() {
-    const quiet = this.lastHost ? Date.now() - this.lastHost : 0;
-    return { link: this.link ? this.link.state : 'idle', hostAlive: !this.hostBye && quiet < 13000 };
+    const link = this.link ? this.link.state : 'idle';
+    if (this.role !== 'guest') return { link, hostAlive: true, role: this.role };
+    const now = Date.now();
+    /* Nach einer Abmeldung übernimmt gleich jemand: erst melden, wenn das ausbleibt. */
+    const alive = this.hostBye ? now - this.byeAt < 5000 * K : !this.lastHost || now - this.lastHost < 7500 * K;
+    return { link, hostAlive: alive, role: this.role };
   }
 
-  close(leave) {
+  /* leave: bewusst gehen, der Raum läuft für die anderen weiter. silent: ohne Abschied. */
+  close(leave, silent) {
     if (this.closed) return;
+    if (this.link && !silent) {
+      if (this.role === 'host' && this.room) {
+        if (this.room.players.length > 1) this.link.send('all', { t: 'snap', ep: this.ep, host: this.pid, snap: JSON.parse(JSON.stringify(this._snap())) });
+        this.link.send('all', { t: 'bye', ep: this.ep, host: this.pid, leave: !!leave });
+      } else if (leave) this.link.send('up', { t: 'leave', pid: this.pid });
+    }
     this.closed = true;
     clearInterval(this.tick);
-    clearTimeout(this.jt);
-    for (const id of Object.keys(this.acks)) clearTimeout(this.acks[id].timer);
-    if (this.link) {
-      if (leave) this.link.send('up', { t: 'leave', pid: this.pid });
-      const l = this.link;
-      setTimeout(() => l.close(), 200);
+    clearTimeout(this.flush);
+    for (const id of Object.keys(this.acks)) {
+      clearTimeout(this.acks[id].timer);
+      this.acks[id].resolve({ closed: true });
     }
+    this.acks = {};
+    if (this.link) {
+      const l = this.link;
+      if (silent) l.close();
+      else setTimeout(() => l.close(), 300);
+    }
+    if (this.room) this.room.destroy();
+    this.room = null;
   }
 }
 
-module.exports = { HostSession, GuestSession, Link, brokers, setBrokers, relayName, brokerIndexFor, normCode, PREFIX, DEFAULT_BROKERS };
+module.exports = { Session, Link, brokers, setBrokers, relayName, brokerIndexFor, normCode, PREFIX, DEFAULT_BROKERS, TIMING: T };
 
 return module.exports;})(__req);
 __m["app"]=(function(require){var module={exports:{}};var exports=module.exports;
@@ -3729,8 +6829,13 @@ const { GameHost } = require('../shared/host.js');
 const RM = require('../shared/room.js');
 const C = require('./cards.js');
 const Net = require('./net.js');
+const QR = require('../vendor/qrcode.js');
 
 const APP = 'Zauberstich';
+const VERSION = '1.2';
+const REACTIONS = ['😂', '👏', '😱', '🙈', '😤', '🔥', 'Autsch', 'Danke'];
+/* Angaben für Impressum und Datenschutz, beim Bauen aus legal.json eingesetzt */
+const LEGAL = {"name":"Sebastian Straub","street":"Enzianweg 1","city":"89269 Vöhringen","email":"seba.straub99@gmail.com","phone":""};
 const LEVELS = [
   { id: 'lehrling', name: 'Lehrling', hint: 'Spielt nach Gefühl und verschätzt sich öfter.' },
   { id: 'geselle', name: 'Geselle', hint: 'Sagt überlegt an und spielt solide.' },
@@ -3740,6 +6845,7 @@ const ICON = {
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
   menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  smile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.2c1 1.5 2.2 2.2 3.5 2.2s2.5-.7 3.5-2.2M9 9.6v.6M15 9.6v.6"/></svg>',
 };
 
 const $ = (id) => document.getElementById(id);
@@ -3788,7 +6894,7 @@ const store = {
   },
 };
 
-const settings = Object.assign({ name: '', players: 4, level: 'geselle', pm1: false, oneTap: false, fast: false }, store.get('zs.set', {}));
+const settings = Object.assign({ name: '', players: 4, level: 'geselle', pm1: false, dealerPicks: false, short: false, hiddenBids: false, oneTap: false, fast: false }, store.get('zs.set', {}));
 const saveSettings = () => store.set('zs.set', settings);
 function myPid() {
   let p = store.get('zs.pid', '');
@@ -3901,7 +7007,7 @@ function startSolo() {
   leaveSession();
   const names = shuffled(RM.BOT_NAMES).slice(0, settings.players - 1);
   const seats = [{ name: settings.name || 'Du', kind: 'human' }].concat(names.map((nm) => ({ name: nm, kind: 'bot', level: settings.level })));
-  const cfg = { seats, pm1: settings.pm1, speed: DEV.speed !== undefined ? DEV.speed : settings.fast ? 0.55 : 1, rounds: DEV.rounds };
+  const cfg = { seats, pm1: settings.pm1 && !settings.hiddenBids, dealerPicks: settings.dealerPicks, short: settings.short, hiddenBids: settings.hiddenBids, speed: DEV.speed !== undefined ? DEV.speed : settings.fast ? 0.55 : 1, rounds: DEV.rounds };
   S.session = new SoloSession({ cfg });
   S.session.start();
   keepAwake();
@@ -3935,9 +7041,12 @@ function leaveSession(leaveRoom) {
   S.sel = -1;
   S.pending = -1;
   S.shownRound = -1;
+  S.drawnRound = -1;
+  S.lastReact = 0;
   S.shownEnd = false;
   S.panelKey = '';
   S.seatKey = '';
+  $('rxPal').hidden = true;
   handEls.clear();
   $('hand').innerHTML = '';
   $('trick').innerHTML = '';
@@ -3958,7 +7067,7 @@ function onView(v) {
   S.prev = S.game;
   S.game = v.game;
   S.room = v.room;
-  if (S.room && S.session && S.session.kind === 'guest') {
+  if (S.room && S.session && S.session.kind !== 'solo') {
     const m = store.get('zs.mp', null);
     if (m && Date.now() - m.at > 20000) {
       m.at = Date.now();
@@ -3992,7 +7101,7 @@ function netState() {
   const st = S.session.status();
   let text = '';
   if (st.link !== 'online') text = 'Verbindung unterbrochen. Verbinde neu …';
-  else if (!st.hostAlive) text = 'Der Raum-Eröffner ist gerade nicht erreichbar. Die Partie geht weiter, sobald er zurück ist.';
+  else if (!st.hostAlive) text = 'Das Handy, das die Partie leitet, antwortet nicht. Gleich übernimmt ein anderes.';
   const g = $('gNet');
   g.hidden = !text;
   g.textContent = text;
@@ -4054,7 +7163,22 @@ function renderSolo() {
       renderSolo();
     }
   );
-  $('sRounds').textContent = `${60 / settings.players} Runden, du und ${settings.players - 1} Computergegner.`;
+  $('sRounds').textContent = `Du und ${settings.players - 1} Computergegner.`;
+  const full = 60 / settings.players;
+  seg(
+    $('sLen'),
+    [
+      { value: false, label: `Voll (${full} Runden)` },
+      { value: true, label: 'Kurz (8 Runden)' },
+    ],
+    !!settings.short,
+    (v) => {
+      settings.short = v;
+      saveSettings();
+      renderSolo();
+    }
+  );
+  $('sLenHint').textContent = settings.short ? `Karten je Runde: ${E.shortPlan(settings.players).join(', ')}.` : `Jede Runde eine Karte mehr, von 1 bis ${full}.`;
   seg(
     $('sLevel'),
     LEVELS.map((l) => ({ value: l.id, label: l.name })),
@@ -4066,7 +7190,10 @@ function renderSolo() {
     }
   );
   $('sLevelHint').textContent = LEVELS.find((l) => l.id === settings.level).hint;
-  $('sPm1').setAttribute('aria-checked', String(settings.pm1));
+  $('sHid').setAttribute('aria-checked', String(settings.hiddenBids));
+  $('sPm1').setAttribute('aria-checked', String(settings.pm1 && !settings.hiddenBids));
+  $('sPm1').setAttribute('aria-disabled', String(settings.hiddenBids));
+  $('sDp').setAttribute('aria-checked', String(settings.dealerPicks));
 }
 
 /* ---------- Mehrspieler: Eingang und Warteraum ---------- */
@@ -4111,7 +7238,7 @@ function renderMpEnter(msg) {
   const open = el('button', 'btn primary', 'Raum eröffnen');
   open.onclick = () => needName() && hostRoom();
   const st1 = el('div', 'stack');
-  st1.append(open, el('p', 'hint', 'Du bekommst einen Code und einen Link für deine Freunde. Dein Handy leitet die Partie, lass die Seite also offen.'));
+  st1.append(open, el('p', 'hint', 'Du bekommst einen Code, einen Link und einen QR-Code für deine Freunde.'));
   body.appendChild(st1);
 
   const f = el('div', 'field codein');
@@ -4140,6 +7267,7 @@ function renderMpEnter(msg) {
   const st2 = el('div', 'stack');
   st2.append(f, join);
   body.appendChild(st2);
+  body.appendChild(legalLinks());
 }
 
 function mpBusy(text) {
@@ -4149,8 +7277,10 @@ function mpBusy(text) {
   body.appendChild(el('p', 'lede', text));
 }
 
-function sessionCallbacks() {
+function sessionOptions(name) {
   return {
+    pid: myPid(),
+    name,
     onView,
     onState: netState,
     onGone: (text) => {
@@ -4158,58 +7288,40 @@ function sessionCallbacks() {
       leaveSession();
       renderMpEnter(text);
     },
+    /* Stand des Raums auf diesem Gerät sichern: So kann es den Raum wieder öffnen oder die Leitung übernehmen. */
+    onSave: (rec) => store.set('zs.mp', { role: rec.role, code: rec.code, name, at: Date.now(), ep: rec.ep, snap: rec.snap }),
+    testCfg: DEV.rounds || DEV.speed !== undefined ? { rounds: DEV.rounds, speed: DEV.speed } : null,
   };
 }
 
-async function hostRoom(snapRec) {
+async function enterRoom(busyText, name, go, failText, keepRecord) {
   leaveSession();
-  mpBusy(snapRec ? 'Raum wird wieder geöffnet …' : 'Raum wird eröffnet …');
-  const name = snapRec ? snapRec.name : settings.name;
-  const hooks = {};
-  const sess = new Net.HostSession(
-    Object.assign(sessionCallbacks(), {
-      pid: myPid(),
-      name,
-      snap: snapRec ? snapRec.snap : null,
-      hooks,
-      onSnapshot: (snap) => store.set('zs.mp', { role: 'host', code: snap.code, name, at: Date.now(), snap }),
-    })
-  );
+  mpBusy(busyText);
+  const sess = new Net.Session(sessionOptions(name));
   S.session = sess;
   try {
-    await sess.start();
-    if (DEV.rounds || DEV.speed !== undefined) sess.room.testCfg = { rounds: DEV.rounds, speed: DEV.speed };
+    await go(sess);
     keepAwake();
   } catch (e) {
-    if (S.session === sess) {
-      leaveSession();
-      renderMpEnter(e.message || 'Der Raum konnte nicht eröffnet werden.');
-    }
+    if (S.session !== sess) return;
+    leaveSession();
+    /* Ohne Netz bleibt die Sicherung liegen: Der Raum lässt sich später wieder öffnen. */
+    if (!(keepRecord && e && e.net)) store.del('zs.mp');
+    renderMpEnter((e && e.message) || failText);
   }
 }
 
-async function joinRoom(code, quiet) {
-  leaveSession();
+function hostRoom() {
+  return enterRoom('Raum wird eröffnet …', settings.name, (sess) => sess.openRoom(), 'Der Raum konnte nicht eröffnet werden.');
+}
+
+function joinRoom(code) {
   code = Net.normCode(code);
-  mpBusy('Verbinde mit Raum ' + code + ' …');
-  const sess = new Net.GuestSession(Object.assign(sessionCallbacks(), { pid: myPid(), name: settings.name || 'Gast', code }));
-  S.session = sess;
-  try {
-    await sess.start();
-    store.set('zs.mp', { role: 'guest', code, name: settings.name, at: Date.now() });
-    keepAwake();
-  } catch (e) {
-    if (S.session === sess) {
-      leaveSession();
-      if (quiet) store.del('zs.mp');
-      renderMpEnter(e.message || 'Beitritt nicht möglich.');
-    }
-  }
+  return enterRoom('Verbinde mit Raum ' + code + ' …', settings.name || 'Gast', (sess) => sess.join(code), 'Beitritt nicht möglich.');
 }
 
 function resumeRoom(m) {
-  if (m.role === 'host' && m.snap) hostRoom(m);
-  else joinRoom(m.code, true);
+  return enterRoom('Zurück in Raum ' + m.code + ' …', m.name || settings.name || 'Gast', (sess) => sess.resume(m), 'Der Raum ist nicht mehr erreichbar.', true);
 }
 
 function shareUrl(code) {
@@ -4235,6 +7347,33 @@ async function shareRoom(code) {
   }
 }
 
+function qrSVG(text) {
+  if (S.qr && S.qr.text === text) return S.qr.svg;
+  let svg = '';
+  try {
+    const q = QR(0, 'M');
+    q.addData(text);
+    q.make();
+    const n = q.getModuleCount();
+    let d = '';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (q.isDark(y, x)) d += `M${x} ${y}h1v1h-1z`;
+    svg = `<svg viewBox="-2 -2 ${n + 4} ${n + 4}" shape-rendering="crispEdges" role="img" aria-label="QR-Code zum Beitreten"><path d="${d}" fill="#221638"/></svg>`;
+  } catch (e) {}
+  S.qr = { text, svg };
+  return svg;
+}
+
+function legalLinks() {
+  const p = el('p', 'hint legal');
+  if (!hasLegal()) return p;
+  const a = el('button', '', 'Impressum');
+  a.onclick = () => openImpressum();
+  const b = el('button', '', 'Datenschutz');
+  b.onclick = () => openPrivacy();
+  p.append(a, b);
+  return p;
+}
+
 function renderLobby() {
   const r = S.room;
   if (!r) return;
@@ -4247,7 +7386,23 @@ function renderLobby() {
   body.appendChild(net);
 
   const head = el('div', 'stack');
-  head.append(el('span', 'label', 'Raumcode'), el('div', 'code', r.code));
+  const row = el('div', 'coderow');
+  const left = el('div', 'stack');
+  left.style.gap = '4px';
+  left.append(el('span', 'label', 'Raumcode'), el('div', 'code', r.code));
+  const qr = el('button', 'qr');
+  qr.type = 'button';
+  qr.innerHTML = qrSVG(shareUrl(r.code));
+  qr.setAttribute('aria-label', 'QR-Code vergrößern');
+  qr.onclick = () => {
+    const w = el('div', 'stack');
+    const big = el('div', 'qr big');
+    big.innerHTML = qrSVG(shareUrl(r.code));
+    w.append(big, el('p', 'lede', `Mit der Kamera scannen oder Raumcode ${r.code} eingeben.`));
+    openSheet('qr', 'Beitreten', w);
+  };
+  row.append(left, qr);
+  head.appendChild(row);
   const share = el('button', 'btn', 'Link an Freunde schicken');
   share.onclick = () => shareRoom(r.code);
   head.appendChild(share);
@@ -4277,7 +7432,7 @@ function renderLobby() {
 
   const relay = el('p', 'hint', 'Verbunden über ' + Net.relayName(r.code) + '.');
   if (r.owner) {
-    const start = el('button', 'btn primary', `Partie starten (${60 / r.cfg.size} Runden)`);
+    const start = el('button', 'btn primary', `Partie starten (${r.cfg.short ? 8 : 60 / r.cfg.size} Runden)`);
     start.onclick = async () => {
       start.disabled = true;
       const res = await S.session.send({ t: 'start' });
@@ -4311,20 +7466,40 @@ function renderLobby() {
       f2.appendChild(s2);
       body.appendChild(f2);
     }
+    const f3 = el('div', 'field');
+    f3.appendChild(el('span', 'label', 'Länge der Partie'));
+    const s3 = el('div', 'seg');
+    seg(
+      s3,
+      [
+        { value: false, label: `Voll (${60 / r.cfg.size} Runden)` },
+        { value: true, label: 'Kurz (8 Runden)' },
+      ],
+      !!r.cfg.short,
+      (v) => S.session.send({ t: 'cfg', short: v })
+    );
+    f3.appendChild(s3);
+    body.appendChild(f3);
+    body.appendChild(switchRow('Verdeckte Ansage', 'Alle wählen gleichzeitig und geheim. Aufgedeckt wird, wenn jeder angesagt hat.', !!r.cfg.hiddenBids, (v) => S.session.send({ t: 'cfg', hiddenBids: v })));
     const sw = el('button', 'switch');
     sw.setAttribute('role', 'switch');
-    sw.setAttribute('aria-checked', String(r.cfg.pm1));
+    sw.setAttribute('aria-checked', String(r.cfg.pm1 && !r.cfg.hiddenBids));
+    sw.setAttribute('aria-disabled', String(!!r.cfg.hiddenBids));
     sw.innerHTML = '<span><b>Variante Plus/Minus 1</b><span>Die Ansagen dürfen zusammen nicht genau aufgehen.</span></span><span class="knob"></span>';
-    sw.onclick = () => S.session.send({ t: 'cfg', pm1: !r.cfg.pm1 });
+    sw.onclick = () => (r.cfg.hiddenBids ? toast('Plus/Minus 1 geht nicht zusammen mit verdeckter Ansage.') : S.session.send({ t: 'cfg', pm1: !r.cfg.pm1 }));
     body.appendChild(sw);
-    body.appendChild(el('p', 'hint', 'Dein Handy leitet die Partie. Lass diese Seite offen, bis ihr fertig seid.'));
+    body.appendChild(
+      switchRow('Geber wählt den Trumpf', 'Gilt, wenn ein Zauberer aufgedeckt wird (Originalregel). Ausgeschaltet wird die Trumpffarbe dann ausgelost.', !!r.cfg.dealerPicks, (v) => S.session.send({ t: 'cfg', dealerPicks: v }))
+    );
+    body.appendChild(el('p', 'hint', 'Legt jemand sein Handy weg, läuft die Partie auf den anderen weiter.'));
     body.appendChild(relay);
   } else {
-    const ow = r.players.find((p) => p.owner);
+    const ow = r.players.find((p) => p.boss && p.online) || r.players.find((p) => p.owner);
     body.appendChild(el('p', 'lede', `Warte, bis ${ow ? ow.name : 'der Eröffner'} die Partie startet.`));
-    body.appendChild(el('p', 'hint', `${r.cfg.size} Plätze, ${60 / r.cfg.size} Runden${r.cfg.pm1 ? ', Variante Plus/Minus 1' : ''}.`));
+    body.appendChild(el('p', 'hint', `${r.cfg.size} Plätze, ${r.cfg.short ? '8 Runden (kurze Partie)' : 60 / r.cfg.size + ' Runden'}${r.cfg.hiddenBids ? ', verdeckte Ansage' : ''}${r.cfg.pm1 ? ', Variante Plus/Minus 1' : ''}${r.cfg.dealerPicks ? ', Geber wählt den Trumpf bei aufgedecktem Zauberer' : ''}.`));
     body.appendChild(relay);
   }
+  body.appendChild(legalLinks());
   netState();
 }
 
@@ -4449,6 +7624,11 @@ const nameOf = (g, i) => (i === g.me ? 'Du' : g.seats[i].name);
 function statusText(g) {
   const me = g.me;
   if (g.phase === 'trump') return g.turn === me ? 'Wähle die Trumpffarbe' : `${nameOf(g, g.dealer)} wählt die Trumpffarbe`;
+  if (g.phase === 'bid' && g.hiddenBids) {
+    if (g.seats[me] && g.seats[me].bid === null) return 'Deine verdeckte Ansage';
+    const open = g.seats.filter((s) => !s.bidDone).length;
+    return open === 1 ? 'Warte auf die letzte Ansage' : `Warte auf ${open} Ansagen`;
+  }
   if (g.phase === 'bid') return g.turn === me ? 'Deine Ansage' : `${nameOf(g, g.turn)} sagt an`;
   if (g.phase === 'play') {
     if (g.turn !== me) return `${nameOf(g, g.turn)} ist dran`;
@@ -4478,11 +7658,29 @@ function renderGame() {
   $('gRound').textContent = `Runde ${g.round} von ${g.rounds}`;
   const bids = g.seats.map((s) => s.bid).filter((b) => b !== null);
   const sum = bids.reduce((a, b) => a + b, 0);
-  $('gSub').textContent = bids.length === 0 ? `${g.round} ${g.round === 1 ? 'Stich' : 'Stiche'} zu vergeben` : `${bids.length < g.n ? 'Bisher angesagt' : 'Angesagt'}: ${sum} von ${g.round}`;
+  const nTricks = g.cards || g.round;
+  const tw = nTricks === 1 ? 'Stich' : 'Stiche';
+  const hiddenNow = g.hiddenBids && g.phase === 'bid';
+  $('gSub').textContent = hiddenNow ? `${nTricks} ${tw}, verdeckte Ansage` : bids.length === 0 ? `${nTricks} ${tw} zu vergeben` : `${bids.length < g.n ? 'Bisher angesagt' : 'Angesagt'}: ${sum} von ${nTricks}`;
   renderTrump(g);
+  if (S.drawnRound !== g.round) {
+    S.drawnRound = g.round;
+    const fresh = g.trickNo === 0 && g.trick.plays.length === 0 && bids.length === 0;
+    if (fresh && g.phase === 'bid' && g.trumpCard >= 0 && E.isWizard(g.trumpCard) && !g.dealerPicks && g.trumpSuit >= 0) {
+      toast(`Zauberer aufgedeckt. Trumpf ausgelost: ${C.SUITS[g.trumpSuit].name}`);
+    }
+  }
 
   const G = geometry(g);
   renderSeats(g, p, G);
+  if (S.room && S.room.reacts) {
+    for (const rc of S.room.reacts) {
+      if (rc.id > (S.lastReact || 0)) {
+        S.lastReact = rc.id;
+        if (rc.age < 5000) showReaction(g, rc.seat, rc.k);
+      }
+    }
+  }
   renderTrick(g, p, G);
   renderHand(g, p, hand, hl);
   renderMeBar(g);
@@ -4529,7 +7727,7 @@ function renderSeats(g, p, G) {
     s.classList.toggle('turn', g.turn === i);
     s.classList.toggle('away', away && !d.auto);
     s.querySelector('.nm').textContent = d.name + (d.kind === 'human' && d.auto ? ' (Computer)' : '');
-    const th = tallyHTML(d.bid, d.tricks, g.phase === 'bid' && g.turn === i);
+    const th = g.hiddenBids && g.phase === 'bid' ? `<span class="wait">${d.bidDone ? 'angesagt' : 'überlegt'}</span>` : tallyHTML(d.bid, d.tricks, g.phase === 'bid' && g.turn === i);
     const t = s.querySelector('.tally');
     if (t._k !== th) {
       t.innerHTML = th;
@@ -4550,6 +7748,44 @@ function renderSeats(g, p, G) {
       setTimeout(() => bub.remove(), 2200);
     }
   }
+}
+
+/* ---------- Reaktionen ---------- */
+function showReaction(g, seat, k) {
+  const label = REACTIONS[k];
+  if (!label) return;
+  const word = /^[A-Za-zÄÖÜäöü]/.test(label);
+  const b = el('span', 'bubble ' + (word ? 'word' : 'emo'), label);
+  let host;
+  if (seat === g.me) {
+    host = $('table');
+    b.classList.add('self');
+  } else host = $('seats').querySelector(`.seat[data-seat="${seat}"]`);
+  if (!host) return;
+  for (const old of Array.from(host.children)) if (old.classList.contains('emo') || old.classList.contains('word')) old.remove();
+  host.appendChild(b);
+  setTimeout(() => b.remove(), 2900);
+}
+
+function toggleReactions(force) {
+  const pal = $('rxPal');
+  const open = force === undefined ? pal.hidden : force;
+  if (!open) {
+    pal.hidden = true;
+    return;
+  }
+  if (!pal.firstChild) {
+    REACTIONS.forEach((label, k) => {
+      const b = el('button', /^[A-Za-zÄÖÜäöü]/.test(label) ? '' : 'emo', label);
+      b.type = 'button';
+      b.onclick = () => {
+        pal.hidden = true;
+        act({ t: 'react', k });
+      };
+      pal.appendChild(b);
+    });
+  }
+  pal.hidden = false;
 }
 
 function centerOf(r) {
@@ -4655,13 +7891,14 @@ function renderHand(g, p, hand, hl) {
 function renderMeBar(g) {
   const bar = $('mebar');
   const me = g.seats[g.me] || g.seats[0];
-  const mine = g.turn === g.me && (g.phase === 'play' || g.phase === 'bid' || g.phase === 'trump');
-  bar.classList.toggle('turn', mine);
+  const mine = (g.turn === g.me && (g.phase === 'play' || g.phase === 'bid' || g.phase === 'trump')) || (g.hiddenBids && g.phase === 'bid' && me.bid === null);
+  bar.classList.toggle('turn', !!mine);
   const html =
     `<span class="st">${esc(statusText(g))}</span>` +
     (g.dealer === g.me ? '<span class="badge gb" title="Geber">G</span>' : '') +
     `<span class="tally">${tallyHTML(me.bid, me.tricks, false, 7)}</span>` +
-    `<span class="pts">${me.score}</span>`;
+    `<span class="pts">${me.score}</span>` +
+    (S.room ? `<button class="rx" type="button" aria-label="Reaktion senden">${ICON.smile}</button>` : '');
   if (bar._k !== html) {
     bar.innerHTML = html;
     bar._k = html;
@@ -4670,7 +7907,8 @@ function renderMeBar(g) {
 
 function renderPanel(g) {
   const panel = $('panel');
-  const mine = g.turn === g.me;
+  const myBid = g.seats[g.me] ? g.seats[g.me].bid : null;
+  const mine = g.phase === 'bid' && g.hiddenBids ? myBid === null : g.turn === g.me;
   const key = mine && (g.phase === 'bid' || g.phase === 'trump') ? g.round + ':' + g.phase : '';
   if (key === S.panelKey) return;
   S.panelKey = key;
@@ -4693,11 +7931,12 @@ function renderPanel(g) {
     panel.appendChild(grid);
     return;
   }
-  const r = g.round;
+  const r = g.cards || g.round;
   const bids = g.seats.map((s) => s.bid).filter((b) => b !== null);
   const sum = bids.reduce((a, b) => a + b, 0);
   panel.appendChild(el('h2', '', 'Wie viele Stiche machst du?'));
   let hint = bids.length ? `Bisher angesagt: ${sum} von ${r}.` : `Du sagst als Erster an. Es gibt ${r} ${r === 1 ? 'Stich' : 'Stiche'}.`;
+  if (g.hiddenBids) hint = `Es gibt ${r} ${r === 1 ? 'Stich' : 'Stiche'}. Alle wählen geheim, aufgedeckt wird am Schluss.`;
   if (g.noBid >= 0) hint += ` Die ${g.noBid} ist für dich gesperrt (Plus/Minus 1).`;
   panel.appendChild(el('p', 'hint', hint));
   const chips = el('div', 'chips');
@@ -4846,7 +8085,7 @@ function openGameEnd(g) {
   const h = g.history[g.history.length - 1];
   const wn = g.winners.map((i) => nameOf(g, i));
   const iWon = g.winners.indexOf(g.me) >= 0;
-  const title = iWon ? (wn.length > 1 ? 'Geteilter Sieg für dich' : 'Du gewinnst die Partie') : wn.length > 1 ? `${wn.join(' und ')} teilen sich den Sieg` : `${wn[0]} gewinnt die Partie`;
+  const title = iWon ? (wn.length > 1 ? 'Geteilter Sieg für dich' : 'Du gewinnst die Partie') : wn.length > 1 ? `${wn.slice(0, -1).join(', ')} und ${wn[wn.length - 1]} teilen sich den Sieg` : `${wn[0]} gewinnt die Partie`;
   const order = g.seats.map((_, i) => i).sort((a, b) => g.seats[b].score - g.seats[a].score);
   const ul = el('ul', 'results');
   order.forEach((i) => {
@@ -4915,7 +8154,7 @@ function openBlock(back) {
   for (const h of g.history) {
     const tr = el('tr');
     const td0 = el('td');
-    const rs = el('span', 'rs', String(h.round));
+    const rs = el('span', 'rs', String(h.cards || h.round));
     if (h.trumpSuit >= 0) {
       rs.style.background = C.SUITS[h.trumpSuit].bg;
       rs.style.color = C.SUITS[h.trumpSuit].fg;
@@ -4931,7 +8170,7 @@ function openBlock(back) {
     tbl.appendChild(tr);
   }
   wrap.appendChild(tbl);
-  wrap.appendChild(el('p', 'hint', g.history.length ? 'Fett: Punktestand nach der Runde. Darunter: gemachte Stiche von angesagten, grün bei Treffer. Die Farbe an der Rundennummer ist der Trumpf.' : 'Noch keine Runde gewertet.'));
+  wrap.appendChild(el('p', 'hint', g.history.length ? 'Links: Karten in der Runde, eingefärbt in der Trumpffarbe. Fett: Punktestand nach der Runde. Darunter: gemachte Stiche von angesagten, grün bei Treffer.' : 'Noch keine Runde gewertet.'));
   wrap.lastChild.style.marginTop = '10px';
   openSheet('block', 'Block', wrap, { back });
 }
@@ -4970,7 +8209,11 @@ function openTrumpInfo() {
   let text;
   if (g.trumpCard < 0) text = 'In der letzten Runde sind alle Karten verteilt. Es gibt keinen Trumpf.';
   else if (E.isJester(g.trumpCard)) text = 'Ein Narr wurde aufgedeckt. In dieser Runde gibt es keinen Trumpf.';
-  else if (E.isWizard(g.trumpCard)) text = g.phase === 'trump' ? `Ein Zauberer wurde aufgedeckt. ${nameOf(g, g.dealer)} wählt als Geber die Trumpffarbe.` : `Ein Zauberer wurde aufgedeckt. ${nameOf(g, g.dealer)} hat ${C.SUITS[g.trumpSuit].name} als Trumpf gewählt.`;
+  else if (E.isWizard(g.trumpCard)) {
+    if (g.phase === 'trump') text = `Ein Zauberer wurde aufgedeckt. ${nameOf(g, g.dealer)} wählt als Geber die Trumpffarbe.`;
+    else if (g.dealerPicks) text = `Ein Zauberer wurde aufgedeckt. ${nameOf(g, g.dealer)} hat als Geber ${C.SUITS[g.trumpSuit].name} zum Trumpf gemacht.`;
+    else text = `Ein Zauberer wurde aufgedeckt. Die Trumpffarbe wurde ausgelost: ${C.SUITS[g.trumpSuit].name}.`;
+  }
   else text = `Aufgedeckt wurde ${C.cardName(g.trumpCard)}. ${C.SUITS[g.trumpSuit].name} ist Trumpf und sticht jede andere Farbe.`;
   if (g.trumpCard >= 0) {
     const row = el('div', 'minirow');
@@ -5004,6 +8247,35 @@ function openLastTrick() {
     wrap.appendChild(el('p', '', `Der Stich ging an ${g.lastTrick.winner === g.me ? 'dich' : nameOf(g, g.lastTrick.winner)}.`));
   }
   openSheet('last', 'Letzter Stich', wrap, { back: openMenu });
+}
+
+/* ---------- Impressum und Datenschutz ---------- */
+function hasLegal() {
+  return !!(LEGAL && LEGAL.name && LEGAL.street && LEGAL.city && LEGAL.email);
+}
+
+function openImpressum(back) {
+  const w = el('div', 'legaltext');
+  w.innerHTML =
+    `<section><h3>Angaben gemäß § 5 DDG</h3><p>${esc(LEGAL.name)}<br>${esc(LEGAL.street)}<br>${esc(LEGAL.city)}</p></section>` +
+    `<section><h3>Kontakt</h3><p>E-Mail: ${esc(LEGAL.email)}${LEGAL.phone ? '<br>Telefon: ' + esc(LEGAL.phone) : ''}</p></section>` +
+    `<section><h3>Verantwortlich für den Inhalt</h3><p>${esc(LEGAL.name)}, Anschrift wie oben</p></section>` +
+    `<p class="hint">${APP} ist ein privates Projekt ohne Werbung und ohne Gewinnabsicht.</p>`;
+  openSheet('imp', 'Impressum', w, { back });
+}
+
+function openPrivacy(back) {
+  const w = el('div', 'legaltext');
+  w.innerHTML =
+    `<section><h3>Kurz gesagt</h3><p>${APP} braucht kein Konto und nutzt weder Werbung noch Tracking noch Cookies. Verarbeitet wird nur, was technisch nötig ist, um die Seite auszuliefern und Partien zwischen Geräten zu vermitteln.</p></section>` +
+    `<section><h3>Verantwortlich</h3><p>${esc(LEGAL.name)}, ${esc(LEGAL.street)}, ${esc(LEGAL.city)}, E-Mail: ${esc(LEGAL.email)}</p></section>` +
+    `<section><h3>Aufruf der Seite</h3><p>Die Seite liegt bei GitHub Pages, einem Dienst der GitHub, Inc. (USA). Beim Aufruf überträgt dein Browser technisch bedingt deine IP-Adresse an GitHub. Nach der Dokumentation von GitHub wird die IP-Adresse von Besuchern zu Sicherheitszwecken protokolliert und gespeichert. Dabei können Daten in die USA übermittelt werden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO, das berechtigte Interesse an einer sicheren und stabilen Bereitstellung. Näheres steht in der <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>.</p></section>` +
+    `<section><h3>Speicher auf deinem Gerät</h3><p>Die App legt im Browser deines Geräts ab: deinen Spielernamen, deine Einstellungen, eine zufällige Gerätekennung für Räume und den Stand laufender Partien. Diese Daten bleiben auf deinem Gerät und dienen nur der Funktion der App. Du löschst sie über die Website-Daten in den Einstellungen deines Browsers. Der Zugriff ist für den von dir gewünschten Dienst unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG).</p></section>` +
+    `<section><h3>Mit Freunden spielen</h3><p>In einem Raum werden Spielernamen, Spielzüge, Karten und Reaktionen zwischen den beteiligten Geräten übertragen. Das Gerät, das die Partie leitet, verarbeitet diese Daten. Damit die Partie einen Ausfall übersteht, erhalten auch die Geräte der anderen Mitspieler eine Sicherung des Spielstands.</p><p>Die Vermittlung läuft über öffentliche MQTT-Relays Dritter (broker.emqx.io, broker.hivemq.com, mqtt.eclipseprojects.io, test.mosquitto.org). Deren Betreiber sehen dabei deine IP-Adresse und können außerhalb der EU sitzen. Die Inhalte sind mit einem Schlüssel aus dem Raumcode verschlüsselt (AES-GCM). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, weil die Übertragung für die von dir gewählte Funktion nötig ist. Im Solo-Modus findet keine solche Übertragung statt.</p></section>` +
+    `<section><h3>Keine Auswertung</h3><p>Es gibt keine Analyse-Werkzeuge, keine Werbung und keine eingebundenen sozialen Netzwerke. Der Betreiber erhält keine Spieldaten und führt keine Nutzerprofile.</p></section>` +
+    `<section><h3>Deine Rechte</h3><p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Der Betreiber speichert selbst keine Daten über einzelne Spieler. Anfragen richtest du an die oben genannte Adresse.</p></section>` +
+    `<p class="hint">Stand: November 2026</p>`;
+  openSheet('ds', 'Datenschutz', w, { back });
 }
 
 function switchRow(title, sub, on, onToggle) {
@@ -5061,7 +8333,11 @@ function openMenu() {
       act({ t: 'end' });
     });
   }
-  if (S.room) menu.appendChild(el('p', 'hint', `Raumcode ${S.room.code}`));
+  if (hasLegal()) {
+    add('Impressum', () => openImpressum(openMenu));
+    add('Datenschutz', () => openPrivacy(openMenu));
+  }
+  if (S.room) menu.appendChild(el('p', 'hint', `Raumcode ${S.room.code}` + (S.session && S.session.role === 'host' ? '. Dieses Handy leitet gerade die Partie.' : '')));
   add(solo ? 'Zum Start (Partie bleibt gespeichert)' : 'Raum verlassen', () => {
     if (!solo) store.del('zs.mp');
     leaveSession(true);
@@ -5079,8 +8355,8 @@ function autopilot() {
     if (!g || !S.session || !S.auto) return;
     const me = g.me;
     if (g.phase === 'trump' && g.turn === me) S.session.send({ t: 'trump', s: 1 });
-    else if (g.phase === 'bid' && g.turn === me) {
-      let b = Math.min(g.round, Math.round(g.hand.length / g.n));
+    else if (g.phase === 'bid' && (g.turn === me || (g.hiddenBids && g.seats[me].bid === null))) {
+      let b = Math.min(g.cards || g.round, Math.round(g.hand.length / g.n));
       if (b === g.noBid) b = b ? b - 1 : 1;
       S.session.send({ t: 'bid', n: b });
     } else if (g.phase === 'play' && g.turn === me && g.legal.length) S.session.send({ t: 'play', c: g.legal[0] });
@@ -5112,11 +8388,36 @@ function init() {
   $('hFriends').onclick = () => renderMpEnter(S.mpMsg);
   $('hRules').onclick = () => openRules();
   $('sPm1').onclick = () => {
+    if (settings.hiddenBids) {
+      toast('Plus/Minus 1 geht nicht zusammen mit verdeckter Ansage.');
+      return;
+    }
     settings.pm1 = !settings.pm1;
     saveSettings();
     renderSolo();
   };
+  $('sHid').onclick = () => {
+    settings.hiddenBids = !settings.hiddenBids;
+    if (settings.hiddenBids) settings.pm1 = false;
+    saveSettings();
+    renderSolo();
+  };
+  $('sDp').onclick = () => {
+    settings.dealerPicks = !settings.dealerPicks;
+    saveSettings();
+    renderSolo();
+  };
   $('sStart').onclick = startSolo;
+  $('hVer').textContent = 'Version ' + VERSION;
+  $('hImp').hidden = $('hDs').hidden = !hasLegal();
+  $('hImp').onclick = () => openImpressum();
+  $('hDs').onclick = () => openPrivacy();
+  $('mebar').addEventListener('click', (ev) => {
+    if (ev.target.closest('.rx')) toggleReactions();
+  });
+  document.addEventListener('click', (ev) => {
+    if (!$('rxPal').hidden && !ev.target.closest('.rxpal') && !ev.target.closest('.rx')) toggleReactions(false);
+  });
   $('hand').addEventListener('click', onHandTap);
   window.addEventListener('resize', () => {
     if (S.game && S.screen === 'game') {
@@ -5124,9 +8425,18 @@ function init() {
       renderGame();
     }
   });
+  /* Im Hintergrund friert das Handy die Seite ein: Leitung abgeben, beim Zurückkommen wieder einreihen. */
+  const away = () => S.session && S.session.pause && S.session.pause();
+  window.addEventListener('pagehide', away);
+  window.addEventListener('pageshow', (ev) => {
+    if (ev.persisted && S.session && S.session.wake) S.session.wake();
+  });
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState !== 'visible') return;
-    if (S.session && S.session.link) S.session.link.kick();
+    if (document.visibilityState !== 'visible') {
+      away();
+      return;
+    }
+    if (S.session && S.session.wake) S.session.wake();
     if (S.game) {
       keepAwake();
       S.prev = S.game;
